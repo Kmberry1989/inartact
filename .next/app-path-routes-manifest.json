@@ -1,6 +1,6 @@
 {
-  "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
   "/_not-found/page": "/_not-found",
+  "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
   "/page": "/",
   "/artists/[id]/page": "/artists/[id]",
   "/admin/edit/[id]/page": "/admin/edit/[id]"

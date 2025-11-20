@@ -13,8 +13,8 @@ interface ArtistProfileProps {
 export function ArtistProfile({ artist }: ArtistProfileProps) {
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <Link 
-        href="/" 
+      <Link
+        href="/"
         className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors"
       >
         <ArrowLeft className="mr-2 h-4 w-4" />
@@ -33,7 +33,7 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
               priority
             />
           </div>
-          
+
           <div className="rounded-xl border bg-card text-card-foreground shadow-sm p-6">
             <h3 className="font-semibold mb-4 flex items-center text-lg">
               <Info className="w-5 h-5 mr-2 text-primary" />
@@ -90,18 +90,43 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
             <p className="text-lg leading-relaxed text-muted-foreground mb-6">
               {artist.bio}
             </p>
-            
+
             <h3 className="text-xl font-semibold mb-3">The Work</h3>
             <p className="text-lg leading-relaxed text-muted-foreground">
               {artist.workDescription}
             </p>
+
+            {/* Media Section */}
+            {(artist.mixcloudEmbed || artist.vimeoUrl) && (
+              <div className="mt-8 space-y-6">
+                <h3 className="text-xl font-semibold mb-3">Media</h3>
+
+                {artist.mixcloudEmbed && (
+                  <div
+                    className="w-full overflow-hidden rounded-lg shadow-sm"
+                    dangerouslySetInnerHTML={{ __html: artist.mixcloudEmbed }}
+                  />
+                )}
+
+                {artist.vimeoUrl && (
+                  <div className="aspect-video w-full overflow-hidden rounded-lg shadow-sm">
+                    <iframe
+                      src={`https://player.vimeo.com/video/${artist.vimeoUrl.split('/').pop()?.split('?')[0]}`}
+                      className="w-full h-full"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-4 mt-auto pt-8 border-t">
             <Button asChild size="lg" className="w-full sm:w-auto shadow-sm">
-              <a 
-                href={`https://www.google.com/search?q=${encodeURIComponent(artist.searchQuery)}`} 
-                target="_blank" 
+              <a
+                href={`https://www.google.com/search?q=${encodeURIComponent(artist.searchQuery)}`}
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />

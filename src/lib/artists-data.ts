@@ -114,7 +114,9 @@ export const artistsData: Artist[] = [
     workDescription: "'Social Alchemy' is a multi-year project exploring the concepts of utopia and dystopia, drawing inspiration from New Harmony, Indiana. It uses art, radio, and design to facilitate social connection and reimagine how communities can live better together.",
     searchQuery: "Big Car Collaborative Social Alchemy",
     imageUrl: "/placeholder.svg?height=400&width=600",
-    link: "https://bigcar.org"
+    link: "https://bigcar.org",
+    mixcloudEmbed: '<iframe width="100%" height="120" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FWQRT_Indianapolis%2Fplaylists%2Fsocial-alchemy-symposium-2022%2F" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" frameborder="0"></iframe>',
+    vimeoUrl: "https://vimeo.com/709741692"
   },
   {
     id: "9",
