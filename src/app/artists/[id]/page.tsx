@@ -11,8 +11,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function Page({ params }: { params: { id: string } }) {
-  const artist = artistsData.find((a) => a.id === params.id)
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  // Await the params promise
+  const { id } = await params
+  const artist = artistsData.find((a) => a.id === id)
 
   if (!artist) {
     notFound()
