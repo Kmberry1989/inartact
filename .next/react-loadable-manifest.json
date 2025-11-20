@@ -10,5 +10,12 @@
     "files": [
       "static/chunks/646.f342b7cffc01feb0.js"
     ]
+  },
+  "app\\activists\\map\\page.tsx -> react-leaflet": {
+    "id": 3538,
+    "files": [
+      "static/chunks/d0deef33.cac6acee3fffe7af.js",
+      "static/chunks/538.329a043d9e42d7ae.js"
+    ]
   }
 }

@@ -13,7 +13,9 @@ export const artistsData: Artist[] = [
     bio: "The Eighteen Art Collective is a group of 18 Indianapolis-based Black artists who came together in 2020 to paint the 'Black Lives Matter' mural on Indiana Avenue. They have since formalized as a collective to advocate for equity, civic engagement, and the support of Black creatives in the city.",
     workDescription: "A massive street mural where each of the 18 artists was assigned one letter of the phrase 'Black Lives Matter.' The mural is a vibrant affirmation of Black life and culture, located on a street with deep historical significance to Indianapolis's Black community.",
     searchQuery: "The Eighteen Art Collective Indianapolis",
-    imageUrl: "/placeholder.svg?height=400&width=600"
+    imageUrl: "/placeholder.svg?height=400&width=600",
+    latitude: 39.7753,
+    longitude: -86.1649
   },
   {
     id: "2",
@@ -116,7 +118,9 @@ export const artistsData: Artist[] = [
     imageUrl: "/placeholder.svg?height=400&width=600",
     link: "https://bigcar.org",
     mixcloudEmbed: '<iframe width="100%" height="120" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FWQRT_Indianapolis%2Fplaylists%2Fsocial-alchemy-symposium-2022%2F" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" frameborder="0"></iframe>',
-    vimeoUrl: "https://vimeo.com/709741692"
+    vimeoUrl: "https://vimeo.com/709741692",
+    latitude: 39.7326,
+    longitude: -86.1415
   },
   {
     id: "9",
@@ -130,7 +134,9 @@ export const artistsData: Artist[] = [
     bio: "Andre Portee is a Fort Wayne-based creative and the founder of AbsorbALL. He focuses on using art as a tool for community revitalization, specifically targeting public spaces in underserved neighborhoods to instill pride and ownership.",
     workDescription: "A massive, vibrant mural painted directly onto the basketball courts of McMillen Park. The project revitalized a gray, neglected space into a colorful destination, celebrating Black culture and providing a beautiful, dignified space for youth recreation.",
     searchQuery: "Portee AbsorbALL Fort Wayne",
-    imageUrl: "/placeholder.svg?height=400&width=600"
+    imageUrl: "/placeholder.svg?height=400&width=600",
+    latitude: 41.0582,
+    longitude: -85.1069
   },
   {
     id: "10",
@@ -144,7 +150,9 @@ export const artistsData: Artist[] = [
     bio: "Rachel Kavathe is an artist and landscape architect whose work lies at the intersection of nature, community, and urban design. She creates site-specific installations that highlight the identity of neighborhoods and the natural ecosystems they inhabit.",
     workDescription: "A street mural project designed to calm traffic and beautify the McDoel Gardens neighborhood. The design features native flora and garden imagery, reflecting the neighborhood's history and the shared values of its residents.",
     searchQuery: "Rachel Kavathe artist",
-    imageUrl: "/placeholder.svg?height=400&width=600"
+    imageUrl: "/placeholder.svg?height=400&width=600",
+    latitude: 39.1539,
+    longitude: -86.5396
   },
   {
     id: "11",

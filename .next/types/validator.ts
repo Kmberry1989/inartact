@@ -47,6 +47,33 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 }
 
 
+// Validate ../../src/app/activists/analytics/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/activists/analytics">> = Specific
+  const handler = {} as typeof import("../../src/app/activists/analytics/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/activists/map/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/activists/map">> = Specific
+  const handler = {} as typeof import("../../src/app/activists/map/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/activists/zine/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/activists/zine">> = Specific
+  const handler = {} as typeof import("../../src/app/activists/zine/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/admin/edit/[id]/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/admin/edit/[id]">> = Specific
