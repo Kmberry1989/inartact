@@ -1,21 +1,31 @@
 export interface Artist {
-    id: string;
+  id: string;
+  artist: {
     name: string;
-    isAlive: boolean;
+    bio?: string;
+    website?: string;
+    social_media?: string[];
+    isAlive?: boolean;
     born?: string;
     died?: string;
+  };
+  artwork: {
     title: string;
-    medium: string;
-    date: string;
-    location: string;
-    cause: string;
-    bio: string;
-    workDescription: string;
-    searchQuery: string;
-    imageUrl?: string;
-    link?: string;
-    mixcloudEmbed?: string;
-    vimeoUrl?: string;
+    description?: string;
+    imageUrl: string;
+    alt?: string;
+    categories?: string[];
+    tags?: string[];
+    location?: string;
+    portfolio_url?: string;
+    news_media_coverage?: string[];
+    medium?: string;
+    date?: string;
+    cause?: string;
+    searchQuery?: string;
     latitude?: number;
     longitude?: number;
+    mixcloudEmbed?: string;
+    vimeoUrl?: string;
+  };
 }
