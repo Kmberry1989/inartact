@@ -2,11 +2,11 @@
   "/_not-found/page": "/_not-found",
   "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
   "/about/page": "/about",
-  "/activists/analytics/page": "/activists/analytics",
-  "/activists/map/page": "/activists/map",
   "/activists/timeline/page": "/activists/timeline",
-  "/activists/zine/page": "/activists/zine",
+  "/activists/analytics/page": "/activists/analytics",
   "/page": "/",
-  "/admin/edit/[id]/page": "/admin/edit/[id]",
-  "/artists/[id]/page": "/artists/[id]"
+  "/activists/map/page": "/activists/map",
+  "/activists/zine/page": "/activists/zine",
+  "/artists/[id]/page": "/artists/[id]",
+  "/admin/edit/[id]/page": "/admin/edit/[id]"
 }

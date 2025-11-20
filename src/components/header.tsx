@@ -16,29 +16,6 @@ export function Header() {
           </Link>
         </div>
         <nav className="flex items-center gap-4">
-          <Link
-            href="/about"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            About
-          </Link>
-          <Link
-            href="/activists"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Archive
-          </Link>
-          <Link
-            href="/activists/timeline"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Timeline
-          </Link>
-          <Button asChild variant="outline" size="sm">
-            <Link href="https://www.google.com/search?q=Indiana+Art+Activism" target="_blank">
-              Resources
-            </Link>
-          </Button>
         </nav>
       </div>
     </header>

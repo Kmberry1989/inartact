@@ -13,7 +13,7 @@ export const artistsData: Artist[] = [
     bio: "The Eighteen Art Collective is a group of 18 Indianapolis-based Black artists who came together in 2020 to paint the 'Black Lives Matter' mural on Indiana Avenue. They have since formalized as a collective to advocate for equity, civic engagement, and the support of Black creatives in the city.",
     workDescription: "A massive street mural where each of the 18 artists was assigned one letter of the phrase 'Black Lives Matter.' The mural is a vibrant affirmation of Black life and culture, located on a street with deep historical significance to Indianapolis's Black community.",
     searchQuery: "The Eighteen Art Collective Indianapolis",
-    imageUrl: "https://bloximages.chicago2.vip.townnews.com/wthr.com/content/tncms/assets/v3/editorial/a/0a/a0a8c0ca-d6e5-11ea-8734-274117366f4b/5f2a97b371369.image.jpg?resize=1200%2C675", // Source: WTHR
+    imageUrl: "/theeighteenartcollective.jpg", // Source: Local
     latitude: 39.7753,
     longitude: -86.1649
   },
@@ -29,7 +29,7 @@ export const artistsData: Artist[] = [
     bio: "Gary Gee is a multidisciplinary artist from Indianapolis who bridges the gap between street art and fine art. His work often incorporates ceramics, mixed media, and bold graphic styles to explore themes of urban life, hip-hop culture, and social justice.",
     workDescription: "Part of the 'Murals for Racial Justice', this panel depicts a diverse group of protesters demanding justice. The work contrasts the constitutional ideal of 'We the People' with the reality of police brutality and systemic inequality faced by marginalized communities.",
     searchQuery: "Gary Gee We the People mural Indianapolis",
-    imageUrl: "https://www.digitalindy.org/digital/api/singleitem/image/murals/43/default.jpg" // Source: IndyPL Digital Collections
+    imageUrl: "/wethepeople.webp" // Source: Local
   },
   {
     id: "3",
@@ -43,7 +43,7 @@ export const artistsData: Artist[] = [
     bio: "Mechi Shakur (Demetrius Green) is a self-taught visual artist whose work is characterized by raw emotion and intense social commentary. He often uses his art to challenge comfort zones and confront viewers with the harsh realities of racial violence and systemic oppression.",
     workDescription: "A powerful, eight-panel work created on boarded-up windows during the 2020 protests. The provocative title and imagery serve as a direct confrontation of the violence against Black bodies, challenging the viewer to acknowledge the disparity in how lives are valued.",
     searchQuery: "Mechi Shakur Blkkk Lives Don't Matter",
-    imageUrl: "https://indyencyclopedia.org/wp-content/uploads/2021/03/BLKKK-Lives-Dont-Matter.jpg" // Source: Indy Encyclopedia
+    imageUrl: "/blkkklivesdontmatter.jpg" // Source: Local
   },
   {
     id: "4",
@@ -57,7 +57,7 @@ export const artistsData: Artist[] = [
     bio: "Israel Solomon is a visual artist and educator known for his geometric, cubist-inspired style and vibrant use of color. His work frequently focuses on community, family, and the Black experience, often creating portraits that elevate everyday people to icons.",
     workDescription: "This piece explores the split experience of American life, highlighting the stark differences in safety, policing, and opportunity faced by Black Americans versus their white counterparts.",
     searchQuery: "Israel Solomon American Duality",
-    imageUrl: "https://images.squarespace-cdn.com/content/v1/5f4d3634d32572633065688d/1603903384355-83572424825645006577/Israel+Solomon+Mural.jpg" // Source: Israel Solomon Art (Official)
+    imageUrl: "/americanduality.webp" // Source: Local
   },
   {
     id: "5",
@@ -71,7 +71,7 @@ export const artistsData: Artist[] = [
     bio: "Fred Wilson is a world-renowned conceptual artist known for his practice of 'mining the museum,' where he rearranges and recontextualizes objects to reveal hidden histories of racism and exclusion. He represented the U.S. at the Venice Biennale in 2003.",
     workDescription: "This controversial project proposed remixing the Soldiers' and Sailors' Monument by isolating the sole African American figure (a formerly enslaved man) and elevating him on a new pedestal holding a flag of the African diaspora. The project was cancelled due to public controversy.",
     searchQuery: "Fred Wilson E Pluribus Unum Indianapolis",
-    imageUrl: "https://beautifultrouble.org/wp-content/uploads/2021/04/Fred-Wilson-E-Pluribus-Unum.jpg" // Concept rendering
+    imageUrl: "/EPluribusUnum.webp" // Source: Local
   },
   {
     id: "6",
@@ -87,7 +87,7 @@ export const artistsData: Artist[] = [
     bio: "Robert Indiana was a preeminent figure in the Pop Art movement, best known for his iconic 'LOVE' series. Born in Indiana, his work often used bold text and hard-edge painting to critique American politics, identity, and the deceptive nature of the 'American Dream.'",
     workDescription: "Part of his 'Confederacy' series, this work is a blunt critique of Southern racism during the Civil Rights era. It features a map of Mississippi and references the 1964 murders of civil rights workers, condemning the state's violent resistance to justice.",
     searchQuery: "Robert Indiana Confederacy Mississippi painting",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/en/5/53/Robert_Indiana_-_The_Confederacy_Mississippi.jpg" // Fair use/Wiki
+    imageUrl: "/mississippi.jpeg" // Source: Local
   },
   {
     id: "7",
@@ -101,7 +101,7 @@ export const artistsData: Artist[] = [
     bio: "Samuel Levi Jones is an artist who challenges the authority of established history by physically deconstructing institutional materials like encyclopedias and law books. He strips the covers and reassembles them into abstract grids, visually dismantling the systems that have historically excluded marginalized voices.",
     workDescription: "A diptych made from the skins of deconstructed books. The title references the song 'Strange Fruit' and the history of lynching (poplar trees), using the medium itself to critique how history and law have been used to oppress rather than protect.",
     searchQuery: "Samuel Levi Jones Poplar Trees",
-    imageUrl: "https://artmuseum.indiana.edu/images/art/collections/western-art-post-1945/Jones-Samuel-Levi-Poplar-Trees.jpg" // Source: Eskenazi Museum
+    imageUrl: "/Poplar_Trees_2015.webp" // Source: Local
   },
   {
     id: "8",
@@ -134,7 +134,7 @@ export const artistsData: Artist[] = [
     bio: "Andre Portee is a Fort Wayne-based creative and the founder of AbsorbALL. He focuses on using art as a tool for community revitalization, specifically targeting public spaces in underserved neighborhoods to instill pride and ownership.",
     workDescription: "A massive, vibrant mural painted directly onto the basketball courts of McMillen Park. The project revitalized a gray, neglected space into a colorful destination, celebrating Black culture and providing a beautiful, dignified space for youth recreation.",
     searchQuery: "Andre Portee McMillen Park mural",
-    imageUrl: "https://inputfortwayne.com/images/articles/2020_10_29_10_49_29_McMillen_Park_Mural.jpg", // Source: Input Fort Wayne
+    imageUrl: "/mcmillenparkbasketballcourtmural.jpeg", // Source: Local
     latitude: 41.0582,
     longitude: -85.1069
   },
@@ -166,7 +166,7 @@ export const artistsData: Artist[] = [
     bio: "Kacy Jackson, founder of 'The Art of Kacy', is a muralist known for his photorealistic portraits and ability to capture the human spirit. His work is dedicated to storytelling and uplifting community heroes through large-scale public art.",
     workDescription: "This mural honors local figures Irene Paxia, who supports refugees, and William E. Warfield, a historic Black real estate investor. It celebrates the contributions of immigrants and Black leaders to the fabric of Fort Wayne.",
     searchQuery: "Kacy Jackson Faces of the Fort mural",
-    imageUrl: "https://inputfortwayne.com/images/articles/2021_06_16_16_09_26_Faces_of_the_Fort_Kacy_Jackson.jpg" // Source: Input Fort Wayne
+    imageUrl: "/facesofthefortkacyjackson.jfif" // Source: Local
   },
   {
     id: "12",
@@ -180,7 +180,7 @@ export const artistsData: Artist[] = [
     bio: "Benjamin Duke is a painter and professor at Michigan State University. His studio work often involves complex, figurative narratives, which translates into his murals as dynamic, multi-layered compositions that tackle history and social justice.",
     workDescription: "The mural depicts Glynn Hines, a long-time advocate for racial justice, and Genevieve Meyer, a crusader against child marriage in Indiana. It highlights the ongoing fight for legislative and social protection of vulnerable groups.",
     searchQuery: "Benjamin Duke Faces of the Fort mural",
-    imageUrl: "https://www.cityoffortwayne.in.gov/images/stories/Community_Development/Planning/Public_Art/FOTF_NE.jpg" // Source: City of Fort Wayne
+    imageUrl: "/facesofthefortbenjaminduke.jfif" // Source: Local
   },
   {
     id: "13",
@@ -194,7 +194,7 @@ export const artistsData: Artist[] = [
     bio: "Mitchell Egly is a Fort Wayne native and artist who specializes in large-scale public works that engage with local history. He returned to his hometown to contribute to its artistic renaissance, focusing on themes of civic pride and history.",
     workDescription: "A tribute to diverse local leaders who have shaped the community's history. The mural serves as a visual history lesson, ensuring that the contributions of civil rights leaders and community builders are not forgotten.",
     searchQuery: "Mitchell Egly Faces of the Fort mural",
-    imageUrl: "https://www.cityoffortwayne.in.gov/images/stories/Community_Development/Planning/Public_Art/FOTF_SW.jpg" // Source: City of Fort Wayne
+    imageUrl: "/facesofthefortmitchellegly.jfif" // Source: Local
   },
   {
     id: "14",
@@ -210,7 +210,7 @@ export const artistsData: Artist[] = [
     bio: "May Wright Sewall was a legendary suffragist, educator, and peace activist. A close ally of Susan B. Anthony, she believed that access to culture and education was essential for women's liberation, leading her to found the Art Association (now Newfields) and the Propylaeum.",
     workDescription: "While not a visual artwork, her 'work' was the creation of the institutions themselves. She leveraged her influence to create spaces where women could organize, learn, and engage with the arts, laying the cultural foundation of Indianapolis.",
     searchQuery: "May Wright Sewall portrait",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/May_Wright_Sewall.jpg/800px-May_Wright_Sewall.jpg" // Wiki Commons
+    imageUrl: "/maywrightsewall.jpg" // Source: Local
   },
   {
     id: "15",
@@ -254,7 +254,7 @@ export const artistsData: Artist[] = [
     bio: "Shelby Nower is a fine artist and muralist from Decatur, Indiana. She is known for her colorful, illustrative style and character-driven works that often bring historical figures or community narratives to life.",
     workDescription: "A celebratory painting depicting women triumphantly casting their first votes. Nower integrated the names of prominent Indiana suffragists into the clothing of the figures, turning the painting into a historical document of the movement's leaders.",
     searchQuery: "Shelby Nower nINeteenth painting",
-    imageUrl: "https://www.in.gov/arts/files/Shelby-Nower-nINeteenth.jpg" // Source: Indiana Arts Commission
+    imageUrl: "/nINeteenth.webp" // Source: Local
   },
   {
     id: "18",
@@ -268,7 +268,7 @@ export const artistsData: Artist[] = [
     bio: "Bonnie Fillenwarth is an Indiana artist who works in painting and mixed media. She is deeply interested in women's history and uses her art to tell the stories of forgotten or underappreciated female figures.",
     workDescription: "Created as Indiana's contribution to the national 'Her Flag' collaborative project. The stripe illustrates key Hoosier suffragists, visually weaving Indiana's specific history into the larger national tapestry of the 19th Amendment ratification.",
     searchQuery: "Bonnie Fillenwarth Her Flag Indiana",
-    imageUrl: "https://www.herflag.com/wp-content/uploads/2020/03/Indiana-Bonnie-Fillenwarth.jpg" // Source: Her Flag
+    imageUrl: "/herflag.webp" // Source: Local
   },
   {
     id: "19",
@@ -298,7 +298,7 @@ export const artistsData: Artist[] = [
     bio: "Karen Boone is a 'natural pigment painter' who forages for clay, ochre, and charcoal near her home in Southern Indiana. She processes these materials by hand to create zero-waste paints, making her entire artistic process an act of environmental stewardship.",
     workDescription: "Her abstract paintings are literal pieces of the Indiana landscape. By refusing commercial, toxic paints in favor of earth-based materials, her work advocates for a sustainable relationship with the land.",
     searchQuery: "Karen Boone natural pigment artist",
-    imageUrl: "https://images.squarespace-cdn.com/content/v1/5e54206e6e01605a0857c162/1612301985859-13B6T7T0J8F6X8L6T4H1/Karen-Boone-Artist-Natural-Pigments.jpg" // Source: Karen Boone Studio
+    imageUrl: "/karenboonenaturalpigment.webp" // Source: Local
   },
   {
     id: "21",
