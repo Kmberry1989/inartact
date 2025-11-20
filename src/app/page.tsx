@@ -24,7 +24,7 @@ export default function Home() {
               <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
                 Explore the Inventory
               </Button>
-              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/10">
+              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/10 bg-transparent">
                 About the Project
               </Button>
             </div>
@@ -43,7 +43,7 @@ export default function Home() {
               </div>
               {/* Search/Filter functionality would go here */}
             </div>
-            
+
             <ArtistGallery artists={artistsData} />
           </div>
         </section>
