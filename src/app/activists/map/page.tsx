@@ -1,28 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { artistsData } from '@/lib/artists-data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
 
-// Dynamically import MapContainer and TileLayer to avoid SSR issues with Leaflet
-const MapContainer = dynamic(
-    () => import('react-leaflet').then((mod) => mod.MapContainer),
-    { ssr: false }
-);
-const TileLayer = dynamic(
-    () => import('react-leaflet').then((mod) => mod.TileLayer),
-    { ssr: false }
-);
-const Marker = dynamic(
-    () => import('react-leaflet').then((mod) => mod.Marker),
-    { ssr: false }
-);
-const Popup = dynamic(
-    () => import('react-leaflet').then((mod) => mod.Popup),
-    { ssr: false }
-);
+// Dynamically import the Map component to avoid SSR issues
+const LeafletMap = dynamic(() => import('@/components/LeafletMap'), {
+    ssr: false,
+    loading: () => <div className="h-full w-full flex items-center justify-center bg-muted">Loading map...</div>
+});
 
 export default function MapPage() {
     const [isMounted, setIsMounted] = useState(false);
@@ -37,7 +24,7 @@ export default function MapPage() {
     );
 
     if (!isMounted) {
-        return <div className="p-8">Loading map...</div>;
+        return null;
     }
 
     return (
@@ -49,39 +36,7 @@ export default function MapPage() {
 
             <Card className="overflow-hidden border-2">
                 <CardContent className="p-0 h-[600px]">
-                    <MapContainer
-                        center={[39.7684, -86.1581]} // Indianapolis center
-                        zoom={7}
-                        style={{ height: '100%', width: '100%' }}
-                        className="z-0"
-                    >
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        {mapArtists.map((artist) => (
-                            <Marker
-                                key={artist.id}
-                                position={[artist.latitude!, artist.longitude!]}
-                            >
-                                <Popup>
-                                    <div className="min-w-[200px]">
-                                        <h3 className="font-bold text-lg">{artist.name}</h3>
-                                        <p className="text-sm font-medium mb-1">{artist.title}</p>
-                                        <p className="text-xs text-muted-foreground mb-2">
-                                            {artist.location}
-                                        </p>
-                                        <Link
-                                            href={`/artists/${artist.id}`}
-                                            className="text-primary hover:underline text-sm"
-                                        >
-                                            View Profile
-                                        </Link>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        ))}
-                    </MapContainer>
+                    <LeafletMap artists={mapArtists} />
                 </CardContent>
             </Card>
         </div>
