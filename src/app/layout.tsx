@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import { Inter } from "next/font/google"; // Add a nice font
+import "./globals.css"; // <--- THIS IS THE KEY IMPORT
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Indiana Art Activist Inventory",
@@ -12,8 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased bg-background text-foreground">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          inter.variable
+        )}
+      >
         {children}
       </body>
     </html>
