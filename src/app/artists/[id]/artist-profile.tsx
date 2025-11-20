@@ -26,8 +26,8 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
         <div className="space-y-8">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-md">
             <Image
-              src={artist.imageUrl || "/placeholder.svg?height=800&width=600"}
-              alt={`Artwork by ${artist.name}`}
+              src={artist.artwork.imageUrl || "/placeholder.svg?height=800&width=600"}
+              alt={`Artwork by ${artist.artist.name}`}
               fill
               className="object-cover hover:scale-105 transition-transform duration-500"
               priority
@@ -42,24 +42,24 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
             <dl className="grid gap-4 text-sm">
               <div className="grid grid-cols-3 gap-1 items-baseline">
                 <dt className="font-medium text-muted-foreground">Title</dt>
-                <dd className="col-span-2 font-semibold">{artist.title}</dd>
+                <dd className="col-span-2 font-semibold">{artist.artwork.title}</dd>
               </div>
               <Separator />
               <div className="grid grid-cols-3 gap-1 items-baseline">
                 <dt className="font-medium text-muted-foreground">Medium</dt>
-                <dd className="col-span-2">{artist.medium}</dd>
+                <dd className="col-span-2">{artist.artwork.medium}</dd>
               </div>
               <Separator />
               <div className="grid grid-cols-3 gap-1 items-baseline">
                 <dt className="font-medium text-muted-foreground">Date</dt>
-                <dd className="col-span-2">{artist.date}</dd>
+                <dd className="col-span-2">{artist.artwork.date}</dd>
               </div>
               <Separator />
               <div className="grid grid-cols-3 gap-1 items-baseline">
                 <dt className="font-medium text-muted-foreground">Location</dt>
                 <dd className="col-span-2 flex items-start">
                   <MapPin className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-muted-foreground shrink-0" />
-                  {artist.location}
+                  {artist.artwork.location}
                 </dd>
               </div>
             </dl>
@@ -71,16 +71,16 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           <div className="mb-8">
             <div className="flex flex-wrap gap-3 mb-4">
               <Badge className="bg-primary text-primary-foreground px-3 py-1 text-sm">
-                {artist.cause}
+                {artist.artwork.cause}
               </Badge>
-              {!artist.isAlive && (
+              {!artist.artist.isAlive && (
                 <Badge variant="secondary" className="text-sm">Historical Figure</Badge>
               )}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">{artist.name}</h1>
-            {artist.born && artist.died && (
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">{artist.artist.name}</h1>
+            {artist.artist.born && artist.artist.died && (
               <p className="text-lg text-muted-foreground">
-                ({artist.born} – {artist.died})
+                ({artist.artist.born} – {artist.artist.died})
               </p>
             )}
           </div>
@@ -88,30 +88,30 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           <div className="prose prose-slate dark:prose-invert max-w-none mb-8">
             <h3 className="text-xl font-semibold mb-3">About the Artist</h3>
             <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-              {artist.bio}
+              {artist.artist.bio}
             </p>
 
             <h3 className="text-xl font-semibold mb-3">The Work</h3>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              {artist.workDescription}
+              {artist.artwork.description}
             </p>
 
             {/* Media Section */}
-            {(artist.mixcloudEmbed || artist.vimeoUrl) && (
+            {(artist.artwork.mixcloudEmbed || artist.artwork.vimeoUrl) && (
               <div className="mt-8 space-y-6">
                 <h3 className="text-xl font-semibold mb-3">Media</h3>
 
-                {artist.mixcloudEmbed && (
+                {artist.artwork.mixcloudEmbed && (
                   <div
                     className="w-full overflow-hidden rounded-lg shadow-sm"
-                    dangerouslySetInnerHTML={{ __html: artist.mixcloudEmbed }}
+                    dangerouslySetInnerHTML={{ __html: artist.artwork.mixcloudEmbed }}
                   />
                 )}
 
-                {artist.vimeoUrl && (
+                {artist.artwork.vimeoUrl && (
                   <div className="aspect-video w-full overflow-hidden rounded-lg shadow-sm">
                     <iframe
-                      src={`https://player.vimeo.com/video/${artist.vimeoUrl.split('/').pop()?.split('?')[0]}`}
+                      src={`https://player.vimeo.com/video/${artist.artwork.vimeoUrl.split('/').pop()?.split('?')[0]}`}
                       className="w-full h-full"
                       allow="autoplay; fullscreen; picture-in-picture"
                       allowFullScreen
@@ -125,7 +125,7 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           <div className="flex flex-wrap gap-4 mt-auto pt-8 border-t">
             <Button asChild size="lg" className="w-full sm:w-auto shadow-sm">
               <a
-                href={`https://www.google.com/search?q=${encodeURIComponent(artist.searchQuery)}`}
+                href={`https://www.google.com/search?q=${encodeURIComponent(artist.artwork.searchQuery || artist.artist.name)}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -133,9 +133,9 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
                 Research this Artist
               </a>
             </Button>
-            {artist.link && (
+            {artist.artist.website && (
               <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-                <a href={artist.link} target="_blank" rel="noopener noreferrer">
+                <a href={artist.artist.website} target="_blank" rel="noopener noreferrer">
                   Visit Official Website
                 </a>
               </Button>

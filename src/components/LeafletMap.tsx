@@ -38,14 +38,14 @@ export default function LeafletMap({ artists }: { artists: Artist[] }) {
             {artists.map((artist) => (
                 <Marker
                     key={artist.id}
-                    position={[artist.latitude!, artist.longitude!] as [number, number]}
+                    position={[artist.artwork.latitude!, artist.artwork.longitude!] as [number, number]}
                 >
                     <Popup>
                         <div className="min-w-[200px]">
-                            <h3 className="font-bold text-lg">{artist.name}</h3>
-                            <p className="text-sm font-medium mb-1">{artist.title}</p>
+                            <h3 className="font-bold text-lg">{artist.artist.name}</h3>
+                            <p className="text-sm font-medium mb-1">{artist.artwork.title}</p>
                             <p className="text-xs text-muted-foreground mb-2">
-                                {artist.location}
+                                {artist.artwork.location}
                             </p>
                             <Link
                                 href={`/artists/${artist.id}`}

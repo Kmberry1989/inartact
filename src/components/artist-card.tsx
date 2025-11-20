@@ -15,22 +15,22 @@ export function ArtistCard({ artist }: ArtistCardProps) {
     <Card className="group h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl border-muted/60">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         <Image
-          src={artist.imageUrl || "/placeholder.svg?height=400&width=600"}
-          alt={`Work by ${artist.name}`}
+          src={artist.artwork.imageUrl || "/placeholder.svg?height=400&width=600"}
+          alt={`Work by ${artist.artist.name}`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        
-        {!artist.isAlive && (
+
+        {!artist.artist.isAlive && (
           <Badge variant="secondary" className="absolute top-3 right-3 shadow-sm backdrop-blur-md bg-white/90 dark:bg-black/80">
             Historical
           </Badge>
         )}
-        
+
         <div className="absolute bottom-3 left-3 right-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <p className="text-xs font-medium text-white/90 line-clamp-1">
-            {artist.title}
+            {artist.artwork.title}
           </p>
         </div>
       </div>
@@ -38,9 +38,9 @@ export function ArtistCard({ artist }: ArtistCardProps) {
       <CardHeader className="p-5 pb-2">
         <div className="space-y-1">
           <h3 className="font-bold text-lg leading-tight tracking-tight line-clamp-1 group-hover:text-primary transition-colors">
-            {artist.name}
+            {artist.artist.name}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-1">{artist.title}</p>
+          <p className="text-sm text-muted-foreground line-clamp-1">{artist.artwork.title}</p>
         </div>
       </CardHeader>
 
@@ -48,17 +48,17 @@ export function ArtistCard({ artist }: ArtistCardProps) {
         <div className="flex flex-col gap-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Palette className="h-4 w-4 text-primary/70" />
-            <span className="truncate">{artist.medium}</span>
+            <span className="truncate">{artist.artwork.medium}</span>
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary/70" />
-            <span className="truncate">{artist.location}</span>
+            <span className="truncate">{artist.artwork.location}</span>
           </div>
         </div>
-        
+
         <div className="pt-2">
           <Badge variant="outline" className="font-normal text-xs bg-primary/5 border-primary/20 text-primary hover:bg-primary/10">
-            {artist.cause}
+            {artist.artwork.cause}
           </Badge>
         </div>
       </CardContent>

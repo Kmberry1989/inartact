@@ -1,13 +1,13 @@
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
-import { artistsData } from '@/lib/artists-data'
+import { artists } from '@/lib/artists-data'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export default function TimelinePage() {
     // Sort artists by date (simple string comparison for now, can be improved with real dates)
-    const sortedArtists = [...artistsData].sort((a, b) => a.date.localeCompare(b.date));
+    const sortedArtists = [...artists].sort((a, b) => (a.artwork.date || '').localeCompare(b.artwork.date || ''));
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
@@ -26,24 +26,24 @@ export default function TimelinePage() {
 
                             <div className="flex flex-col md:flex-row gap-6">
                                 <div className="md:w-32 shrink-0 pt-1">
-                                    <span className="font-bold text-xl text-primary">{artist.date}</span>
+                                    <span className="font-bold text-xl text-primary">{artist.artwork.date}</span>
                                 </div>
 
                                 <Card className="flex-1">
                                     <CardHeader>
                                         <div className="flex flex-wrap gap-2 mb-2">
-                                            <Badge variant="secondary">{artist.cause}</Badge>
-                                            <Badge variant="outline">{artist.location}</Badge>
+                                            <Badge variant="secondary">{artist.artwork.cause}</Badge>
+                                            <Badge variant="outline">{artist.artwork.location}</Badge>
                                         </div>
                                         <CardTitle className="text-2xl">
                                             <Link href={`/artists/${artist.id}`} className="hover:underline">
-                                                {artist.title}
+                                                {artist.artwork.title}
                                             </Link>
                                         </CardTitle>
-                                        <p className="text-muted-foreground font-medium">{artist.name}</p>
+                                        <p className="text-muted-foreground font-medium">{artist.artist.name}</p>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="mb-4 text-sm md:text-base">{artist.workDescription}</p>
+                                        <p className="mb-4 text-sm md:text-base">{artist.artwork.description}</p>
                                         <Link
                                             href={`/artists/${artist.id}`}
                                             className="text-sm font-medium text-primary hover:underline"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { artistsData } from '@/lib/artists-data';
+import { artists } from '@/lib/artists-data';
 import { Card, CardContent } from '@/components/ui/card';
 
 // Dynamically import the Map component to avoid SSR issues
@@ -19,8 +19,8 @@ export default function MapPage() {
     }, []);
 
     // Filter artists who have coordinates
-    const mapArtists = artistsData.filter(
-        (artist) => artist.latitude && artist.longitude
+    const mapArtists = artists.filter(
+        (artist) => artist.artwork.latitude && artist.artwork.longitude
     );
 
     if (!isMounted) {

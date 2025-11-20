@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { artistsData } from '@/lib/artists-data'
+import { artists } from '@/lib/artists-data'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,7 +8,7 @@ import { Header } from '@/components/header'
 
 // Generate static pages for all artists at build time
 export async function generateStaticParams() {
-  return artistsData.map((artist) => ({
+  return artists.map((artist) => ({
     id: artist.id,
   }))
 }
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export default async function EditArtistPage({ params }: { params: Promise<{ id: string }> }) {
   // Await the params promise (Next.js 15 requirement)
   const { id } = await params
-  const artist = artistsData.find((a) => a.id === id)
+  const artist = artists.find((a) => a.id === id)
 
   if (!artist) {
     notFound()
@@ -30,31 +30,31 @@ export default async function EditArtistPage({ params }: { params: Promise<{ id:
           <h1 className="text-3xl font-bold">Edit Artist</h1>
           <span className="text-sm text-muted-foreground">ID: {artist.id}</span>
         </div>
-        
+
         <form className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="name">Artist Name</Label>
-            <Input id="name" name="name" defaultValue={artist.name} />
+            <Input id="name" name="name" defaultValue={artist.artist.name} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="title">Title of Work</Label>
-            <Input id="title" name="title" defaultValue={artist.title} />
+            <Input id="title" name="title" defaultValue={artist.artwork.title} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="medium">Medium</Label>
-            <Input id="medium" name="medium" defaultValue={artist.medium} />
+            <Input id="medium" name="medium" defaultValue={artist.artwork.medium} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="location">Location</Label>
-            <Input id="location" name="location" defaultValue={artist.location} />
+            <Input id="location" name="location" defaultValue={artist.artwork.location} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="bio">Biography</Label>
-            <Textarea id="bio" name="bio" defaultValue={artist.bio} rows={5} />
+            <Textarea id="bio" name="bio" defaultValue={artist.artist.bio} rows={5} />
           </div>
 
           <div className="flex gap-4 pt-4">

@@ -1,12 +1,12 @@
 {
   "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
   "/_not-found/page": "/_not-found",
-  "/activists/map/page": "/activists/map",
   "/about/page": "/about",
+  "/activists/map/page": "/activists/map",
   "/activists/analytics/page": "/activists/analytics",
   "/activists/timeline/page": "/activists/timeline",
   "/activists/zine/page": "/activists/zine",
   "/page": "/",
-  "/admin/edit/[id]/page": "/admin/edit/[id]",
-  "/artists/[id]/page": "/artists/[id]"
+  "/artists/[id]/page": "/artists/[id]",
+  "/admin/edit/[id]/page": "/admin/edit/[id]"
 }

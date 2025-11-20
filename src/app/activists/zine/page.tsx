@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { artistsData } from '@/lib/artists-data';
+import { artists } from '@/lib/artists-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -19,13 +19,13 @@ export default function ZinePage() {
     const [selectedArtists, setSelectedArtists] = useState<string[]>([]);
 
     // Get unique causes
-    const causes = Array.from(new Set(artistsData.map((a) => a.cause)));
+    const causes = Array.from(new Set(artists.map((a) => a.artwork.cause).filter(Boolean)));
 
     // Filter artists by cause
     const filteredArtists =
         selectedCause === 'all'
-            ? artistsData
-            : artistsData.filter((a) => a.cause === selectedCause);
+            ? artists
+            : artists.filter((a) => a.artwork.cause === selectedCause);
 
     const toggleArtist = (id: string) => {
         setSelectedArtists((prev) =>
@@ -60,7 +60,7 @@ export default function ZinePage() {
                             <SelectContent>
                                 <SelectItem value="all">All Causes</SelectItem>
                                 {causes.map((cause) => (
-                                    <SelectItem key={cause} value={cause}>
+                                    <SelectItem key={cause} value={cause!}>
                                         {cause}
                                     </SelectItem>
                                 ))}
@@ -89,10 +89,10 @@ export default function ZinePage() {
                                     htmlFor={`artist-${artist.id}`}
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                                 >
-                                    {artist.name}
+                                    {artist.artist.name}
                                 </label>
-                                <p className="text-xs text-muted-foreground">{artist.title}</p>
-                                <p className="text-xs text-muted-foreground">{artist.cause}</p>
+                                <p className="text-xs text-muted-foreground">{artist.artwork.title}</p>
+                                <p className="text-xs text-muted-foreground">{artist.artwork.cause}</p>
                             </div>
                         </div>
                     ))}
@@ -112,21 +112,21 @@ export default function ZinePage() {
                     </div>
 
                     {/* Artist Pages */}
-                    {artistsData
+                    {artists
                         .filter((a) => selectedArtists.includes(a.id))
                         .map((artist) => (
                             <div
                                 key={artist.id}
                                 className="h-[50vh] flex flex-col p-8 border-b-2 border-dashed break-inside-avoid"
                             >
-                                <h2 className="text-2xl font-bold mb-2">{artist.name}</h2>
-                                <p className="font-medium mb-4">{artist.title}</p>
-                                <p className="text-sm mb-4 flex-grow">{artist.bio}</p>
+                                <h2 className="text-2xl font-bold mb-2">{artist.artist.name}</h2>
+                                <p className="font-medium mb-4">{artist.artwork.title}</p>
+                                <p className="text-sm mb-4 flex-grow">{artist.artist.bio}</p>
                                 <div className="mt-auto">
                                     <p className="text-xs font-bold uppercase tracking-wider mb-1">
                                         Cause
                                     </p>
-                                    <p className="text-sm">{artist.cause}</p>
+                                    <p className="text-sm">{artist.artwork.cause}</p>
                                 </div>
                             </div>
                         ))}

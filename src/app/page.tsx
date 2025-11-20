@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArtistGallery } from '@/components/artist-gallery'
-import { artistsData } from '@/lib/artists-data'
+import { artists } from '@/lib/artists-data'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
@@ -38,13 +38,13 @@ export default function Home() {
               <div>
                 <h2 className="text-3xl font-bold tracking-tight mb-2">The Inventory</h2>
                 <p className="text-muted-foreground">
-                  Exploring {artistsData.length} works of art and activism.
+                  Exploring {artists.length} works of art and activism.
                 </p>
               </div>
               {/* Search/Filter functionality would go here */}
             </div>
 
-            <ArtistGallery artists={artistsData} />
+            <ArtistGallery artists={artists} />
           </div>
         </section>
       </main>

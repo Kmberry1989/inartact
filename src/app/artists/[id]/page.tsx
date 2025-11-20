@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation'
-import { artistsData } from '@/lib/artists-data'
+import { artists } from '@/lib/artists-data'
 import { ArtistProfile } from './artist-profile'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
 // Generate static params for all known artists at build time
 export async function generateStaticParams() {
-  return artistsData.map((artist) => ({
+  return artists.map((artist) => ({
     id: artist.id,
   }))
 }
@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   // Await the params promise
   const { id } = await params
-  const artist = artistsData.find((a) => a.id === id)
+  const artist = artists.find((a) => a.id === id)
 
   if (!artist) {
     notFound()
