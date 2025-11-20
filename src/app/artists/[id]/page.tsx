@@ -1,0 +1,30 @@
+import { notFound } from 'next/navigation'
+import { artistsData } from '@/lib/artists-data'
+import { ArtistProfile } from './artist-profile'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
+
+// Generate static params for all known artists at build time
+export async function generateStaticParams() {
+  return artistsData.map((artist) => ({
+    id: artist.id,
+  }))
+}
+
+export default function Page({ params }: { params: { id: string } }) {
+  const artist = artistsData.find((a) => a.id === params.id)
+
+  if (!artist) {
+    notFound()
+  }
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <ArtistProfile artist={artist} />
+      </main>
+      <Footer />
+    </div>
+  )
+}
