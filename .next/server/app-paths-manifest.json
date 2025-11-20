@@ -1,5 +1,7 @@
 {
+  "/api/admin/artists/[id]/route": "app/api/admin/artists/[id]/route.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/artists/[id]/page": "app/artists/[id]/page.js"
+  "/artists/[id]/page": "app/artists/[id]/page.js",
+  "/admin/edit/[id]/page": "app/admin/edit/[id]/page.js"
 }
