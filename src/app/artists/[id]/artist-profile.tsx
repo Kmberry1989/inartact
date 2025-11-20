@@ -1,33 +1,36 @@
+'use client';
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { ArrowLeft, ExternalLink, MapPin, Info } from 'lucide-react'
+import { ArrowLeft, ExternalLink, MapPin, Info, Globe, Newspaper } from 'lucide-react'
 import { Artist } from '@/lib/types'
+import { LikeButton } from '@/components/LikeButton'
+import { FavoriteButton } from '@/components/FavoriteButton'
+import { ShareButton } from '@/components/ShareButton'
 
 interface ArtistProfileProps {
   artist: Artist
 }
 
 export function ArtistProfile({ artist }: ArtistProfileProps) {
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <Link
-        href="/"
-        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors"
-      >
+      <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Inventory
       </Link>
 
       <div className="grid gap-12 md:grid-cols-2">
-        {/* Image Column */}
         <div className="space-y-8">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-md">
             <Image
               src={artist.artwork.imageUrl || "/placeholder.svg?height=800&width=600"}
-              alt={`Artwork by ${artist.artist.name}`}
+              alt={artist.artwork.alt || `Artwork by ${artist.artist.name}`}
               fill
               className="object-cover hover:scale-105 transition-transform duration-500"
               priority
@@ -44,70 +47,140 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
                 <dt className="font-medium text-muted-foreground">Title</dt>
                 <dd className="col-span-2 font-semibold">{artist.artwork.title}</dd>
               </div>
-              <Separator />
-              <div className="grid grid-cols-3 gap-1 items-baseline">
-                <dt className="font-medium text-muted-foreground">Medium</dt>
-                <dd className="col-span-2">{artist.artwork.medium}</dd>
-              </div>
-              <Separator />
-              <div className="grid grid-cols-3 gap-1 items-baseline">
-                <dt className="font-medium text-muted-foreground">Date</dt>
-                <dd className="col-span-2">{artist.artwork.date}</dd>
-              </div>
-              <Separator />
-              <div className="grid grid-cols-3 gap-1 items-baseline">
-                <dt className="font-medium text-muted-foreground">Location</dt>
-                <dd className="col-span-2 flex items-start">
-                  <MapPin className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-muted-foreground shrink-0" />
-                  {artist.artwork.location}
-                </dd>
-              </div>
+              {artist.artwork.medium && (
+                <>
+                  <Separator />
+                  <div className="grid grid-cols-3 gap-1 items-baseline">
+                    <dt className="font-medium text-muted-foreground">Medium</dt>
+                    <dd className="col-span-2">{artist.artwork.medium}</dd>
+                  </div>
+                </>
+              )}
+              {artist.artwork.date && (
+                <>
+                  <Separator />
+                  <div className="grid grid-cols-3 gap-1 items-baseline">
+                    <dt className="font-medium text-muted-foreground">Date</dt>
+                    <dd className="col-span-2">{artist.artwork.date}</dd>
+                  </div>
+                </>
+              )}
+              {artist.artwork.location && (
+                <>
+                  <Separator />
+                  <div className="grid grid-cols-3 gap-1 items-baseline">
+                    <dt className="font-medium text-muted-foreground">Location</dt>
+                    <dd className="col-span-2 flex items-start">
+                      <MapPin className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-muted-foreground shrink-0" />
+                      {artist.artwork.location}
+                    </dd>
+                  </div>
+                </>
+              )}
             </dl>
+
+            {(artist.artwork.categories?.length || artist.artwork.tags?.length) && (
+              <>
+                <Separator className="my-4" />
+                <div className="space-y-3">
+                  {artist.artwork.categories && artist.artwork.categories.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Categories</p>
+                      <div className="flex flex-wrap gap-2">
+                        {artist.artwork.categories.map((category) => (
+                          <Badge key={category} variant="secondary" className="text-xs">{category}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {artist.artwork.tags && artist.artwork.tags.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Tags</p>
+                      <div className="flex flex-wrap gap-2">
+                        {artist.artwork.tags.map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Info Column */}
         <div className="flex flex-col justify-center">
           <div className="mb-8">
             <div className="flex flex-wrap gap-3 mb-4">
-              <Badge className="bg-primary text-primary-foreground px-3 py-1 text-sm">
-                {artist.artwork.cause}
-              </Badge>
+              {artist.artwork.cause && (
+                <Badge className="bg-primary text-primary-foreground px-3 py-1 text-sm">{artist.artwork.cause}</Badge>
+              )}
               {!artist.artist.isAlive && (
                 <Badge variant="secondary" className="text-sm">Historical Figure</Badge>
               )}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">{artist.artist.name}</h1>
             {artist.artist.born && artist.artist.died && (
-              <p className="text-lg text-muted-foreground">
-                ({artist.artist.born} – {artist.artist.died})
-              </p>
+              <p className="text-lg text-muted-foreground">({artist.artist.born} – {artist.artist.died})</p>
             )}
           </div>
 
           <div className="prose prose-slate dark:prose-invert max-w-none mb-8">
-            <h3 className="text-xl font-semibold mb-3">About the Artist</h3>
-            <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-              {artist.artist.bio}
-            </p>
+            {artist.artist.bio && (
+              <>
+                <h3 className="text-xl font-semibold mb-3">About the Artist</h3>
+                <p className="text-lg leading-relaxed text-muted-foreground mb-6">{artist.artist.bio}</p>
+              </>
+            )}
 
-            <h3 className="text-xl font-semibold mb-3">The Work</h3>
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              {artist.artwork.description}
-            </p>
+            {artist.artwork.description && (
+              <>
+                <h3 className="text-xl font-semibold mb-3">The Work</h3>
+                <p className="text-lg leading-relaxed text-muted-foreground">{artist.artwork.description}</p>
+              </>
+            )}
 
-            {/* Media Section */}
+            {artist.artist.social_media && artist.artist.social_media.length > 0 && (
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold mb-2 uppercase tracking-wider">Follow</h4>
+                <div className="flex flex-wrap gap-2">
+                  {artist.artist.social_media.map((link, index) => (
+                    <Button key={index} variant="outline" size="sm" asChild>
+                      <a href={link} target="_blank" rel="noopener noreferrer">
+                        <Globe className="mr-2 h-3 w-3" />
+                        Social {index + 1}
+                      </a>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {artist.artwork.news_media_coverage && artist.artwork.news_media_coverage.length > 0 && (
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold mb-2 uppercase tracking-wider flex items-center">
+                  <Newspaper className="mr-2 h-4 w-4" />
+                  News & Media Coverage
+                </h4>
+                <ul className="space-y-2">
+                  {artist.artwork.news_media_coverage.map((link, index) => (
+                    <li key={index}>
+                      <a href={link} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline flex items-center">
+                        <ExternalLink className="mr-2 h-3 w-3" />
+                        {new URL(link).hostname}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {(artist.artwork.mixcloudEmbed || artist.artwork.vimeoUrl) && (
               <div className="mt-8 space-y-6">
                 <h3 className="text-xl font-semibold mb-3">Media</h3>
-
                 {artist.artwork.mixcloudEmbed && (
-                  <div
-                    className="w-full overflow-hidden rounded-lg shadow-sm"
-                    dangerouslySetInnerHTML={{ __html: artist.artwork.mixcloudEmbed }}
-                  />
+                  <div className="w-full overflow-hidden rounded-lg shadow-sm" dangerouslySetInnerHTML={{ __html: artist.artwork.mixcloudEmbed }} />
                 )}
-
                 {artist.artwork.vimeoUrl && (
                   <div className="aspect-video w-full overflow-hidden rounded-lg shadow-sm">
                     <iframe
@@ -123,20 +196,33 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           </div>
 
           <div className="flex flex-wrap gap-4 mt-auto pt-8 border-t">
-            <Button asChild size="lg" className="w-full sm:w-auto shadow-sm">
-              <a
-                href={`https://www.google.com/search?q=${encodeURIComponent(artist.artwork.searchQuery || artist.artist.name)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Research this Artist
-              </a>
-            </Button>
+            <LikeButton artistId={artist.id} />
+            <FavoriteButton artistId={artist.id} />
+            <ShareButton url={currentUrl} title={`${artist.artist.name} - ${artist.artwork.title}`} description={artist.artwork.description} />
+
+            {artist.artwork.searchQuery && (
+              <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto shadow-sm">
+                <a href={`https://www.google.com/search?q=${encodeURIComponent(artist.artwork.searchQuery)}`} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Research
+                </a>
+              </Button>
+            )}
+
             {artist.artist.website && (
               <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
                 <a href={artist.artist.website} target="_blank" rel="noopener noreferrer">
-                  Visit Official Website
+                  <Globe className="mr-2 h-4 w-4" />
+                  Official Website
+                </a>
+              </Button>
+            )}
+
+            {artist.artwork.portfolio_url && (
+              <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
+                <a href={artist.artwork.portfolio_url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  View Portfolio
                 </a>
               </Button>
             )}

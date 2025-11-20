@@ -1,9 +1,10 @@
 {
-  "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
   "/_not-found/page": "/_not-found",
+  "/api/admin/artists/[id]/route": "/api/admin/artists/[id]",
+  "/api/likes/[id]/route": "/api/likes/[id]",
   "/about/page": "/about",
-  "/activists/map/page": "/activists/map",
   "/activists/analytics/page": "/activists/analytics",
+  "/activists/map/page": "/activists/map",
   "/activists/timeline/page": "/activists/timeline",
   "/activists/zine/page": "/activists/zine",
   "/page": "/",

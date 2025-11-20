@@ -36,6 +36,14 @@
       "namedRegex": "^/api/admin/artists/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/likes/[id]",
+      "regex": "^/api/likes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/likes/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/artists/[id]",
       "regex": "^/artists/([^/]+?)(?:/)?$",
       "routeKeys": {
