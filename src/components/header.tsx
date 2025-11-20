@@ -16,6 +16,42 @@ export function Header() {
           </Link>
         </div>
         <nav className="flex items-center gap-4">
+          <Link
+            href="/about"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            About
+          </Link>
+          <Link
+            href="/"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            Archive
+          </Link>
+          <Link
+            href="/activists/map"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            Map
+          </Link>
+          <Link
+            href="/activists/timeline"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            Timeline
+          </Link>
+          <Link
+            href="/activists/zine"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            Zine Generator
+          </Link>
+          <Link
+            href="/activists/analytics"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            QR Stats
+          </Link>
         </nav>
       </div>
     </header>
