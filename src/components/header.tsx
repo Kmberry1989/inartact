@@ -1,4 +1,3 @@
-// src/components/header.tsx
 'use client';
 
 import * as React from 'react';
@@ -7,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -14,21 +14,18 @@ export function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Navigation items configuration
   const navItems = [
     { name: 'Archive', href: '/' },
     { name: 'Map', href: '/activists/map' },
     { name: 'Timeline', href: '/activists/timeline' },
-    { name: 'Zine', href: '/activists/zine' }, // Renamed from "Zine Generator"
+    { name: 'Zine', href: '/activists/zine' },
     { name: 'About', href: '/about' },
-    // "QR Stats" removed as requested
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 transition-colors duration-300">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         
-        {/* Logo / Brand */}
         <div className="flex items-center gap-2">
           <Link 
             href="/" 
@@ -60,10 +57,15 @@ export function Header() {
               {item.name}
             </Link>
           ))}
+          {/* Theme Gear */}
+          <div className="ml-2 pl-2 border-l border-border/50">
+             <ThemeSwitcher />
+          </div>
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
+        {/* Mobile Controls */}
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeSwitcher />
           <Button 
             variant="ghost" 
             size="icon" 
@@ -80,8 +82,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation Dropdown */}
-      {/* Note: We use simple conditional rendering here. For more complex animations, standard CSS or framer-motion can be added. */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full border-b border-border/40 bg-background/95 backdrop-blur-xl p-4 shadow-2xl animate-in slide-in-from-top-5 fade-in-20">
           <nav className="flex flex-col space-y-2">
