@@ -1,4 +1,3 @@
-// src/app/page.tsx
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
@@ -67,7 +66,6 @@ export default function Home() {
         case 'name_desc':
           return b.artist.name.localeCompare(a.artist.name);
         case 'newest':
-          // Assuming higher ID means newer or using array index order (reversed)
           return Number(b.id) - Number(a.id); 
         case 'oldest':
            return Number(a.id) - Number(b.id);
@@ -79,12 +77,10 @@ export default function Home() {
     return result;
   }, [searchQuery, selectedCause, sortOption]);
 
-  // Reset visible count when filters change
   useEffect(() => {
     setVisibleCount(12);
   }, [searchQuery, selectedCause, sortOption]);
 
-  // Restore scroll position logic
   useEffect(() => {
     const savedScrollPos = sessionStorage.getItem('directoryScrollPos');
     if (savedScrollPos) {
@@ -98,23 +94,23 @@ export default function Home() {
   const visibleArtists = filteredAndSortedArtists.slice(0, visibleCount);
   const hasMore = visibleCount < filteredAndSortedArtists.length;
 
-  if (!isClient) return null; // Prevent hydration mismatch
+  if (!isClient) return null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
+    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors duration-300">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-slate-900 text-white">
-          {/* Abstract background pattern could go here */}
+        <section className="relative py-20 md:py-32 overflow-hidden bg-slate-900 text-white transition-colors duration-300">
           <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-20" />
           <div className="container relative z-10 mx-auto px-4 text-center">
-            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-blue-500/20 text-blue-100 border-blue-400/30 backdrop-blur-sm hover:bg-blue-500/30">
+            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary/20 text-primary-foreground border-primary/30 backdrop-blur-sm">
               {artists.length} Stories of Change
             </Badge>
             <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-6 text-white leading-[1.1]">
               Art as Activism <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+              {/* UPDATED GRADIENT: from-primary (Blue) to-secondary (Gold) */}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary animate-gradient-x pb-2">
                 in Indiana
               </span>
             </h1>
@@ -122,17 +118,15 @@ export default function Home() {
               Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
             </p>
             
-            {/* Quick Search in Hero */}
             <div className="max-w-md mx-auto relative">
                <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                   <Input 
-                    className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus-visible:ring-blue-400"
+                    className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus-visible:ring-primary"
                     placeholder="Search artists, topics, or cities..."
                     value={searchQuery}
                     onChange={(e) => {
                       setSearchQuery(e.target.value);
-                      // Auto scroll to directory if typing in hero
                       if (window.scrollY < 400) {
                          document.getElementById('directory-section')?.scrollIntoView({ behavior: 'smooth' });
                       }
@@ -154,7 +148,6 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
                   <h2 className="text-2xl font-bold tracking-tight mr-4 hidden md:block">Directory</h2>
                   
-                  {/* Mobile Search (visible if not in hero) */}
                   <div className="relative w-full md:w-64 md:hidden">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input 
@@ -166,7 +159,6 @@ export default function Home() {
                   </div>
 
                   <div className="flex gap-2 w-full md:w-auto">
-                    {/* Cause Filter */}
                     <Select value={selectedCause} onValueChange={setSelectedCause}>
                       <SelectTrigger className="w-full md:w-[200px] bg-white dark:bg-slate-900">
                         <SlidersHorizontal className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -180,7 +172,6 @@ export default function Home() {
                       </SelectContent>
                     </Select>
 
-                    {/* Sort Dropdown */}
                     <Select value={sortOption} onValueChange={setSortOption}>
                       <SelectTrigger className="w-full md:w-[180px] bg-white dark:bg-slate-900">
                          {sortOption === 'newest' ? <Clock className="w-4 h-4 mr-2 text-muted-foreground"/> : <ArrowDownAZ className="w-4 h-4 mr-2 text-muted-foreground"/>}
@@ -196,7 +187,6 @@ export default function Home() {
                   </div>
                 </div>
                 
-                {/* Results Count & Clear */}
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                    <span>{filteredAndSortedArtists.length} result{filteredAndSortedArtists.length !== 1 && 's'}</span>
                    {(searchQuery || selectedCause !== 'all') && (
@@ -216,12 +206,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Gallery Grid */}
             <div className="min-h-[400px]">
               <ArtistGallery artists={visibleArtists} />
             </div>
 
-            {/* Load More Button */}
             {hasMore && (
               <div className="mt-12 text-center">
                 <Button 
