@@ -197,7 +197,7 @@ export const artists: Artist[] = [
       location: "Indianapolis (Garfield Park)",
       cause: "Social Connection",
       searchQuery: "Big Car Collaborative Social Alchemy",
-      imageUrl: "https://www.bigcar.org/wp-content/uploads/2021/09/Social-Alchemy-1.jpg",
+      imageUrl: "/socialalchemy.jpg",
       portfolio_url: "https://www.bigcar.org/project/utopia/",
       latitude: 39.7326,
       longitude: -86.1415,
@@ -259,7 +259,7 @@ export const artists: Artist[] = [
       location: "Bloomington (Allen & Fairview Streets)",
       cause: "Social Connection, Placemaking",
       searchQuery: "Rachel Kavathe artist Bloomington",
-      imageUrl: "https://bloomington.in.gov/sites/default/files/2024-04/McDoel%20Blooms%20Design.jpg",
+      imageUrl: "/mcdoelblooms.webp",
       portfolio_url: "https://rachelkavathestudio.com/project/2",
       latitude: 39.1539,
       longitude: -86.5396,
@@ -381,8 +381,8 @@ export const artists: Artist[] = [
       location: "Evansville, Indiana",
       cause: "Women's Suffrage",
       searchQuery: "Florita Eichel artist Evansville",
-      imageUrl: "https://historicevansville.com/images/site/201702/The%20Vanderburgh%20County%20Court%20House%20In%20The%20Nineteenth%20Century%20(1960s)%20Florita%20Eichel%20print.jpg",
-      portfolio_url: "https://historicevansville.com/gallery/",
+      imageUrl: "/floritaeichel.jpg",
+      portfolio_url: "",
       categories: ["print", "historical"],
       tags: ["Evansville", "Indiana", "courthouse"]
     }
@@ -405,7 +405,7 @@ export const artists: Artist[] = [
       location: "Indianapolis (Indiana Statehouse)",
       cause: "Women's Suffrage, Racial Justice",
       searchQuery: "Kassie Woodworth Together quilt",
-      imageUrl: "https://www.in.gov/arts/files/Kassie-Woodworth-Together.jpg",
+      imageUrl: "/together.jpg",
       portfolio_url: "https://www.in.gov/arts/programs-and-services/public-art/",
       categories: ["quilt", "textile", "public art"]
     }
@@ -474,7 +474,7 @@ export const artists: Artist[] = [
       location: "Various Collections",
       cause: "Women's Suffrage",
       searchQuery: "Robert Indiana Mother of Us All poster",
-      imageUrl: "https://ids.si.edu/ids/deliveryService?id=NPG-NPG_2005_69_C_v3_int-000001",
+      imageUrl: "/themotherofusall.jpg",
       portfolio_url: "https://www.robertindiana.com/artworks/",
       categories: ["poster", "pop art"],
       tags: ["Indiana", "Smithsonian"]
@@ -519,7 +519,7 @@ export const artists: Artist[] = [
       location: "Southern Indiana",
       cause: "Environmental Justice, Zero Waste",
       searchQuery: "Walk the Willow sculpture",
-      imageUrl: "https://static.wixstatic.com/media/851575_e6c2c5a9c3a44a4a8f2c8a2a2c3a3a2a~mv2.jpg",
+      imageUrl: "/walkthewillow.png",
       portfolio_url: "https://www.walkthewillow.com/gallery",
       categories: ["sculpture", "public art"]
     }
@@ -540,7 +540,7 @@ export const artists: Artist[] = [
       location: "Bloomington",
       cause: "Climate Change Awareness",
       searchQuery: "Pat Rowbottom art",
-      imageUrl: "https://www.artistsforclimateawareness.org/wp-content/uploads/2020/01/Pat-Rowbottom-web.jpg",
+      imageUrl: "/patRowbottom-Mikes-Garden.jpg",
       portfolio_url: "https://www.artistsforclimateawareness.org/gallery",
       categories: ["photo", "portrait"]
     }
@@ -564,7 +564,7 @@ export const artists: Artist[] = [
       location: "South Bend",
       cause: "Immigration Detention Abolition",
       searchQuery: "Angelica Frausto Nerdy Brown Kid art",
-      imageUrl: "https://nerdybrownkid.com/wp-content/uploads/2020/02/Screen-Shot-2020-02-28-at-10.44.24-AM.png",
+      imageUrl: "/nerdybrownkid.jpeg",
       portfolio_url: "https://nerdybrownkid.com/portfolio/",
       categories: ["digital art", "portrait"]
     }
@@ -588,7 +588,7 @@ export const artists: Artist[] = [
       location: "Indianapolis",
       cause: "Immigration, Community Safety",
       searchQuery: "Beatriz Vasquez Immigrantes Bienvenidos",
-      imageUrl: "https://indyarts.org/wp-content/uploads/2021/06/BeatrizVasquez_PublicArt_01.jpg",
+      imageUrl: "/beatrizvasquez.jpg",
       portfolio_url: "https://beatrizvasquez.com/portfolio/",
       categories: ["public art", "paper art", "installation"],
       tags: ["Latinx", "immigration", "Indiana"]
@@ -613,7 +613,7 @@ export const artists: Artist[] = [
       location: "Indianapolis (Haughville)",
       cause: "Immigration, Gender & LGBTQ+ Rights",
       searchQuery: "Nasreen Khan artist Indianapolis",
-      imageUrl: "https://images.squarespace-cdn.com/content/v1/5e441f79c5e9122c2d85864c/1581523527783-29292929292929292929/Nasreen+Khan+Headshot.jpg",
+      imageUrl: "/nasreenkhanbluewoman.webp",
       portfolio_url: "https://nasreenkhan.com/portfolio/",
       categories: ["portrait", "photography"]
     }
@@ -637,29 +637,9 @@ export const artists: Artist[] = [
       location: "Bloomington (IU Museum)",
       cause: "Immigration, Empathy",
       searchQuery: "Jawshing Arthur Liou Whispers from the Divide",
-      imageUrl: "https://iumaa.iu.edu/images/exhibits/current/whispers-from-the-divide-banner.jpg",
+      imageUrl: "/whispersfromthedivide.png",
       portfolio_url: "https://www.jawshingliou.com/works",
       categories: ["installation", "public art"]
-    }
-  },
-  {
-    id: "27",
-    artist: {
-      name: "Thomas Hart Benton",
-      isAlive: false,
-      bio: "Thomas Hart Benton was a leader of the Regionalist art movement. His famous Indiana murals were radical for their time because they refused to whitewash history, depicting the KKK and honoring socialist labor leader Eugene V. Debs."
-    },
-    artwork: {
-      title: "A Social History of Indiana",
-      description: "A sprawling mural cycle that places the laborer and the common person at the center of Indiana's history. It explicitly links the state's progress to the physical toil of its workers and acknowledges the political struggles of the working class.",
-      medium: "Oil on Canvas Mural",
-      date: "1933",
-      location: "Bloomington (IU Auditorium)",
-      cause: "Labor Rights",
-      searchQuery: "Thomas Hart Benton Indiana Murals",
-      imageUrl: "https://blogs.iu.edu/artmuseum/files/2011/08/benton_mural_01.jpg",
-      portfolio_url: "https://blogs.iu.edu/artmuseum/",
-      categories: ["mural", "historical"]
     }
   },
   {
@@ -677,7 +657,7 @@ export const artists: Artist[] = [
       location: "Bedford (U.S. Post Office)",
       cause: "Labor Rights",
       searchQuery: "John Fabion Limestone Quarry Workers",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Bedford_IN_PO_relief_detail.jpg/640px-Bedford_IN_PO_relief_detail.jpg",
+      imageUrl: "/limestonequarryworkersjohnfabion.jpg",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-bedford-in/",
       categories: ["relief", "historical"]
     }
@@ -697,7 +677,7 @@ export const artists: Artist[] = [
       location: "Pendleton (U.S. Post Office)",
       cause: "Labor Rights",
       searchQuery: "William F. Kaeser Loggers mural",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Pendleton_IN_PO_mural.jpg/640px-Pendleton_IN_PO_mural.jpg",
+      imageUrl: "/loggers.png",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-mural-pendleton-in/",
       categories: ["mural", "historical"]
     }
@@ -717,7 +697,7 @@ export const artists: Artist[] = [
       location: "Fowler (U.S. Post Office)",
       cause: "Labor Rights",
       searchQuery: "Nat Werner Rest during Prairie Plowing",
-      imageUrl: "https://livingnewdeal.org/wp-content/uploads/2015/08/Fowler-IN-Post-Office-relief-Nat-Werner-1.jpg",
+      imageUrl: "/restduringprairieplowing.jpg",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-relief-fowler-in/",
       categories: ["relief", "New Deal art"]
     }
@@ -738,7 +718,7 @@ export const artists: Artist[] = [
       location: "Indianapolis",
       cause: "Labor Rights for Artists",
       searchQuery: "Artists At Work Indianapolis logo",
-      imageUrl: "https://www.cicf.org/wp-content/uploads/2023/06/AAW-Logo-Color.png",
+      imageUrl: "/artistsatwork.png",
       portfolio_url: "https://www.cicf.org/news/",
       categories: ["logo", "graphic design"]
     }
@@ -761,7 +741,7 @@ export const artists: Artist[] = [
       location: "Various Collections (Global)",
       cause: "Political Change",
       searchQuery: "Robert Indiana HOPE sculpture",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/en/3/37/Robert_Indiana_Hope.jpg",
+      imageUrl: "/hope.jpg",
       portfolio_url: "https://www.robertindiana.com/artworks/",
       categories: ["pop art", "icon"],
       tags: ["LOVE sculpture", "iconic"]
@@ -786,7 +766,7 @@ export const artists: Artist[] = [
       location: "IU Bloomington",
       cause: "Social Justice, Holocaust Memory",
       searchQuery: "Jeffrey A. Wolin Written in Memory",
-      imageUrl: "https://www.artic.edu/iiif/2/f64a8064-8597-2484-4829-071706185041/full/843,/0/default.jpg",
+      imageUrl: "/writteninmemory.jpg",
       portfolio_url: "https://jeffreywolin.com/gallery/",
       categories: ["photography", "documentary"]
     }

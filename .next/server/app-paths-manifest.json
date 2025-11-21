@@ -1,13 +1,4 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/admin/artists/[id]/route": "app/api/admin/artists/[id]/route.js",
-  "/api/likes/[id]/route": "app/api/likes/[id]/route.js",
-  "/about/page": "app/about/page.js",
-  "/activists/analytics/page": "app/activists/analytics/page.js",
-  "/activists/map/page": "app/activists/map/page.js",
-  "/activists/timeline/page": "app/activists/timeline/page.js",
-  "/activists/zine/page": "app/activists/zine/page.js",
-  "/page": "app/page.js",
-  "/artists/[id]/page": "app/artists/[id]/page.js",
-  "/admin/edit/[id]/page": "app/admin/edit/[id]/page.js"
+  "/page": "app/page.js"
 }

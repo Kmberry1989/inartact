@@ -1,15 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { ArrowLeft, ExternalLink, MapPin, Info, Globe, Newspaper } from 'lucide-react'
+import { ArrowLeft, ExternalLink, MapPin, Info, Globe, Newspaper, Instagram, Facebook } from 'lucide-react'
 import { Artist } from '@/lib/types'
 import { LikeButton } from '@/components/LikeButton'
 import { FavoriteButton } from '@/components/FavoriteButton'
 import { ShareButton } from '@/components/ShareButton'
+import { parseSocialMediaLink } from '@/lib/social-media-utils'
+import { ImageLightbox } from '@/components/ImageLightbox'
 
 interface ArtistProfileProps {
   artist: Artist
@@ -17,17 +20,21 @@ interface ArtistProfileProps {
 
 export function ArtistProfile({ artist }: ArtistProfileProps) {
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const [showLightbox, setShowLightbox] = useState(false);
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
       <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to Inventory
+        Back to Directory
       </Link>
 
       <div className="grid gap-12 md:grid-cols-2">
         <div className="space-y-8">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-md">
+          <div
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border shadow-md cursor-pointer group"
+            onClick={() => setShowLightbox(true)}
+          >
             <Image
               src={artist.artwork.imageUrl || "/placeholder.svg?height=800&width=600"}
               alt={artist.artwork.alt || `Artwork by ${artist.artist.name}`}
@@ -35,6 +42,11 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
               className="object-cover hover:scale-105 transition-transform duration-500"
               priority
             />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+              <p className="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 px-4 py-2 rounded-md">
+                Click to view fullscreen
+              </p>
+            </div>
           </div>
 
           <div className="rounded-xl border bg-card text-card-foreground shadow-sm p-6">
@@ -144,14 +156,20 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
               <div className="mt-6">
                 <h4 className="text-sm font-semibold mb-2 uppercase tracking-wider">Follow</h4>
                 <div className="flex flex-wrap gap-2">
-                  {artist.artist.social_media.map((link, index) => (
-                    <Button key={index} variant="outline" size="sm" asChild>
-                      <a href={link} target="_blank" rel="noopener noreferrer">
-                        <Globe className="mr-2 h-3 w-3" />
-                        Social {index + 1}
-                      </a>
-                    </Button>
-                  ))}
+                  {artist.artist.social_media.map((link, index) => {
+                    const socialLink = parseSocialMediaLink(link);
+                    const IconComponent = socialLink.icon === 'instagram' ? Instagram :
+                      socialLink.icon === 'facebook' ? Facebook :
+                        Globe;
+                    return (
+                      <Button key={index} variant="outline" size="sm" asChild>
+                        <a href={link} target="_blank" rel="noopener noreferrer">
+                          <IconComponent className="mr-2 h-3 w-3" />
+                          {socialLink.handle}
+                        </a>
+                      </Button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -196,7 +214,7 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           </div>
 
           <div className="flex flex-wrap gap-4 mt-auto pt-8 border-t">
-            <LikeButton artistId={artist.id} />
+            {/* <LikeButton artistId={artist.id} /> */}
             <FavoriteButton artistId={artist.id} />
             <ShareButton url={currentUrl} title={`${artist.artist.name} - ${artist.artwork.title}`} description={artist.artwork.description} />
 
@@ -229,6 +247,14 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
           </div>
         </div>
       </div>
+
+      {showLightbox && (
+        <ImageLightbox
+          src={artist.artwork.imageUrl || "/placeholder.svg?height=800&width=600"}
+          alt={artist.artwork.alt || `Artwork by ${artist.artist.name}`}
+          onClose={() => setShowLightbox(false)}
+        />
+      )}
     </div>
   )
 }

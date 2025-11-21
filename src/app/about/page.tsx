@@ -11,7 +11,7 @@ export default function AboutPage() {
 
                     <div className="prose dark:prose-invert max-w-none">
                         <p className="text-xl text-muted-foreground mb-6">
-                            The Indiana Art Activist Inventory is a living archive documenting the intersection of creative expression and social justice across the Hoosier state.
+                            The Indiana Art Activist Directory is a living archive documenting the intersection of creative expression and social justice across the Hoosier state.
                         </p>
 
                         <h2 className="text-2xl font-semibold mt-8 mb-4">Our Mission</h2>

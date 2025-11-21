@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Indiana Art Activist Inventory",
+  title: "Indiana Art Activist Directory",
   description: "Discover the artists, murals, and movements shaping social justice in Indiana.",
 };
 

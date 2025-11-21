@@ -1,11 +1,27 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { ArtistGallery } from '@/components/artist-gallery'
-import { artists } from '@/lib/artists-data'
-import { Header } from '@/components/header'
-import { Footer } from '@/components/footer'
+'use client';
+
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArtistGallery } from '@/components/artist-gallery';
+import { artists } from '@/lib/artists-data';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export default function Home() {
+  // Restore scroll position when returning to the page
+  useEffect(() => {
+    const savedScrollPos = sessionStorage.getItem('directoryScrollPos');
+    if (savedScrollPos) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        window.scrollTo(0, parseInt(savedScrollPos, 10));
+        // Clear the saved position after restoring
+        sessionStorage.removeItem('directoryScrollPos');
+      });
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -21,8 +37,17 @@ export default function Home() {
               Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
-                Explore the Inventory
+              <Button
+                size="lg"
+                className="bg-white text-slate-900 hover:bg-slate-100"
+                onClick={() => {
+                  document.getElementById('directory-section')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }}
+              >
+                Explore the Directory
               </Button>
               <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/10 bg-transparent">
                 About the Project
@@ -32,11 +57,11 @@ export default function Home() {
         </section>
 
         {/* Gallery Section */}
-        <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-950">
+        <section id="directory-section" className="py-16 md:py-24 bg-slate-50 dark:bg-slate-950">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight mb-2">The Inventory</h2>
+                <h2 className="text-3xl font-bold tracking-tight mb-2">The Directory</h2>
                 <p className="text-muted-foreground">
                   Exploring {artists.length} works of art and activism.
                 </p>
@@ -50,5 +75,5 @@ export default function Home() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }
