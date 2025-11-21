@@ -176,3 +176,33 @@
     @apply bg-background text-foreground transition-colors duration-300;
   }
 }
+/* Add this to the bottom of src/app/globals.css */
+
+@layer utilities {
+  .animate-gradient-x {
+    background-size: 200% auto;
+    animation: gradient-x 4s linear infinite;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
