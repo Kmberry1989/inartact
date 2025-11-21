@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/artists/1":{},"/artists/2":{},"/artists/3":{},"/artists/4":{},"/artists/5":{},"/artists/6":{},"/artists/7":{},"/artists/8":{},"/artists/9":{},"/artists/10":{},"/artists/11":{},"/artists/12":{},"/artists/13":{},"/artists/14":{},"/artists/15":{},"/artists/16":{},"/artists/17":{},"/artists/18":{},"/artists/19":{},"/artists/20":{},"/artists/21":{},"/artists/22":{},"/artists/23":{},"/artists/24":{},"/artists/25":{},"/artists/26":{},"/artists/28":{},"/artists/29":{},"/artists/30":{},"/artists/31":{},"/artists/32":{},"/artists/33":{}},"dynamicRoutes":{"/artists/[id]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/artists/[id]","routeRegex":"^\\/artists\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"bccb004001c3da1aad3224c25a8ed7a6","previewModeSigningKey":"4b2ce40c6a9acbbccf07d86b1d660524afd0f959b4d201da6e4e3866dd660865","previewModeEncryptionKey":"0468e4ad4e8c20b450c7f5ac5296641cb4942a05d67a98bf6e87d75aa75a74ea"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "35c5fa8a916604b17bf17139d6ed15d4",
+    "previewModeSigningKey": "525eee45ecf1223afc284fd19eb09f3292ab0545f5dc7d263efdaa9a2ff10adc",
+    "previewModeEncryptionKey": "97e4182250fa69e1c44ce5aca581a8fcb21cbfe4746f513fdfbbbff089ec8497"
+  }
+}
