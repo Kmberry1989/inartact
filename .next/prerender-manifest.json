@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "35c5fa8a916604b17bf17139d6ed15d4",
-    "previewModeSigningKey": "525eee45ecf1223afc284fd19eb09f3292ab0545f5dc7d263efdaa9a2ff10adc",
-    "previewModeEncryptionKey": "97e4182250fa69e1c44ce5aca581a8fcb21cbfe4746f513fdfbbbff089ec8497"
-  }
-}
+{"version":4,"routes":{"/artists/1":{},"/artists/2":{},"/artists/3":{},"/artists/4":{},"/artists/5":{},"/artists/6":{},"/artists/7":{},"/artists/8":{},"/artists/9":{},"/artists/10":{},"/artists/11":{},"/artists/12":{},"/artists/13":{},"/artists/14":{},"/artists/15":{},"/artists/16":{},"/artists/17":{},"/artists/18":{},"/artists/19":{},"/artists/20":{},"/artists/21":{},"/artists/22":{},"/artists/23":{},"/artists/24":{},"/artists/25":{},"/artists/26":{},"/artists/28":{},"/artists/29":{},"/artists/30":{},"/artists/31":{},"/artists/32":{},"/artists/33":{}},"dynamicRoutes":{"/artists/[id]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/artists/[id]","routeRegex":"^\\/artists\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"35c5fa8a916604b17bf17139d6ed15d4","previewModeSigningKey":"525eee45ecf1223afc284fd19eb09f3292ab0545f5dc7d263efdaa9a2ff10adc","previewModeEncryptionKey":"97e4182250fa69e1c44ce5aca581a8fcb21cbfe4746f513fdfbbbff089ec8497"}}
