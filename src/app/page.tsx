@@ -225,11 +225,13 @@ export default function Home() {
               {artists.length} Stories of Change
             </Badge>
             <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-6 text-white leading-[1.1]">
-              Art as Activism <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
-                in Indiana
-              </span>
-            </h1>
+  Art as Activism 
+  {/* FORCED LINE BREAK */}
+  <br className="block" />
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
+    in Indiana
+  </span>
+</h1>
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
               Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
             </p>

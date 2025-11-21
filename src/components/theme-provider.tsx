@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'default' | 'dark' | 'high-contrast' | 'cardinal' | 'royal' | 'peony' | 'noir';
+type Theme = 'default' | 'cardinal' | 'peony' | 'high-contrast';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -42,8 +42,7 @@ export function ThemeProvider({
     if (!mounted) return;
 
     const root = window.document.documentElement;
-    // Remove all potential theme classes
-    root.classList.remove('default', 'dark', 'high-contrast', 'cardinal', 'royal', 'peony', 'noir');
+    root.classList.remove('default', 'cardinal', 'peony', 'high-contrast');
 
     if (theme !== 'default') {
       root.classList.add(theme);

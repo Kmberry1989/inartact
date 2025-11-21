@@ -18,13 +18,10 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   const themes = [
-    { id: 'default', name: 'Default (Light)', color: 'bg-slate-100 border-slate-300' },
-    { id: 'dark', name: 'Dark', color: 'bg-slate-900 border-slate-700' },
+    { id: 'default', name: 'Hoosier (Default)', color: 'bg-[#003366] border-yellow-400' },
+    { id: 'cardinal', name: 'Cardinal', color: 'bg-[#C41E3A]' },
+    { id: 'peony', name: 'Peony', color: 'bg-[#F64A8A]' },
     { id: 'high-contrast', name: 'High Contrast', color: 'bg-white border-black border-2' },
-    { id: 'crimson', name: 'Crimson', color: 'bg-[#D61F3D]' },
-    { id: 'royal', name: 'Royal', color: 'bg-[#6b21a8]' },
-    { id: 'elegant', name: 'Elegant', color: 'bg-[#fcfbf7] border-[#9c6b42]' },
-    { id: 'noir', name: 'Noir', color: 'bg-black border-white/20' },
   ];
 
   return (
