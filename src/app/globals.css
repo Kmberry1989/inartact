@@ -58,8 +58,8 @@
   .sugar {
     --font-sans: var(--font-quicksand);
     --font-heading: var(--font-fraunces);
-    --background: 43 50% 96%; 
-    --foreground: 20 30% 25%; 
+    --background: 43 50% 96%;
+    --foreground: 20 30% 25%;
     --card: 43 60% 98%;
     --card-foreground: 20 30% 25%;
     --popover: 43 60% 98%;
@@ -112,68 +112,68 @@
     --background: 210 20% 96%;
     /* Charcoal Text */
     --foreground: 220 20% 10%;
-    
+
     --card: 210 20% 98%;
     --card-foreground: 220 20% 10%;
     --popover: 210 20% 98%;
     --popover-foreground: 220 20% 10%;
-    
+
     /* Vivid Cardinal Red */
     --primary: 355 85% 55%;
     --primary-foreground: 0 0% 100%;
-    
+
     /* Slate/Grey Secondary */
     --secondary: 215 25% 85%;
     --secondary-foreground: 220 20% 10%;
-    
+
     --muted: 215 20% 90%;
     --muted-foreground: 220 15% 45%;
-    
+
     --accent: 355 85% 55%;
     --accent-foreground: 0 0% 100%;
-    
+
     --destructive: 0 80% 40%;
     --destructive-foreground: 0 0% 98%;
-    
+
     --border: 215 25% 80%;
     --input: 215 25% 80%;
     --ring: 355 85% 55%;
   }
 
-  /* HOOSIER THEME (Rustic/Corn/Heartland: Gold/Brown) */
+  /* HOOSIER THEME (Indiana Flag: Navy Blue/Gold) */
   .hoosier {
     --font-sans: var(--font-roboto-slab);
     --font-heading: var(--font-rye);
-    /* Warm Parchment Background */
-    --background: 40 40% 94%;
-    /* Deep Soil Brown Text */
-    --foreground: 30 40% 15%;
-    
-    --card: 40 40% 96%;
-    --card-foreground: 30 40% 15%;
-    --popover: 40 40% 96%;
-    --popover-foreground: 30 40% 15%;
-    
-    /* Hoosier Gold/Corn */
-    --primary: 45 90% 50%;
-    --primary-foreground: 30 40% 15%;
-    
-    /* Rustic Brown Secondary */
-    --secondary: 30 30% 80%;
-    --secondary-foreground: 30 40% 15%;
-    
-    --muted: 30 20% 85%;
-    --muted-foreground: 30 20% 40%;
-    
-    --accent: 45 90% 50%;
-    --accent-foreground: 30 40% 15%;
-    
-    --destructive: 10 60% 40%;
-    --destructive-foreground: 40 40% 96%;
-    
-    --border: 30 30% 75%;
-    --input: 30 30% 75%;
-    --ring: 45 90% 50%;
+    /* Deep Navy Background */
+    --background: 221 60% 15%;
+    /* Light Gold/White Text */
+    --foreground: 49 20% 95%;
+
+    --card: 221 50% 18%;
+    --card-foreground: 49 20% 95%;
+    --popover: 221 50% 18%;
+    --popover-foreground: 49 20% 95%;
+
+    /* Indiana Gold */
+    --primary: 49 100% 50%;
+    --primary-foreground: 221 60% 15%;
+
+    /* Muted Navy Secondary */
+    --secondary: 221 30% 25%;
+    --secondary-foreground: 49 100% 50%;
+
+    --muted: 221 30% 25%;
+    --muted-foreground: 221 20% 70%;
+
+    --accent: 49 100% 50%;
+    --accent-foreground: 221 60% 15%;
+
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 221 40% 30%;
+    --input: 221 40% 30%;
+    --ring: 49 100% 50%;
   }
 
   /* PEONY THEME (State Flower: Pink/Magenta) */
@@ -184,29 +184,29 @@
     --background: 330 30% 98%;
     /* Deep Plum Text */
     --foreground: 320 40% 15%;
-    
+
     --card: 330 30% 99%;
     --card-foreground: 320 40% 15%;
     --popover: 330 30% 99%;
     --popover-foreground: 320 40% 15%;
-    
+
     /* Peony Pink/Magenta Primary */
     --primary: 325 70% 55%;
     --primary-foreground: 330 30% 98%;
-    
+
     /* Light Rose Secondary */
     --secondary: 325 30% 90%;
     --secondary-foreground: 320 40% 15%;
-    
+
     --muted: 325 15% 92%;
     --muted-foreground: 320 20% 50%;
-    
+
     --accent: 325 70% 55%;
     --accent-foreground: 330 30% 98%;
-    
+
     --destructive: 0 60% 50%;
     --destructive-foreground: 330 30% 98%;
-    
+
     --border: 325 25% 85%;
     --input: 325 25% 85%;
     --ring: 325 70% 55%;
@@ -217,10 +217,17 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground font-sans;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
