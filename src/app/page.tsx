@@ -84,8 +84,21 @@ export default function Home() {
 
   const alphabet = useMemo(() => '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), []);
 
+  // Updated: Generate unique causes list by splitting comma-separated strings
   const uniqueCauses = useMemo(() => {
-    const causes = new Set(artists.map((a) => a.artwork.cause || 'Other'));
+    const causes = new Set<string>();
+    artists.forEach((artist) => {
+      // Split by comma, trim whitespace
+      const artistCauses = artist.artwork.cause 
+        ? artist.artwork.cause.split(',').map(c => c.trim()) 
+        : ['Other'];
+      
+      artistCauses.forEach(cause => {
+        if (cause && cause !== '') {
+          causes.add(cause);
+        }
+      });
+    });
     return Array.from(causes).sort();
   }, []);
 
@@ -143,9 +156,14 @@ export default function Home() {
       );
     }
 
-    // 2. Filter by Cause
+    // 2. Filter by Cause (Updated to check included causes)
     if (selectedCause && selectedCause !== 'all') {
-      result = result.filter((item) => item.artwork.cause === selectedCause);
+      result = result.filter((item) => {
+        const itemCauses = item.artwork.cause 
+          ? item.artwork.cause.split(',').map(c => c.trim())
+          : ['Other'];
+        return itemCauses.includes(selectedCause);
+      });
     }
 
     // 3. Filter by Alphabet Letter
@@ -217,31 +235,38 @@ export default function Home() {
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors duration-300">
       <Header />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-slate-900 text-white transition-colors duration-300">
-          <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-20" />
+        {/* Hero Section - UPDATED to support themes */}
+        <section className="relative py-20 md:py-32 overflow-hidden transition-colors duration-300 bg-background border-b border-border">
+          {/* Background Gradient Layer to show off theme Primary/Secondary colors */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-secondary/5 to-background z-0" />
+          
+          {/* Optional: Texture overlay if desired */}
+          <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+          
           <div className="container relative z-10 mx-auto px-4 text-center">
-            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary/20 text-primary-foreground border-primary/30 backdrop-blur-sm">
+            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary text-primary-foreground border-primary/30 backdrop-blur-sm shadow-md">
               {artists.length} Stories of Change
             </Badge>
-            <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-6 text-white leading-[1.1]">
-  Art as Activism 
-  {/* FORCED LINE BREAK */}
-  <br className="block" />
-  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
-    in Indiana
-  </span>
-</h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            
+            <h1 className="text-4xl md:text-7xl font-bold font-heading tracking-tighter mb-6 text-foreground leading-[1.1]">
+              Art as Activism 
+              {/* FORCED LINE BREAK */}
+              <br className="block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
+                in Indiana
+              </span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
               Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
             </p>
             
             {/* Hero Search with Suggestions */}
             <div className="max-w-md mx-auto relative" ref={searchContainerRef}>
                <form onSubmit={handleSearchSubmit} className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input 
-                    className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus-visible:ring-primary backdrop-blur-sm"
+                    className="pl-10 h-12 bg-background/50 border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-primary backdrop-blur-sm shadow-lg"
                     placeholder="Search artists, topics, or cities..."
                     value={searchInput}
                     onChange={(e) => {
@@ -279,16 +304,16 @@ export default function Home() {
         </section>
 
         {/* Directory Section */}
-        <section id="directory-section" className="py-12 md:py-20 bg-slate-50 dark:bg-slate-950/50">
+        <section id="directory-section" className="py-12 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4">
             
             {/* Controls Bar */}
-            <div className="sticky top-0 z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4 border-b border-slate-200 dark:border-slate-800 transition-all shadow-sm">
+            <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4 border-b border-border transition-all shadow-sm">
               <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-4">
                 
                 {/* Left Side: Title & Mobile Search */}
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
-                  <h2 className="text-2xl font-bold tracking-tight mr-4 hidden md:block">Directory</h2>
+                  <h2 className="text-2xl font-heading font-bold tracking-tight mr-4 hidden md:block text-foreground">Directory</h2>
                   
                   {/* Mobile Search Input (Synced with Hero Search) */}
                   <div className="relative w-full md:w-64 md:hidden">
@@ -303,14 +328,14 @@ export default function Home() {
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleSearchSubmit();
                       }}
-                      className="pl-9 bg-white dark:bg-slate-900"
+                      className="pl-9 bg-background"
                     />
                   </div>
 
                   {/* Dropdowns */}
                   <div className="flex gap-2 w-full md:w-auto">
                     <Select value={selectedCause} onValueChange={setSelectedCause}>
-                      <SelectTrigger className="w-full md:w-[200px] bg-white dark:bg-slate-900">
+                      <SelectTrigger className="w-full md:w-[200px] bg-background">
                         <SlidersHorizontal className="w-4 h-4 mr-2 text-muted-foreground" />
                         <SelectValue placeholder="Filter by Cause" />
                       </SelectTrigger>
@@ -323,7 +348,7 @@ export default function Home() {
                     </Select>
 
                     <Select value={sortOption} onValueChange={setSortOption}>
-                      <SelectTrigger className="w-full md:w-[180px] bg-white dark:bg-slate-900">
+                      <SelectTrigger className="w-full md:w-[180px] bg-background">
                          {sortOption === 'newest' ? <Clock className="w-4 h-4 mr-2 text-muted-foreground"/> : <ArrowDownAZ className="w-4 h-4 mr-2 text-muted-foreground"/>}
                         <SelectValue placeholder="Sort By" />
                       </SelectTrigger>
@@ -415,7 +440,7 @@ export default function Home() {
                   size="lg" 
                   variant="outline" 
                   onClick={() => setVisibleCount(prev => prev + 12)}
-                  className="bg-white dark:bg-slate-900 min-w-[200px] shadow-sm hover:bg-accent"
+                  className="bg-background min-w-[200px] shadow-sm hover:bg-accent text-foreground"
                 >
                   Load More Artists
                 </Button>

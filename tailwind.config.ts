@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+export default {
     darkMode: ["class"],
     content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -55,9 +55,28 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+      fontFamily: {
+        // Updated to use the CSS variables set in globals.css
+        sans: ["var(--font-sans)", "sans-serif"],
+        heading: ["var(--font-heading)", "serif"],
+      },
+      keyframes: {
+        "gradient-x": {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
+      },
+      animation: {
+        "gradient-x": "gradient-x 15s ease infinite",
+      },
   	}
   },
   plugins: [require("tailwindcss-animate")],
-};
-export default config;
+} satisfies Config;

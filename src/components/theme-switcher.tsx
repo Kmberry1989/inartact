@@ -1,53 +1,64 @@
-'use client';
+"use client"
 
-import * as React from 'react';
-import { Settings, Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import * as React from "react"
+import { Moon, Sun, Palette, Leaf, Cookie, Bird, Wheat, Flower } from "lucide-react" 
+import { useTheme } from "next-themes"
+
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useTheme } from '@/components/theme-provider';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/dropdown-menu"
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
-
-  const themes = [
-    { id: 'default', name: 'Hoosier (Default)', color: 'bg-[#003366] border-yellow-400' },
-    { id: 'cardinal', name: 'Cardinal', color: 'bg-[#C41E3A]' },
-    { id: 'peony', name: 'Peony', color: 'bg-[#F64A8A]' },
-    { id: 'high-contrast', name: 'High Contrast', color: 'bg-white border-black border-2' },
-  ];
+  const { setTheme, theme } = useTheme()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Theme Settings">
-          <Settings className="h-5 w-5 transition-transform duration-500 hover:rotate-90" />
+        <Button variant="outline" size="icon" className="relative">
+          {/* Icon Logic: Show Sun for Light, Moon for Dark, Palette for custom themes */}
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 sugar:scale-0 tuliptree:scale-0 cardinal:scale-0 hoosier:scale-0 peony:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {themes.map((t) => (
-          <DropdownMenuItem
-            key={t.id}
-            onClick={() => setTheme(t.id as any)}
-            className="flex items-center justify-between cursor-pointer"
-          >
-            <div className="flex items-center gap-2">
-              <div className={cn("h-4 w-4 rounded-full border", t.color)} />
-              <span>{t.name}</span>
-            </div>
-            {theme === t.id && <Check className="h-4 w-4" />}
-          </DropdownMenuItem>
-        ))}
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          <Sun className="mr-2 h-4 w-4" />
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <Moon className="mr-2 h-4 w-4" />
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("sugar")}>
+          <Cookie className="mr-2 h-4 w-4" />
+          Sugar Cream
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("tuliptree")}>
+          <Leaf className="mr-2 h-4 w-4" />
+          Tuliptree
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("cardinal")}>
+          <Bird className="mr-2 h-4 w-4" />
+          Cardinal
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("hoosier")}>
+          <Wheat className="mr-2 h-4 w-4" />
+          Hoosier
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("peony")}>
+          <Flower className="mr-2 h-4 w-4" />
+          Peony
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          <Palette className="mr-2 h-4 w-4" />
+          System
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

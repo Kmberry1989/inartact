@@ -1,109 +1,102 @@
-'use client';
+"use client"
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import * as React from "react"
+import Link from "next/link"
+import { Menu, X } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { ThemeSwitcher } from "@/components/theme-switcher"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+const navigation = [
+  { name: "Directory", href: "/" },
+  { name: "Map", href: "/activists/map" },
+  { name: "Timeline", href: "/activists/timeline" },
+  { name: "Zine", href: "/activists/zine" },
+  { name: "Analytics", href: "/activists/analytics" },
+  { name: "About", href: "/about" },
+]
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const navItems = [
-    { name: 'Archive', href: '/' },
-    { name: 'Map', href: '/activists/map' },
-    { name: 'Timeline', href: '/activists/timeline' },
-    { name: 'Zine', href: '/activists/zine' },
-    { name: 'About', href: '/about' },
-  ];
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 transition-colors duration-300">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-background border-b border-transparent"
+      }`}
+    >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        
         <div className="flex items-center gap-2">
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 group" 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
-              IA
-            </div>
-            <span className="hidden font-bold sm:inline-block text-lg tracking-tight text-foreground/90">
-              Indiana Art Activist
-            </span>
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold font-heading tracking-tight text-foreground">InArtAct</span>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navItems.map((item) => (
+        <nav className="hidden md:flex items-center gap-6">
+          {navigation.map((item) => (
             <Link
-              key={item.href}
+              key={item.name}
               href={item.href}
-              className={cn(
-                "px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 hover:bg-primary/10 hover:text-primary",
-                pathname === item.href 
-                  ? "text-primary bg-primary/5 font-semibold" 
-                  : "text-muted-foreground"
-              )}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               {item.name}
             </Link>
           ))}
-          {/* Theme Gear */}
-          <div className="ml-2 pl-2 border-l border-border/50">
-             <ThemeSwitcher />
+          <div className="pl-2 border-l border-border">
+            <ThemeSwitcher />
           </div>
         </nav>
 
-        {/* Mobile Controls */}
-        <div className="md:hidden flex items-center gap-2">
+        {/* Mobile Navigation */}
+        <div className="flex items-center md:hidden gap-4">
           <ThemeSwitcher />
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={toggleMenu} 
-            aria-label="Toggle menu"
-            className="hover:bg-transparent"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-foreground transition-transform rotate-90" />
-            ) : (
-              <Menu className="h-6 w-6 text-foreground" />
-            )}
-          </Button>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background border-l border-border">
+              <div className="flex flex-col gap-6 mt-10">
+                <Link 
+                  href="/" 
+                  className="text-2xl font-bold font-heading tracking-tight mb-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  InArtAct
+                </Link>
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full border-b border-border/40 bg-background/95 backdrop-blur-xl p-4 shadow-2xl animate-in slide-in-from-top-5 fade-in-20">
-          <nav className="flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center p-3 text-base font-medium rounded-md transition-colors",
-                  pathname === item.href
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
     </header>
-  );
+  )
 }
