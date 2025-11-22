@@ -104,7 +104,7 @@ export default function ZinePage() {
                 <div className="grid grid-cols-2 gap-8">
                     {/* Cover Page */}
                     <div className="h-[50vh] flex flex-col justify-center items-center text-center border-b-2 border-dashed pb-8">
-                        <h1 className="text-4xl font-bold mb-4">InArtAct Zine</h1>
+                        <h1 className="text-4xl font-bold mb-4">Zine</h1>
                         <p className="text-xl mb-2">Art & Activism in Indiana</p>
                         <p className="text-sm text-muted-foreground">
                             Generated on {new Date().toLocaleDateString()}

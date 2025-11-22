@@ -80,7 +80,7 @@ export function Header() {
                   className="text-2xl font-bold font-heading tracking-tight mb-4"
                   onClick={() => setIsOpen(false)}
                 >
-                  InArtAct
+                  Indiana Art Activism Directory 
                 </Link>
                 {navigation.map((item) => (
                   <Link
