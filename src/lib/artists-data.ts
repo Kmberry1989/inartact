@@ -1,5 +1,19 @@
 import { Artist } from './types';
 
+// Centralized Cause Constants to ensure consistency across filters
+const CAUSES = {
+  RACIAL_JUSTICE: "Racial Justice",
+  CIVIL_RIGHTS: "Civil Rights",
+  ENVIRONMENT: "Environmental Justice",
+  WOMENS_RIGHTS: "Women's Suffrage",
+  IMMIGRATION: "Immigration",
+  LABOR: "Labor Rights",
+  COMMUNITY: "Community Building",
+  MENTAL_HEALTH: "Mental Health",
+  PUBLIC_ART: "Public Space",
+  POLITICAL: "Political Change/Satire"
+} as const;
+
 export const artists: Artist[] = [
   {
     id: "1",
@@ -14,7 +28,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Public Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "The Eighteen Art Collective Indianapolis",
       imageUrl: "/theeighteenartcollective.jpg",
       latitude: 39.7753,
@@ -35,7 +49,7 @@ export const artists: Artist[] = [
       medium: "Acrylic on Plywood Banner",
       date: "2020",
       location: "Indianapolis (Archived by IndyPL)",
-      cause: "Civil Rights, Police Brutality",
+      cause: `${CAUSES.CIVIL_RIGHTS}, Police Brutality`,
       searchQuery: "Gary Gee We the People mural Indianapolis",
       imageUrl: "/wethepeople.webp",
       categories: ["street art", "public art"]
@@ -54,7 +68,7 @@ export const artists: Artist[] = [
       medium: "Acrylic on Plywood Banner",
       date: "2020",
       location: "Indianapolis (Archived by IndyPL)",
-      cause: "Racial Justice, Police Brutality",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Police Brutality`,
       searchQuery: "Mechi Shakur Blkkk Lives Don't Matter",
       imageUrl: "/blkkklivesdontmatter.jpg",
       categories: ["controversial", "political"]
@@ -107,7 +121,7 @@ export const artists: Artist[] = [
       medium: "Sculptural Intervention (Proposed/Cancelled)",
       date: "2007-2011",
       location: "Indianapolis (Not Installed)",
-      cause: "Racial Justice, Historical Reconciliation",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Historical Reconciliation`,
       searchQuery: "Fred Wilson E Pluribus Unum Indianapolis",
       imageUrl: "/EPluribusUnum.webp",
       portfolio_url: "https://en.wikipedia.org/wiki/E_Pluribus_Unum_(sculpture)",
@@ -138,7 +152,7 @@ export const artists: Artist[] = [
       medium: "Oil on Canvas",
       date: "1965",
       location: "Various Collections",
-      cause: "Civil Rights",
+      cause: CAUSES.CIVIL_RIGHTS,
       searchQuery: "Robert Indiana Confederacy Mississippi painting",
       imageUrl: "/mississippi.jpeg",
       portfolio_url: "https://www.robertindiana.com/artworks/artworks-items/mississippi",
@@ -166,7 +180,7 @@ export const artists: Artist[] = [
       medium: "Deconstructed Books on Canvas",
       date: "2015",
       location: "IU Eskenazi Museum of Art (Bloomington)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Samuel Levi Jones Poplar Trees",
       imageUrl: "/Poplar_Trees_2015.webp",
       portfolio_url: "https://www.samuellevijones.com/2015",
@@ -195,7 +209,7 @@ export const artists: Artist[] = [
       medium: "Social Practice / Community Engagement",
       date: "Ongoing (Since 2005)",
       location: "Indianapolis (Garfield Park)",
-      cause: "Social Connection",
+      cause: CAUSES.COMMUNITY,
       searchQuery: "Big Car Collaborative Social Alchemy",
       imageUrl: "/socialalchemy.jpg",
       portfolio_url: "https://www.bigcar.org/project/utopia/",
@@ -227,7 +241,7 @@ export const artists: Artist[] = [
       medium: "Court Paint / Public Art",
       date: "2020",
       location: "Fort Wayne (McMillen Park)",
-      cause: "Racial Justice, Placemaking",
+      cause: `${CAUSES.RACIAL_JUSTICE}, ${CAUSES.COMMUNITY}`,
       searchQuery: "Andre Portee McMillen Park mural",
       imageUrl: "/mcmillenparkbasketballcourtmural.jpeg",
       portfolio_url: "http://www.andreportee.com",
@@ -257,7 +271,7 @@ export const artists: Artist[] = [
       medium: "Street Mural / Public Art",
       date: "2025",
       location: "Bloomington (Allen & Fairview Streets)",
-      cause: "Social Connection, Placemaking",
+      cause: CAUSES.COMMUNITY,
       searchQuery: "Rachel Kavathe artist Bloomington",
       imageUrl: "/mcdoelblooms.webp",
       portfolio_url: "https://rachelkavathestudio.com/project/2",
@@ -285,7 +299,7 @@ export const artists: Artist[] = [
       medium: "Acrylic on Building / Mural",
       date: "June 2021",
       location: "Fort Wayne (4335 S Anthony Blvd)",
-      cause: "Civil Rights, Immigration",
+      cause: `${CAUSES.CIVIL_RIGHTS}, ${CAUSES.IMMIGRATION}`,
       searchQuery: "Kacy Jackson Faces of the Fort mural",
       imageUrl: "/facesofthefortkacyjackson.jfif",
       portfolio_url: "https://www.cityoffortwayne.in.gov/368/Faces-of-the-Fort",
@@ -312,7 +326,7 @@ export const artists: Artist[] = [
       medium: "Acrylic on Building / Mural",
       date: "June 2021",
       location: "Fort Wayne (1514 St. Joseph Blvd)",
-      cause: "Racial Justice, Inclusive Community",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Inclusive Community`,
       searchQuery: "Benjamin Duke Faces of the Fort mural",
       imageUrl: "/facesofthefortbenjaminduke.jfif",
       portfolio_url: "https://bendukeart.com/mural-projects/faces-of-the-fort",
@@ -355,7 +369,7 @@ export const artists: Artist[] = [
       medium: "Institution Building",
       date: "1883",
       location: "Indianapolis",
-      cause: "Women's Suffrage, Education",
+      cause: `${CAUSES.WOMENS_RIGHTS}, Education`,
       searchQuery: "May Wright Sewall portrait",
       imageUrl: "/maywrightsewall.jpg",
       portfolio_url: "https://images.indianahistory.org/digital/collection/womenshistory",
@@ -379,7 +393,7 @@ export const artists: Artist[] = [
       medium: "Activism / Curatorial Work",
       date: "Early 1900s",
       location: "Evansville, Indiana",
-      cause: "Women's Suffrage",
+      cause: CAUSES.WOMENS_RIGHTS,
       searchQuery: "Florita Eichel artist Evansville",
       imageUrl: "/floritaeichel.jpg",
       portfolio_url: "",
@@ -403,7 +417,7 @@ export const artists: Artist[] = [
       medium: "Quilt (Mixed media)",
       date: "2020",
       location: "Indianapolis (Indiana Statehouse)",
-      cause: "Women's Suffrage, Racial Justice",
+      cause: `${CAUSES.WOMENS_RIGHTS}, ${CAUSES.RACIAL_JUSTICE}`,
       searchQuery: "Kassie Woodworth Together quilt",
       imageUrl: "/together.jpg",
       portfolio_url: "https://www.in.gov/arts/programs-and-services/public-art/",
@@ -423,7 +437,7 @@ export const artists: Artist[] = [
       medium: "Painting (Oil/Acrylic)",
       date: "2020",
       location: "Decatur / Indiana Statehouse",
-      cause: "Women's Suffrage",
+      cause: CAUSES.WOMENS_RIGHTS,
       searchQuery: "Shelby Nower nINeteenth painting",
       imageUrl: "/nINeteenth.webp",
       portfolio_url: "https://www.in.gov/arts/programs-and-services/public-art/",
@@ -448,7 +462,7 @@ export const artists: Artist[] = [
       medium: "Mixed Media on Fabric",
       date: "2020",
       location: "Indianapolis (Work travels nationally)",
-      cause: "Women's Suffrage",
+      cause: CAUSES.WOMENS_RIGHTS,
       searchQuery: "Bonnie Fillenwarth Her Flag Indiana",
       imageUrl: "/herflag.webp",
       portfolio_url: "https://www.herflag.com/indiana",
@@ -472,7 +486,7 @@ export const artists: Artist[] = [
       medium: "Lithography / Set Design",
       date: "1967 / 1976",
       location: "Various Collections",
-      cause: "Women's Suffrage",
+      cause: CAUSES.WOMENS_RIGHTS,
       searchQuery: "Robert Indiana Mother of Us All poster",
       imageUrl: "/themotherofusall.jpg",
       portfolio_url: "https://www.robertindiana.com/artworks/",
@@ -497,7 +511,7 @@ export const artists: Artist[] = [
       medium: "Painting / Mixed Media",
       date: "Ongoing",
       location: "Borden, Indiana",
-      cause: "Environmental Justice",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "Karen Boone natural pigment artist",
       imageUrl: "/karenboonenaturalpigment.webp",
       portfolio_url: "https://www.karenboone.com/portfolio",
@@ -517,7 +531,7 @@ export const artists: Artist[] = [
       medium: "Willow Branches / Sculpture",
       date: "Ongoing",
       location: "Southern Indiana",
-      cause: "Environmental Justice, Zero Waste",
+      cause: `${CAUSES.ENVIRONMENT}, Zero Waste`,
       searchQuery: "Walk the Willow sculpture",
       imageUrl: "/walkthewillow.png",
       portfolio_url: "https://www.walkthewillow.com/gallery",
@@ -538,7 +552,7 @@ export const artists: Artist[] = [
       medium: "Painting / Advocacy",
       date: "Ongoing",
       location: "Bloomington",
-      cause: "Climate Change Awareness",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "Pat Rowbottom art",
       imageUrl: "/patRowbottom-Mikes-Garden.jpg",
       portfolio_url: "https://www.artistsforclimateawareness.org/gallery",
@@ -562,7 +576,7 @@ export const artists: Artist[] = [
       medium: "Digital Art / Graphic Design",
       date: "Ongoing",
       location: "South Bend",
-      cause: "Immigration Detention Abolition",
+      cause: `${CAUSES.IMMIGRATION}, Detention Abolition`,
       searchQuery: "Angelica Frausto Nerdy Brown Kid art",
       imageUrl: "/nerdybrownkid.jpeg",
       portfolio_url: "https://nerdybrownkid.com/portfolio/",
@@ -586,7 +600,7 @@ export const artists: Artist[] = [
       medium: "Papel Picado / Mural",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Immigration, Community Safety",
+      cause: `${CAUSES.IMMIGRATION}, Community Safety`,
       searchQuery: "Beatriz Vasquez Immigrantes Bienvenidos",
       imageUrl: "/beatrizvasquez.jpg",
       portfolio_url: "https://beatrizvasquez.com/portfolio/",
@@ -611,7 +625,7 @@ export const artists: Artist[] = [
       medium: "Visual Art / Scavenged Wood",
       date: "Ongoing",
       location: "Indianapolis (Haughville)",
-      cause: "Immigration, Gender & LGBTQ+ Rights",
+      cause: `${CAUSES.IMMIGRATION}, Gender & LGBTQ+ Rights`,
       searchQuery: "Nasreen Khan artist Indianapolis",
       imageUrl: "/nasreenkhanbluewoman.webp",
       portfolio_url: "https://nasreenkhan.com/portfolio/",
@@ -635,7 +649,7 @@ export const artists: Artist[] = [
       medium: "Video Installation",
       date: "Recent",
       location: "Bloomington (IU Museum)",
-      cause: "Immigration, Empathy",
+      cause: `${CAUSES.IMMIGRATION}, Empathy`,
       searchQuery: "Jawshing Arthur Liou Whispers from the Divide",
       imageUrl: "/whispersfromthedivide.png",
       portfolio_url: "https://www.jawshingliou.com/works",
@@ -655,7 +669,7 @@ export const artists: Artist[] = [
       medium: "Terra-Cotta Relief",
       date: "1942",
       location: "Bedford (U.S. Post Office)",
-      cause: "Labor Rights",
+      cause: CAUSES.LABOR,
       searchQuery: "John Fabion Limestone Quarry Workers",
       imageUrl: "/limestonequarryworkersjohnfabion.jpg",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-bedford-in/",
@@ -675,7 +689,7 @@ export const artists: Artist[] = [
       medium: "Oil on Canvas Mural",
       date: "1941",
       location: "Pendleton (U.S. Post Office)",
-      cause: "Labor Rights",
+      cause: CAUSES.LABOR,
       searchQuery: "William F. Kaeser Loggers mural",
       imageUrl: "/loggers.png",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-mural-pendleton-in/",
@@ -695,7 +709,7 @@ export const artists: Artist[] = [
       medium: "Cast Stone Relief",
       date: "1940",
       location: "Fowler (U.S. Post Office)",
-      cause: "Labor Rights",
+      cause: CAUSES.LABOR,
       searchQuery: "Nat Werner Rest during Prairie Plowing",
       imageUrl: "/restduringprairieplowing.jpg",
       portfolio_url: "https://livingnewdeal.org/projects/post-office-relief-fowler-in/",
@@ -716,7 +730,7 @@ export const artists: Artist[] = [
       medium: "Program/Economic Model",
       date: "Ongoing (Since 2023)",
       location: "Indianapolis",
-      cause: "Labor Rights for Artists",
+      cause: `${CAUSES.LABOR} for Artists`,
       searchQuery: "Artists At Work Indianapolis logo",
       imageUrl: "/artistsatwork.png",
       portfolio_url: "https://www.cicf.org/news/",
@@ -739,7 +753,7 @@ export const artists: Artist[] = [
       medium: "Mixed Media / Sculpture",
       date: "2008",
       location: "Various Collections (Global)",
-      cause: "Political Change",
+      cause: CAUSES.POLITICAL,
       searchQuery: "Robert Indiana HOPE sculpture",
       imageUrl: "/hope.jpg",
       portfolio_url: "https://www.robertindiana.com/artworks/",
@@ -778,7 +792,11 @@ export const artists: Artist[] = [
     artist: {
       name: "Kevin West",
       isAlive: true,
-      bio: "Kevin West is a founding member of the Eighteen Art Collective. His vibrant, often abstract portraits focus on Black identity and strength, contributing to the cultural revitalization of Indiana Avenue."
+      bio: "Kevin West is a founding member of the Eighteen Art Collective. His vibrant, often abstract portraits focus on Black identity and strength, contributing to the cultural revitalization of Indiana Avenue.",
+      website: "https://www.kwestfineart.com",
+      social_media: [
+        "https://www.instagram.com/artbykwest"
+      ]
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'L')",
@@ -786,7 +804,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Kevin West artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -799,7 +817,10 @@ export const artists: Artist[] = [
     artist: {
       name: "John G. Moore",
       isAlive: true,
-      bio: "John G. Moore, known as 'The Jas,' is an artist and preacher whose work often blends spiritual themes with social commentary. He is a member of the Eighteen Art Collective and uses his art to uplift the Black community."
+      bio: "John G. Moore, known as 'The Jas,' is an artist and preacher whose work often blends spiritual themes with social commentary. He is a member of the Eighteen Art Collective and uses his art to uplift the Black community.",
+      social_media: [
+        "https://www.instagram.com/johngmoore"
+      ]
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'A')",
@@ -807,11 +828,12 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice, Spirituality",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Spirituality`,
       searchQuery: "John G Moore artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
       longitude: -86.1649,
+      portfolio_url: "https://indyarts.org/artist/john-moore-2/",
       categories: ["mural", "activism"]
     }
   },
@@ -820,7 +842,11 @@ export const artists: Artist[] = [
     artist: {
       name: "Ess McKee",
       isAlive: true,
-      bio: "Ess McKee is a multimedia artist and member of the Eighteen Art Collective. Her work often incorporates hip-hop culture and graphic design elements to challenge stereotypes and celebrate Black creativity."
+      bio: "Ess McKee is a multimedia artist and member of the Eighteen Art Collective. Her work often incorporates hip-hop culture and graphic design elements to challenge stereotypes and celebrate Black creativity.",
+      website: "https://www.iamessmckee.com",
+      social_media: [
+        "https://www.instagram.com/iamessmckee"
+      ]
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'C')",
@@ -828,7 +854,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice, Youth Empowerment",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Youth Empowerment`,
       searchQuery: "Ess McKee artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -849,9 +875,10 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Wavy Blayne artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
+      portfolio_url: "https://ganggangculture.com/artists/wavy-blayne/",
       latitude: 39.7753,
       longitude: -86.1649,
       categories: ["mural", "graffiti"]
@@ -862,7 +889,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Harriet Watson",
       isAlive: true,
-      bio: "Harriet Watson is an artist and educator whose work often features portraiture and historical themes. A member of the Eighteen Art Collective, she uses art to teach and preserve Black history."
+      bio: "Harriet Watson is an artist and educator whose work often features portraiture and historical themes. A member of the Eighteen Art Collective, she uses art to teach and preserve Black history.",
+      website: "https://www.itsartmydearwatson.com"
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'L')",
@@ -870,7 +898,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice, Education",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Education`,
       searchQuery: "Harriet Watson artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -883,7 +911,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Deonna Craig",
       isAlive: true,
-      bio: "Deonna Craig is an Indianapolis-based artist and entrepreneur. Her vibrant, expressive works often focus on Black womanhood and community empowerment. She is a key member of the Eighteen Art Collective."
+      bio: "Deonna Craig is an Indianapolis-based artist and entrepreneur. Her vibrant, expressive works often focus on Black womanhood and community empowerment. She is a key member of the Eighteen Art Collective.",
+      website: "https://www.deonnacraigart.com"
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'I')",
@@ -891,7 +920,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice, Gender Equity",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Gender Equity`,
       searchQuery: "Deonna Craig artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -904,7 +933,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Danicia Monét",
       isAlive: true,
-      bio: "Danicia Monét is an arts administrator, planner, and artist. Her work focuses on the intersection of art, urban planning, and equity, using creativity to redesign public spaces for marginalized communities."
+      bio: "Danicia Monét is an arts administrator, planner, and artist. Her work focuses on the intersection of art, urban planning, and equity, using creativity to redesign public spaces for marginalized communities.",
+      website: "https://indianahumanities.org/danicia-monet-malone/"
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'E')",
@@ -925,7 +955,11 @@ export const artists: Artist[] = [
     artist: {
       name: "Dr. Jarrod Dortch",
       isAlive: true,
-      bio: "Dr. Jarrod Dortch is an artist, professor, and urban farmer. He combines his passion for agriculture with visual art to address food deserts and environmental justice in Black communities."
+      bio: "Dr. Jarrod Dortch is an artist, professor, and urban farmer. He combines his passion for agriculture with visual art to address food deserts and environmental justice in Black communities.",
+      website: "https://lostdoggallery.com/artists/dr-jarrod-dortch",
+      social_media: [
+        "https://www.instagram.com/jarroddortch"
+      ]
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'S')",
@@ -933,7 +967,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Environmental Justice, Racial Justice",
+      cause: `${CAUSES.ENVIRONMENT}, ${CAUSES.RACIAL_JUSTICE}`,
       searchQuery: "Jarrod Dortch artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -954,7 +988,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Matthew Cooper artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -967,7 +1001,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Amiah Mims",
       isAlive: true,
-      bio: "Amiah Mims is a graphic designer and muralist. Her work is characterized by fluid lines and organic shapes, often depicting Black figures in states of grace and power."
+      bio: "Amiah Mims is a graphic designer and muralist. Her work is characterized by fluid lines and organic shapes, often depicting Black figures in states of grace and power.",
+      website: "https://www.worksbymimsy.com"
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'A')",
@@ -975,7 +1010,7 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Amiah Mims artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7753,
@@ -996,9 +1031,10 @@ export const artists: Artist[] = [
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
-      cause: "Racial Justice",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Rebecca Robinson artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
+      portfolio_url: "https://ganggangculture.com/artists/rebecca-robinson/",
       latitude: 39.7753,
       longitude: -86.1649,
       categories: ["mural", "activism"]
@@ -1017,7 +1053,7 @@ export const artists: Artist[] = [
       medium: "Textiles / Social Practice",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Racial Justice, Historical Memory",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Historical Memory`,
       searchQuery: "LaShawnda Crowe Storm Lynch Quilts",
       imageUrl: "/placeholder-art.jpg",
       categories: ["textile", "social practice", "activism"]
@@ -1057,7 +1093,7 @@ export const artists: Artist[] = [
       medium: "Public Mural (Subject)",
       date: "2016",
       location: "Indianapolis (Mass Ave)",
-      cause: "Civil Rights, Literature",
+      cause: `${CAUSES.CIVIL_RIGHTS}, Literature`,
       searchQuery: "Mari Evans mural Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7728,
@@ -1101,7 +1137,7 @@ export const artists: Artist[] = [
       medium: "Oil on Canvas / Architecture",
       date: "1907",
       location: "Nashville, IN",
-      cause: "Conservation, Environmentalism",
+      cause: `${CAUSES.ENVIRONMENT}, Conservation`,
       searchQuery: "TC Steele House of the Singing Winds",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.1842,
@@ -1124,7 +1160,7 @@ export const artists: Artist[] = [
       medium: "Photography",
       date: "Early 1900s",
       location: "Geneva, IN",
-      cause: "Conservation, Environmentalism",
+      cause: `${CAUSES.ENVIRONMENT}, Conservation`,
       searchQuery: "Gene Stratton Porter Limberlost photos",
       imageUrl: "/placeholder-art.jpg",
       latitude: 40.5911,
@@ -1147,7 +1183,7 @@ export const artists: Artist[] = [
       medium: "Bronze Sculpture",
       date: "1910s",
       location: "Various Collections",
-      cause: "Women's Suffrage",
+      cause: CAUSES.WOMENS_RIGHTS,
       searchQuery: "Janet Scudder sculptor",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "historical"]
@@ -1158,7 +1194,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Tom Torluemke",
       isAlive: true,
-      bio: "Tom Torluemke is a contemporary painter and muralist based in Northwest Indiana. His work is known for its 'social surrealism,' often tackling tough subjects like environmental pollution, politics, and war with a satirical edge."
+      bio: "Tom Torluemke is a contemporary painter and muralist based in Northwest Indiana. His work is known for its 'social surrealism,' often tackling tough subjects like environmental pollution, politics, and war with a satirical edge.",
+      website: "http://www.tomtorluemke.com"
     },
     artwork: {
       title: "Simple Truths",
@@ -1166,7 +1203,7 @@ export const artists: Artist[] = [
       medium: "Painting / Public Art",
       date: "Ongoing",
       location: "Hammond / Northwest Indiana",
-      cause: "Environmental Justice, Political Satire",
+      cause: `${CAUSES.ENVIRONMENT}, Political Satire`,
       searchQuery: "Tom Torluemke art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["painting", "political"]
@@ -1177,7 +1214,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Malcolm Mobutu Smith",
       isAlive: true,
-      bio: "Malcolm Mobutu Smith is a ceramic artist and professor at IU Bloomington. His work merges the aesthetics of hip-hop, jazz, and graphic art with ceramic vessels to explore issues of racial identity and cultural history."
+      bio: "Malcolm Mobutu Smith is a ceramic artist and professor at IU Bloomington. His work merges the aesthetics of hip-hop, jazz, and graphic art with ceramic vessels to explore issues of racial identity and cultural history.",
+      website: "https://www.malcolmmobutusmith.com"
     },
     artwork: {
       title: "Cloud Vessels",
@@ -1204,7 +1242,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "Recent",
       location: "Indianapolis",
-      cause: "Community Building",
+      cause: CAUSES.COMMUNITY,
       searchQuery: "Taresa Downing art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "public art"]
@@ -1223,7 +1261,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "Recent",
       location: "Indianapolis",
-      cause: "Mental Health, Community Health",
+      cause: `${CAUSES.MENTAL_HEALTH}, ${CAUSES.COMMUNITY}`,
       searchQuery: "Boxx the Artist",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "social practice"]
@@ -1234,7 +1272,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Shamira Wilson",
       isAlive: true,
-      bio: "Shamira Wilson is an interdisciplinary visual artist. Her work explores ethnobotany and the relationship between humans and the environment, advocating for a more sustainable and connected way of living."
+      bio: "Shamira Wilson is an interdisciplinary visual artist. Her work explores ethnobotany and the relationship between humans and the environment, advocating for a more sustainable and connected way of living.",
+      website: "https://shamirawilson.com"
     },
     artwork: {
       title: "Ethnobotany Textiles",
@@ -1242,7 +1281,7 @@ export const artists: Artist[] = [
       medium: "Textiles / Printmaking",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Environmentalism, Indigenous Knowledge",
+      cause: `${CAUSES.ENVIRONMENT}, Indigenous Knowledge`,
       searchQuery: "Shamira Wilson art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["textile", "environmental"]
@@ -1253,7 +1292,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Brose Partington",
       isAlive: true,
-      bio: "Brose Partington creates kinetic sculptures that often deal with themes of surveillance, consumerism, and the precariousness of modern life. His work moves and interacts with the viewer, creating a physical dialogue about control."
+      bio: "Brose Partington creates kinetic sculptures that often deal with themes of surveillance, consumerism, and the precariousness of modern life. His work moves and interacts with the viewer, creating a physical dialogue about control.",
+      website: "https://brosepartingtonstudio.com"
     },
     artwork: {
       title: "Surveillance Series",
@@ -1272,7 +1312,8 @@ export const artists: Artist[] = [
     artist: {
       name: "Tiffany Black",
       isAlive: true,
-      bio: "Tiffany Black is a muralist and community artist. She specializes in collaborative mural projects that involve local residents in the design and painting process, ensuring the art reflects the people who live there."
+      bio: "Tiffany Black is a muralist and community artist. She specializes in collaborative mural projects that involve local residents in the design and painting process, ensuring the art reflects the people who live there.",
+      website: "https://www.tblack.co"
     },
     artwork: {
       title: "Neighborhood History Mural",
@@ -1280,7 +1321,7 @@ export const artists: Artist[] = [
       medium: "Community Mural",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Community Integrity, Anti-Gentrification",
+      cause: `${CAUSES.COMMUNITY}, Anti-Gentrification`,
       searchQuery: "Tiffany Black murals Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "community"]
@@ -1299,7 +1340,7 @@ export const artists: Artist[] = [
       medium: "Social Practice",
       date: "2010s",
       location: "Indianapolis",
-      cause: "Public Space Equity",
+      cause: CAUSES.PUBLIC_ART,
       searchQuery: "Artur Silva artist",
       imageUrl: "/placeholder-art.jpg",
       categories: ["social practice", "public art"]
@@ -1318,7 +1359,7 @@ export const artists: Artist[] = [
       medium: "Kinetic Installation",
       date: "Various",
       location: "Indianapolis",
-      cause: "Environmental Awareness",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "Greg Hull artist Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["installation", "sculpture"]
@@ -1337,7 +1378,7 @@ export const artists: Artist[] = [
       medium: "Environmental Design",
       date: "2010s",
       location: "Indianapolis (White River)",
-      cause: "Water Access, Urban Ecology",
+      cause: `${CAUSES.ENVIRONMENT}, Urban Ecology`,
       searchQuery: "Mary Miss City Goes to the Water Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["environmental", "conceptual"]
@@ -1356,7 +1397,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "2021",
       location: "Indianapolis (Downtown)",
-      cause: "Racial Justice, Historical Correction",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Historical Correction`,
       searchQuery: "Shawn Michael Warren Major Taylor mural",
       imageUrl: "/placeholder-art.jpg",
       latitude: 39.7684,
@@ -1473,7 +1514,7 @@ export const artists: Artist[] = [
       medium: "Sculpture",
       date: "Various",
       location: "Indianapolis",
-      cause: "Public Space",
+      cause: CAUSES.PUBLIC_ART,
       searchQuery: "Willie Ray Parish sculpture",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "public art"]
@@ -1513,7 +1554,7 @@ export const artists: Artist[] = [
       medium: "Kinetic Sculpture",
       date: "1967",
       location: "Various (South Bend roots)",
-      cause: "Environmental Awareness",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "George Rickey kinetic sculpture",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "kinetic"]
@@ -1593,7 +1634,7 @@ export const artists: Artist[] = [
       medium: "Landscape Architecture",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Environmental Justice",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "Phyllis Boyd Groundwork Indy",
       imageUrl: "/placeholder-art.jpg",
       categories: ["landscape", "activism"]
@@ -1612,7 +1653,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "Recent",
       location: "Indianapolis",
-      cause: "Community History",
+      cause: CAUSES.COMMUNITY,
       searchQuery: "Kevin Wilson murals Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "community"]
@@ -1669,7 +1710,7 @@ export const artists: Artist[] = [
       medium: "Photography",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Racial Justice, Representation",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Representation`,
       searchQuery: "Milikah Bass photography",
       imageUrl: "/placeholder-art.jpg",
       categories: ["photography", "activism"]
@@ -1688,7 +1729,7 @@ export const artists: Artist[] = [
       medium: "Graffiti",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Public Space, Free Speech",
+      cause: `${CAUSES.PUBLIC_ART}, Free Speech`,
       searchQuery: "Fingers graffiti Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["graffiti", "street art"]
@@ -1783,7 +1824,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Environmental Awareness",
+      cause: CAUSES.ENVIRONMENT,
       searchQuery: "Lisa Sears art Indianapolis",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "environmental"]
@@ -1802,7 +1843,7 @@ export const artists: Artist[] = [
       medium: "Mural",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Mental Health, Public Joy",
+      cause: `${CAUSES.MENTAL_HEALTH}, Public Joy`,
       searchQuery: "Megan Jefferson art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["mural", "abstract"]
@@ -1936,7 +1977,7 @@ export const artists: Artist[] = [
       medium: "Light Sculpture",
       date: "Ongoing",
       location: "Indianapolis",
-      cause: "Public Safety, Beautification",
+      cause: `${CAUSES.PUBLIC_ART}, Beautification`,
       searchQuery: "Quincy Owens art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "light art"]
@@ -1974,7 +2015,7 @@ export const artists: Artist[] = [
       medium: "Glass / Sculpture",
       date: "Recent",
       location: "Indianapolis",
-      cause: "Community Hope",
+      cause: CAUSES.COMMUNITY,
       searchQuery: "Arlon Bayliss art",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "public art"]
@@ -2095,5 +2136,4 @@ export const artists: Artist[] = [
     }
   }
 ];
-
 
