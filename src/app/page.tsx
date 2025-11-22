@@ -1,456 +1,220 @@
-// src/app/page.tsx
-'use client';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useState, useMemo, useRef } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ArtistGallery } from '@/components/artist-gallery';
-import { artists } from '@/lib/artists-data';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
-import { Search, SlidersHorizontal, ArrowDownAZ, Clock, X, RotateCcw, User, Palette } from 'lucide-react';
-import { cn } from '@/lib/utils';
+"use client";
 
-// Type for our suggestions
-type Suggestion = {
-  id: string;
-  text: string;
-  type: 'artist' | 'artwork';
-  artistId: string;
-};
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Search } from "lucide-react";
+import Link from "next/link";
+
+// Changed from '@/' to relative paths '..' to fix resolution errors
+import { Header } from "../components/header";
+import { Footer } from "../components/footer";
+import { ArtistGallery } from "../components/artist-gallery";
+import { Input } from "../components/ui/input";
+import { Badge } from "../components/ui/badge";
+import { artists } from "../lib/artists-data";
 
 export default function Home() {
-  // --- State ---
-  
-  // Search State
-  const [searchInput, setSearchInput] = useState(''); // What the user types
-  const [appliedSearch, setAppliedSearch] = useState(''); // What actually filters the grid
+  const [searchInput, setSearchInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
-  // Filters & Sort
-  const [selectedCause, setSelectedCause] = useState<string>('all');
-  const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
-  const [sortOption, setSortOption] = useState<string>('newest');
-  
-  // Pagination / Hydration
-  const [visibleCount, setVisibleCount] = useState(12);
-  const [isClient, setIsClient] = useState(false);
-
-  // Refs for click-outside detection
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  // --- Effects ---
+  // -------------------------------------------
+  // 1. Parallax & Animation Hooks
+  // -------------------------------------------
+  const { scrollY } = useScroll();
+  
+  // Text moves down slower than scroll (Parallax)
+  const yText = useTransform(scrollY, [0, 300], [0, 100]);
+  
+  // Text fades out as you scroll down
+  const opacityText = useTransform(scrollY, [0, 300], [1, 0]);
 
-  useEffect(() => {
-    setIsClient(true);
-    
-    // Click outside to close suggestions
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-        setShowSuggestions(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  // -------------------------------------------
+  // 2. Search & Filter Logic
+  // -------------------------------------------
+  const filteredArtists = artists.filter((artist) =>
+    artist.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+    artist.location.toLowerCase().includes(searchInput.toLowerCase()) ||
+    artist.tags.some(tag => tag.toLowerCase().includes(searchInput.toLowerCase()))
+  );
 
-  // Restore scroll position logic
-  useEffect(() => {
-    const savedScrollPos = sessionStorage.getItem('directoryScrollPos');
-    if (savedScrollPos) {
-      requestAnimationFrame(() => {
-        window.scrollTo(0, parseInt(savedScrollPos, 10));
-        sessionStorage.removeItem('directoryScrollPos');
-      });
-    }
-  }, []);
+  const searchSuggestions = searchInput.length > 0
+    ? artists
+        .filter((artist) =>
+          artist.name.toLowerCase().includes(searchInput.toLowerCase())
+        )
+        .slice(0, 5)
+    : [];
 
-  // Reset visible count when filters change
-  useEffect(() => {
-    setVisibleCount(12);
-  }, [appliedSearch, selectedCause, sortOption, selectedLetter]);
-
-
-  // --- Data Logic ---
-
-  const alphabet = useMemo(() => '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), []);
-
-  // Updated: Generate unique causes list by splitting comma-separated strings
-  const uniqueCauses = useMemo(() => {
-    const causes = new Set<string>();
-    artists.forEach((artist) => {
-      // Split by comma, trim whitespace
-      const artistCauses = artist.artwork.cause 
-        ? artist.artwork.cause.split(',').map(c => c.trim()) 
-        : ['Other'];
-      
-      artistCauses.forEach(cause => {
-        if (cause && cause !== '') {
-          causes.add(cause);
-        }
-      });
-    });
-    return Array.from(causes).sort();
-  }, []);
-
-  // Generate Suggestions based on 'searchInput'
-  const suggestions: Suggestion[] = useMemo(() => {
-    if (!searchInput || searchInput.length < 2) return [];
-    
-    const query = searchInput.toLowerCase();
-    const matches: Suggestion[] = [];
-
-    artists.forEach(item => {
-      // Check Artist Name
-      if (item.artist.name.toLowerCase().includes(query)) {
-        matches.push({
-          id: `artist-${item.id}`,
-          text: item.artist.name,
-          type: 'artist',
-          artistId: item.id
-        });
-      }
-      // Check Artwork Title
-      if (item.artwork.title.toLowerCase().includes(query)) {
-        matches.push({
-          id: `work-${item.id}`,
-          text: item.artwork.title,
-          type: 'artwork',
-          artistId: item.id
-        });
-      }
-    });
-
-    // Sort by relevance: Starts with > Includes
-    return matches.sort((a, b) => {
-      const aStarts = a.text.toLowerCase().startsWith(query);
-      const bStarts = b.text.toLowerCase().startsWith(query);
-      if (aStarts && !bStarts) return -1;
-      if (!aStarts && bStarts) return 1;
-      return 0;
-    }).slice(0, 6); // Limit to 6 suggestions
-  }, [searchInput]);
-
-  // Main Gallery Filtering (Uses 'appliedSearch')
-  const filteredAndSortedArtists = useMemo(() => {
-    let result = [...artists];
-
-    // 1. Filter by Applied Search (from Enter or Click Suggestion)
-    if (appliedSearch) {
-      const query = appliedSearch.toLowerCase();
-      result = result.filter(
-        (item) =>
-          item.artist.name.toLowerCase().includes(query) ||
-          item.artwork.title.toLowerCase().includes(query) ||
-          item.artwork.description?.toLowerCase().includes(query) ||
-          item.artwork.cause?.toLowerCase().includes(query)
-      );
-    }
-
-    // 2. Filter by Cause (Updated to check included causes)
-    if (selectedCause && selectedCause !== 'all') {
-      result = result.filter((item) => {
-        const itemCauses = item.artwork.cause 
-          ? item.artwork.cause.split(',').map(c => c.trim())
-          : ['Other'];
-        return itemCauses.includes(selectedCause);
-      });
-    }
-
-    // 3. Filter by Alphabet Letter
-    if (selectedLetter) {
-      if (selectedLetter === '#') {
-        result = result.filter((item) => /^\d/.test(item.artist.name));
-      } else {
-        result = result.filter((item) => 
-          item.artist.name.toUpperCase().startsWith(selectedLetter)
-        );
-      }
-    }
-
-    // 4. Sort
-    result.sort((a, b) => {
-      switch (sortOption) {
-        case 'name_asc':
-          return a.artist.name.localeCompare(b.artist.name);
-        case 'name_desc':
-          return b.artist.name.localeCompare(a.artist.name);
-        case 'newest':
-          return Number(b.id) - Number(a.id); 
-        case 'oldest':
-           return Number(a.id) - Number(b.id);
-        default:
-          return 0;
-      }
-    });
-
-    return result;
-  }, [appliedSearch, selectedCause, sortOption, selectedLetter]);
-
-  const visibleArtists = filteredAndSortedArtists.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredAndSortedArtists.length;
-
-  // --- Handlers ---
-
-  const handleSearchSubmit = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    setAppliedSearch(searchInput); // Apply the filter to the grid
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     setShowSuggestions(false);
-    
-    // Scroll to results
-    if (window.scrollY < 400) {
-      document.getElementById('directory-section')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Optional: Programmatically scroll to directory
+    const directory = document.getElementById("directory");
+    if (directory) directory.scrollIntoView({ behavior: "smooth" });
   };
-
-  const handleSuggestionClick = (suggestion: Suggestion) => {
-    setSearchInput(suggestion.text);
-    setAppliedSearch(suggestion.text);
-    setShowSuggestions(false);
-    
-    if (window.scrollY < 400) {
-      document.getElementById('directory-section')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const clearFilters = () => {
-    setSearchInput('');
-    setAppliedSearch('');
-    setSelectedCause('all');
-    setSelectedLetter(null);
-  };
-
-  if (!isClient) return null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors duration-300">
+    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors duration-300 overflow-x-hidden selection:bg-primary/30">
       <Header />
+
       <main className="flex-1">
-        {/* Hero Section - UPDATED to support themes */}
-        <section className="relative py-20 md:py-32 overflow-hidden transition-colors duration-300 bg-background border-b border-border">
-          {/* Background Gradient Layer to show off theme Primary/Secondary colors */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-secondary/5 to-background z-0" />
-          
-          {/* Optional: Texture overlay if desired */}
-          <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-10 mix-blend-overlay" />
-          
-          <div className="container relative z-10 mx-auto px-4 text-center">
-            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary text-primary-foreground border-primary/30 backdrop-blur-sm shadow-md">
-              {artists.length} Stories of Change
-            </Badge>
-            
-            <h1 className="text-4xl md:text-7xl font-bold font-heading tracking-tighter mb-6 text-foreground leading-[1.1]">
-              Art as Activism 
-              {/* FORCED LINE BREAK */}
-              <br className="block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
-                in Indiana
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
-              Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
-            </p>
-            
-            {/* Hero Search with Suggestions */}
-            <div className="max-w-md mx-auto relative" ref={searchContainerRef}>
-               <form onSubmit={handleSearchSubmit} className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input 
-                    className="pl-10 h-12 bg-background/50 border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-primary backdrop-blur-sm shadow-lg"
-                    placeholder="Search artists, topics, or cities..."
-                    value={searchInput}
-                    onChange={(e) => {
-                      setSearchInput(e.target.value);
-                      setShowSuggestions(true);
-                    }}
-                    onFocus={() => setShowSuggestions(true)}
-                  />
-               </form>
-               
-               {/* Suggestions Dropdown */}
-               {showSuggestions && suggestions.length > 0 && (
-                 <div className="absolute top-full left-0 right-0 mt-2 bg-background text-foreground rounded-md shadow-xl border border-border overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                   {suggestions.map((suggestion) => (
-                     <div
-                       key={suggestion.id}
-                       onClick={() => handleSuggestionClick(suggestion)}
-                       className="flex items-center px-4 py-3 hover:bg-muted cursor-pointer border-b border-border/40 last:border-0 transition-colors"
-                     >
-                       {suggestion.type === 'artist' ? (
-                         <User className="h-4 w-4 mr-3 text-primary/70" />
-                       ) : (
-                         <Palette className="h-4 w-4 mr-3 text-secondary/70" />
-                       )}
-                       <span className="text-sm font-medium">{suggestion.text}</span>
-                       {suggestion.type === 'artwork' && (
-                         <span className="ml-auto text-xs text-muted-foreground">Artwork</span>
-                       )}
-                     </div>
-                   ))}
-                 </div>
-               )}
-            </div>
-          </div>
-        </section>
+        
+        {/* ----------------------------------------------------------------- */}
+        {/* HERO SECTION (Parallax & Animated)                                */}
+        {/* ----------------------------------------------------------------- */}
+        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-20">
+             
+             {/* Background Ambient Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background z-0 pointer-events-none" />
 
-        {/* Directory Section */}
-        <section id="directory-section" className="py-12 md:py-20 bg-muted/20">
-          <div className="container mx-auto px-4">
-            
-            {/* Controls Bar */}
-            <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4 border-b border-border transition-all shadow-sm">
-              <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-4">
-                
-                {/* Left Side: Title & Mobile Search */}
-                <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
-                  <h2 className="text-2xl font-heading font-bold tracking-tight mr-4 hidden md:block text-foreground">Directory</h2>
-                  
-                  {/* Mobile Search Input (Synced with Hero Search) */}
-                  <div className="relative w-full md:w-64 md:hidden">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      placeholder="Search..." 
-                      value={searchInput}
-                      onChange={(e) => {
-                        setSearchInput(e.target.value);
-                        // Mobile typically doesn't use suggestions dropdown as heavily, but we apply the search on Enter
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSearchSubmit();
-                      }}
-                      className="pl-9 bg-background"
-                    />
-                  </div>
-
-                  {/* Dropdowns */}
-                  <div className="flex gap-2 w-full md:w-auto">
-                    <Select value={selectedCause} onValueChange={setSelectedCause}>
-                      <SelectTrigger className="w-full md:w-[200px] bg-background">
-                        <SlidersHorizontal className="w-4 h-4 mr-2 text-muted-foreground" />
-                        <SelectValue placeholder="Filter by Cause" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Causes</SelectItem>
-                        {uniqueCauses.map(cause => (
-                          <SelectItem key={cause} value={cause}>{cause}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={sortOption} onValueChange={setSortOption}>
-                      <SelectTrigger className="w-full md:w-[180px] bg-background">
-                         {sortOption === 'newest' ? <Clock className="w-4 h-4 mr-2 text-muted-foreground"/> : <ArrowDownAZ className="w-4 h-4 mr-2 text-muted-foreground"/>}
-                        <SelectValue placeholder="Sort By" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="newest">Newest Added</SelectItem>
-                        <SelectItem value="oldest">Oldest Added</SelectItem>
-                        <SelectItem value="name_asc">Name (A-Z)</SelectItem>
-                        <SelectItem value="name_desc">Name (Z-A)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                
-                {/* Right Side: Results & Clear */}
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                   <span>{filteredAndSortedArtists.length} result{filteredAndSortedArtists.length !== 1 && 's'}</span>
-                   {(appliedSearch || searchInput || selectedCause !== 'all' || selectedLetter) && (
-                     <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={clearFilters}
-                        className="h-8 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
-                      >
-                        <X className="w-3 h-3 mr-1" /> Clear
-                     </Button>
-                   )}
-                </div>
-              </div>
-
-              {/* Alphabet Slider */}
-              <div className="w-full overflow-x-auto no-scrollbar pb-2">
-                <div className="flex space-x-1 min-w-max px-1">
-                  <Button
-                     variant={selectedLetter === null ? "default" : "ghost"}
-                     size="sm"
-                     onClick={() => setSelectedLetter(null)}
-                     className={cn(
-                       "h-8 w-auto px-3 rounded-full text-xs font-medium transition-all",
-                       selectedLetter === null ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                     )}
-                  >
-                    All
-                  </Button>
-                  {alphabet.map((letter) => (
-                    <Button
-                      key={letter}
-                      variant={selectedLetter === letter ? "default" : "ghost"}
-                      size="sm"
-                      onClick={() => setSelectedLetter(selectedLetter === letter ? null : letter)}
-                      className={cn(
-                        "h-8 w-8 p-0 rounded-full text-xs font-medium transition-all",
-                        selectedLetter === letter 
-                          ? "bg-primary text-primary-foreground shadow-md" 
-                          : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                      )}
-                    >
-                      {letter}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* Gallery Grid */}
-            <div className="min-h-[400px] pt-6">
-              {filteredAndSortedArtists.length > 0 ? (
-                <ArtistGallery artists={visibleArtists} />
-              ) : (
-                <div className="flex flex-col items-center justify-center py-20 text-center border-2 border-dashed rounded-xl border-muted">
-                  <div className="bg-muted/50 p-4 rounded-full mb-4">
-                    <RotateCcw className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-1">No artists found</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Try adjusting your search, filters, or selected letter.
-                  </p>
-                  <Button onClick={clearFilters} variant="outline">
-                    Reset All Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            {/* Load More Button */}
-            {hasMore && (
-              <div className="mt-12 text-center">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  onClick={() => setVisibleCount(prev => prev + 12)}
-                  className="bg-background min-w-[200px] shadow-sm hover:bg-accent text-foreground"
+            <motion.div
+                style={{ y: yText, opacity: opacityText }}
+                className="container relative z-10 mx-auto px-4 text-center"
+            >
+                {/* 1. Floating Badge */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="flex justify-center"
                 >
-                  Load More Artists
-                </Button>
-              </div>
-            )}
-          </div>
+                    <Badge variant="secondary" className="mb-8 px-4 py-1.5 text-sm font-medium bg-primary/10 text-primary border-primary/20 backdrop-blur-sm shadow-sm hover:bg-primary/20 transition-colors cursor-default">
+                        {artists.length} Stories of Change
+                    </Badge>
+                </motion.div>
+
+                {/* 2. Main Heading */}
+                <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                    className="text-5xl md:text-7xl lg:text-9xl font-bold font-heading tracking-tighter mb-8 text-foreground leading-[1.1]"
+                >
+                    Art as Activism
+                    <br className="block" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
+                        in Indiana
+                    </span>
+                </motion.h1>
+
+                {/* 3. Subtitle */}
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                    className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed font-sans"
+                >
+                    Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
+                </motion.p>
+
+                {/* 4. Search Bar Container */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    className="max-w-lg mx-auto relative z-20"
+                    ref={searchContainerRef}
+                >
+                    <form onSubmit={handleSearchSubmit} className="relative group">
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-300" />
+                        <Input
+                            className="pl-14 h-16 rounded-full bg-background/60 border-input/50 text-lg shadow-lg hover:shadow-2xl hover:bg-background/80 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 backdrop-blur-xl"
+                            placeholder="Search artists, cities, or topics..."
+                            value={searchInput}
+                            onChange={(e) => {
+                                setSearchInput(e.target.value);
+                                setShowSuggestions(true);
+                            }}
+                            onFocus={() => setShowSuggestions(true)}
+                            // Small delay on blur to allow clicking links in dropdown
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} 
+                        />
+                    </form>
+
+                     {/* Search Suggestions Dropdown */}
+                    {showSuggestions && searchSuggestions.length > 0 && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            className="absolute mt-3 w-full bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden text-left z-50"
+                        >
+                            {searchSuggestions.map((artist) => (
+                                <Link
+                                    key={artist.id}
+                                    href={`/artists/${artist.id}`}
+                                    className="block px-6 py-4 hover:bg-primary/5 transition-colors border-b border-border/40 last:border-0"
+                                    onClick={() => setShowSuggestions(false)}
+                                >
+                                    <div className="font-semibold text-foreground text-lg">{artist.name}</div>
+                                    <div className="text-sm text-muted-foreground flex items-center gap-2">
+                                      <span className="inline-block w-2 h-2 rounded-full bg-primary/50" />
+                                      {artist.role} 
+                                      <span className="text-border">|</span> 
+                                      {artist.location}
+                                    </div>
+                                </Link>
+                            ))}
+                        </motion.div>
+                    )}
+                </motion.div>
+            </motion.div>
         </section>
+
+        {/* ----------------------------------------------------------------- */}
+        {/* DIRECTORY SECTION (Masonry Grid)                                  */}
+        {/* ----------------------------------------------------------------- */}
+        <section className="container mx-auto px-4 pb-24 relative z-10" id="directory">
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
+            >
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-border/40 pb-6 gap-4">
+                    <div>
+                         <h2 className="text-4xl font-bold font-heading mb-2 text-foreground">Artist Directory</h2>
+                         <p className="text-muted-foreground text-lg">
+                            {searchInput ? `Showing results for "${searchInput}"` : "Explore the complete collection of Indiana activists"}
+                         </p>
+                    </div>
+                    
+                    {searchInput && (
+                         <button 
+                            onClick={() => setSearchInput("")}
+                            className="text-sm font-medium text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+                        >
+                            Clear Filters
+                        </button>
+                    )}
+                </div>
+
+                {filteredArtists.length > 0 ? (
+                    <ArtistGallery artists={filteredArtists} />
+                ) : (
+                    <div className="text-center py-32 bg-muted/30 rounded-3xl border border-dashed border-border">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+                          <Search className="w-8 h-8 text-muted-foreground" />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-2">No artists found</h3>
+                        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+                          We couldn't find any artists matching "{searchInput}". Try searching for a different keyword or location.
+                        </p>
+                        <button 
+                            onClick={() => setSearchInput("")}
+                            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                        >
+                            Reset Search
+                        </button>
+                    </div>
+                )}
+            </motion.div>
+        </section>
+
       </main>
+
       <Footer />
     </div>
   );
 }
-
