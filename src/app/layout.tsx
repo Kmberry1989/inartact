@@ -15,7 +15,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-
+import { SmoothScroller } from "@/components/smooth-scroller"; // Import this
 // Default Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -125,6 +125,8 @@ export default function RootLayout({
           disableTransitionOnChange
           themes={["light", "dark", "sugar", "tuliptree", "cardinal", "hoosier", "peony"]}
         >
+          <SmoothScroller />
+          <div className="noise-overlay" />
           {children}
         </ThemeProvider>
       </body>

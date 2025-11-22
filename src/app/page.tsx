@@ -1,6 +1,6 @@
 // src/app/page.tsx
 'use client';
-
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -30,17 +30,17 @@ type Suggestion = {
 
 export default function Home() {
   // --- State ---
-  
+
   // Search State
   const [searchInput, setSearchInput] = useState(''); // What the user types
   const [appliedSearch, setAppliedSearch] = useState(''); // What actually filters the grid
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
+
   // Filters & Sort
   const [selectedCause, setSelectedCause] = useState<string>('all');
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState<string>('newest');
-  
+
   // Pagination / Hydration
   const [visibleCount, setVisibleCount] = useState(12);
   const [isClient, setIsClient] = useState(false);
@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
-    
+
     // Click outside to close suggestions
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
@@ -89,10 +89,10 @@ export default function Home() {
     const causes = new Set<string>();
     artists.forEach((artist) => {
       // Split by comma, trim whitespace
-      const artistCauses = artist.artwork.cause 
-        ? artist.artwork.cause.split(',').map(c => c.trim()) 
+      const artistCauses = artist.artwork.cause
+        ? artist.artwork.cause.split(',').map(c => c.trim())
         : ['Other'];
-      
+
       artistCauses.forEach(cause => {
         if (cause && cause !== '') {
           causes.add(cause);
@@ -105,7 +105,7 @@ export default function Home() {
   // Generate Suggestions based on 'searchInput'
   const suggestions: Suggestion[] = useMemo(() => {
     if (!searchInput || searchInput.length < 2) return [];
-    
+
     const query = searchInput.toLowerCase();
     const matches: Suggestion[] = [];
 
@@ -159,7 +159,7 @@ export default function Home() {
     // 2. Filter by Cause (Updated to check included causes)
     if (selectedCause && selectedCause !== 'all') {
       result = result.filter((item) => {
-        const itemCauses = item.artwork.cause 
+        const itemCauses = item.artwork.cause
           ? item.artwork.cause.split(',').map(c => c.trim())
           : ['Other'];
         return itemCauses.includes(selectedCause);
@@ -171,7 +171,7 @@ export default function Home() {
       if (selectedLetter === '#') {
         result = result.filter((item) => /^\d/.test(item.artist.name));
       } else {
-        result = result.filter((item) => 
+        result = result.filter((item) =>
           item.artist.name.toUpperCase().startsWith(selectedLetter)
         );
       }
@@ -185,9 +185,9 @@ export default function Home() {
         case 'name_desc':
           return b.artist.name.localeCompare(a.artist.name);
         case 'newest':
-          return Number(b.id) - Number(a.id); 
+          return Number(b.id) - Number(a.id);
         case 'oldest':
-           return Number(a.id) - Number(b.id);
+          return Number(a.id) - Number(b.id);
         default:
           return 0;
       }
@@ -205,7 +205,7 @@ export default function Home() {
     e?.preventDefault();
     setAppliedSearch(searchInput); // Apply the filter to the grid
     setShowSuggestions(false);
-    
+
     // Scroll to results
     if (window.scrollY < 400) {
       document.getElementById('directory-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -216,7 +216,7 @@ export default function Home() {
     setSearchInput(suggestion.text);
     setAppliedSearch(suggestion.text);
     setShowSuggestions(false);
-    
+
     if (window.scrollY < 400) {
       document.getElementById('directory-section')?.scrollIntoView({ behavior: 'smooth' });
     }
@@ -239,66 +239,66 @@ export default function Home() {
         <section className="relative py-20 md:py-32 overflow-hidden transition-colors duration-300 bg-background border-b border-border">
           {/* Background Gradient Layer to show off theme Primary/Secondary colors */}
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-secondary/5 to-background z-0" />
-          
+
           {/* Optional: Texture overlay if desired */}
           <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-10 mix-blend-overlay" />
-          
+
           <div className="container relative z-10 mx-auto px-4 text-center">
             <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary text-primary-foreground border-primary/30 backdrop-blur-sm shadow-md">
               {artists.length} Stories of Change
             </Badge>
-            
+
             <h1 className="text-4xl md:text-7xl font-bold font-heading tracking-tighter mb-6 text-foreground leading-[1.1]">
-              Art as Activism 
+              Art as Activism
               {/* FORCED LINE BREAK */}
               <br className="block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
                 in Indiana
               </span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
               Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
             </p>
-            
+
             {/* Hero Search with Suggestions */}
             <div className="max-w-md mx-auto relative" ref={searchContainerRef}>
-               <form onSubmit={handleSearchSubmit} className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input 
-                    className="pl-10 h-12 bg-background/50 border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-primary backdrop-blur-sm shadow-lg"
-                    placeholder="Search artists, topics, or cities..."
-                    value={searchInput}
-                    onChange={(e) => {
-                      setSearchInput(e.target.value);
-                      setShowSuggestions(true);
-                    }}
-                    onFocus={() => setShowSuggestions(true)}
-                  />
-               </form>
-               
-               {/* Suggestions Dropdown */}
-               {showSuggestions && suggestions.length > 0 && (
-                 <div className="absolute top-full left-0 right-0 mt-2 bg-background text-foreground rounded-md shadow-xl border border-border overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                   {suggestions.map((suggestion) => (
-                     <div
-                       key={suggestion.id}
-                       onClick={() => handleSuggestionClick(suggestion)}
-                       className="flex items-center px-4 py-3 hover:bg-muted cursor-pointer border-b border-border/40 last:border-0 transition-colors"
-                     >
-                       {suggestion.type === 'artist' ? (
-                         <User className="h-4 w-4 mr-3 text-primary/70" />
-                       ) : (
-                         <Palette className="h-4 w-4 mr-3 text-secondary/70" />
-                       )}
-                       <span className="text-sm font-medium">{suggestion.text}</span>
-                       {suggestion.type === 'artwork' && (
-                         <span className="ml-auto text-xs text-muted-foreground">Artwork</span>
-                       )}
-                     </div>
-                   ))}
-                 </div>
-               )}
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  className="pl-10 h-12 bg-background/50 border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-primary backdrop-blur-sm shadow-lg"
+                  placeholder="Search artists, topics, or cities..."
+                  value={searchInput}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                />
+              </form>
+
+              {/* Suggestions Dropdown */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-background text-foreground rounded-md shadow-xl border border-border overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
+                  {suggestions.map((suggestion) => (
+                    <div
+                      key={suggestion.id}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="flex items-center px-4 py-3 hover:bg-muted cursor-pointer border-b border-border/40 last:border-0 transition-colors"
+                    >
+                      {suggestion.type === 'artist' ? (
+                        <User className="h-4 w-4 mr-3 text-primary/70" />
+                      ) : (
+                        <Palette className="h-4 w-4 mr-3 text-secondary/70" />
+                      )}
+                      <span className="text-sm font-medium">{suggestion.text}</span>
+                      {suggestion.type === 'artwork' && (
+                        <span className="ml-auto text-xs text-muted-foreground">Artwork</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -306,20 +306,20 @@ export default function Home() {
         {/* Directory Section */}
         <section id="directory-section" className="py-12 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4">
-            
+
             {/* Controls Bar */}
             <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4 border-b border-border transition-all shadow-sm">
               <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-4">
-                
+
                 {/* Left Side: Title & Mobile Search */}
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
                   <h2 className="text-2xl font-heading font-bold tracking-tight mr-4 hidden md:block text-foreground">Directory</h2>
-                  
+
                   {/* Mobile Search Input (Synced with Hero Search) */}
                   <div className="relative w-full md:w-64 md:hidden">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      placeholder="Search..." 
+                    <Input
+                      placeholder="Search..."
                       value={searchInput}
                       onChange={(e) => {
                         setSearchInput(e.target.value);
@@ -349,7 +349,7 @@ export default function Home() {
 
                     <Select value={sortOption} onValueChange={setSortOption}>
                       <SelectTrigger className="w-full md:w-[180px] bg-background">
-                         {sortOption === 'newest' ? <Clock className="w-4 h-4 mr-2 text-muted-foreground"/> : <ArrowDownAZ className="w-4 h-4 mr-2 text-muted-foreground"/>}
+                        {sortOption === 'newest' ? <Clock className="w-4 h-4 mr-2 text-muted-foreground" /> : <ArrowDownAZ className="w-4 h-4 mr-2 text-muted-foreground" />}
                         <SelectValue placeholder="Sort By" />
                       </SelectTrigger>
                       <SelectContent>
@@ -361,20 +361,20 @@ export default function Home() {
                     </Select>
                   </div>
                 </div>
-                
+
                 {/* Right Side: Results & Clear */}
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                   <span>{filteredAndSortedArtists.length} result{filteredAndSortedArtists.length !== 1 && 's'}</span>
-                   {(appliedSearch || searchInput || selectedCause !== 'all' || selectedLetter) && (
-                     <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={clearFilters}
-                        className="h-8 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
-                      >
-                        <X className="w-3 h-3 mr-1" /> Clear
-                     </Button>
-                   )}
+                  <span>{filteredAndSortedArtists.length} result{filteredAndSortedArtists.length !== 1 && 's'}</span>
+                  {(appliedSearch || searchInput || selectedCause !== 'all' || selectedLetter) && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="h-8 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
+                    >
+                      <X className="w-3 h-3 mr-1" /> Clear
+                    </Button>
+                  )}
                 </div>
               </div>
 
@@ -382,13 +382,13 @@ export default function Home() {
               <div className="w-full overflow-x-auto no-scrollbar pb-2">
                 <div className="flex space-x-1 min-w-max px-1">
                   <Button
-                     variant={selectedLetter === null ? "default" : "ghost"}
-                     size="sm"
-                     onClick={() => setSelectedLetter(null)}
-                     className={cn(
-                       "h-8 w-auto px-3 rounded-full text-xs font-medium transition-all",
-                       selectedLetter === null ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                     )}
+                    variant={selectedLetter === null ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setSelectedLetter(null)}
+                    className={cn(
+                      "h-8 w-auto px-3 rounded-full text-xs font-medium transition-all",
+                      selectedLetter === null ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                    )}
                   >
                     All
                   </Button>
@@ -400,8 +400,8 @@ export default function Home() {
                       onClick={() => setSelectedLetter(selectedLetter === letter ? null : letter)}
                       className={cn(
                         "h-8 w-8 p-0 rounded-full text-xs font-medium transition-all",
-                        selectedLetter === letter 
-                          ? "bg-primary text-primary-foreground shadow-md" 
+                        selectedLetter === letter
+                          ? "bg-primary text-primary-foreground shadow-md"
                           : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
                       )}
                     >
@@ -436,9 +436,9 @@ export default function Home() {
             {/* Load More Button */}
             {hasMore && (
               <div className="mt-12 text-center">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
+                <Button
+                  size="lg"
+                  variant="outline"
                   onClick={() => setVisibleCount(prev => prev + 12)}
                   className="bg-background min-w-[200px] shadow-sm hover:bg-accent text-foreground"
                 >

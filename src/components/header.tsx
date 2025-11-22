@@ -2,14 +2,11 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { ThemeSwitcher } from "@/components/theme-switcher"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { motion, useScroll, useMotionValueEvent } from "framer-motion"
 
 const navigation = [
   { name: "Directory", href: "/" },
@@ -21,82 +18,86 @@ const navigation = [
 ]
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isOpen, setIsOpen] = React.useState(false)
+  const { scrollY } = useScroll()
+  const [hidden, setHidden] = React.useState(false)
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+  // Hide header on scroll down, show on scroll up
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0
+    if (latest > previous && latest > 150) {
+      setHidden(true)
+    } else {
+      setHidden(false)
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  })
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-background border-b border-transparent"
-      }`}
+    <motion.header
+      variants={{
+        visible: { y: 0, opacity: 1 },
+        hidden: { y: -100, opacity: 0 },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4"
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
+      <div className="w-full max-w-5xl rounded-full border border-white/20 bg-background/70 backdrop-blur-xl shadow-lg transition-all duration-300">
+        <div className="flex h-14 items-center justify-between px-6">
+          
+          {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold font-heading tracking-tight text-foreground">InArtAct</span>
+            <span className="text-xl font-bold font-heading tracking-tight text-foreground">
+              InArtAct
+            </span>
           </Link>
-        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {item.name}
-            </Link>
-          ))}
-          <div className="pl-2 border-l border-border">
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-6">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary relative group"
+              >
+                {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+              </Link>
+            ))}
+            <div className="pl-4 border-l border-border/50">
+              <ThemeSwitcher />
+            </div>
+          </nav>
+
+          {/* Mobile Nav */}
+          <div className="flex items-center md:hidden gap-4">
             <ThemeSwitcher />
-          </div>
-        </nav>
-
-        {/* Mobile Navigation */}
-        <div className="flex items-center md:hidden gap-4">
-          <ThemeSwitcher />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background border-l border-border">
-              <div className="flex flex-col gap-6 mt-10">
-                <Link 
-                  href="/" 
-                  className="text-2xl font-bold font-heading tracking-tight mb-4"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Indiana Art Activism Directory 
-                </Link>
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <div className="flex flex-col gap-6 mt-10">
+                  <Link href="/" className="text-2xl font-bold font-heading mb-4">
+                    InArtAct
                   </Link>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-lg font-medium hover:text-primary transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
