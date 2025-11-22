@@ -1,6 +1,6 @@
 // src/app/page.tsx
 'use client';
-
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
