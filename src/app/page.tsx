@@ -84,8 +84,21 @@ export default function Home() {
 
   const alphabet = useMemo(() => '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), []);
 
+  // Updated: Generate unique causes list by splitting comma-separated strings
   const uniqueCauses = useMemo(() => {
-    const causes = new Set(artists.map((a) => a.artwork.cause || 'Other'));
+    const causes = new Set<string>();
+    artists.forEach((artist) => {
+      // Split by comma, trim whitespace
+      const artistCauses = artist.artwork.cause 
+        ? artist.artwork.cause.split(',').map(c => c.trim()) 
+        : ['Other'];
+      
+      artistCauses.forEach(cause => {
+        if (cause && cause !== '') {
+          causes.add(cause);
+        }
+      });
+    });
     return Array.from(causes).sort();
   }, []);
 
@@ -143,9 +156,14 @@ export default function Home() {
       );
     }
 
-    // 2. Filter by Cause
+    // 2. Filter by Cause (Updated to check included causes)
     if (selectedCause && selectedCause !== 'all') {
-      result = result.filter((item) => item.artwork.cause === selectedCause);
+      result = result.filter((item) => {
+        const itemCauses = item.artwork.cause 
+          ? item.artwork.cause.split(',').map(c => c.trim())
+          : ['Other'];
+        return itemCauses.includes(selectedCause);
+      });
     }
 
     // 3. Filter by Alphabet Letter
@@ -428,3 +446,4 @@ export default function Home() {
     </div>
   );
 }
+
