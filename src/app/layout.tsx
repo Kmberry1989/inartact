@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { 
-  Geist, 
-  Geist_Mono, 
-  Fraunces, 
-  Quicksand, 
-  Playfair_Display, 
+import {
+  Geist,
+  Geist_Mono,
+  Fraunces,
+  Quicksand,
+  Playfair_Display,
   Lato,
   Crimson_Text,
   Source_Sans_3,
@@ -120,7 +120,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="hoosier"
           enableSystem
           disableTransitionOnChange
           themes={["light", "dark", "sugar", "tuliptree", "cardinal", "hoosier", "peony"]}

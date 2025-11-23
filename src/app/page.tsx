@@ -315,22 +315,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
                   <h2 className="text-2xl font-heading font-bold tracking-tight mr-4 hidden md:block text-foreground">Directory</h2>
 
-                  {/* Mobile Search Input (Synced with Hero Search) */}
-                  <div className="relative w-full md:w-64 md:hidden">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search..."
-                      value={searchInput}
-                      onChange={(e) => {
-                        setSearchInput(e.target.value);
-                        // Mobile typically doesn't use suggestions dropdown as heavily, but we apply the search on Enter
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSearchSubmit();
-                      }}
-                      className="pl-9 bg-background"
-                    />
-                  </div>
+
 
                   {/* Dropdowns */}
                   <div className="flex gap-2 w-full md:w-auto">
