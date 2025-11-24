@@ -2138,4 +2138,3 @@ export const artists: Artist[] = [
     }
   }
 ];
-
