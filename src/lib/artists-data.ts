@@ -799,8 +799,8 @@ export const artists: Artist[] = [
       ]
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'L')",
-      description: "West painted the first 'L' in the Black Lives Matter street mural. His contribution features bold colors and imagery celebrating Black resilience, forming a critical part of the collective's statement against systemic racism.",
+      title: "Black Lives Matter Mural (Letter 'K')",
+      description: "West painted the 'K' in the Black Lives Matter street mural. His contribution included the name of his cousin, Michael Taylor, a Black teenager killed by police in Indianapolis in 1987, making the piece a deeply personal protest against police violence.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -823,8 +823,8 @@ export const artists: Artist[] = [
       ]
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'A')",
-      description: "Moore contributed the first 'A' to the Indiana Avenue mural. His section incorporates spiritual iconography and bright colors to convey a message of hope and divine justice amidst the struggle for civil rights.",
+      title: "Black Lives Matter Mural (Letter 'L')",
+      description: "Moore contributed the second 'L' to the Indiana Avenue mural. His section incorporates the word 'VOTE' written vertically next to a ballot box, emphasizing civic engagement as a crucial tool for achieving justice.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -849,8 +849,8 @@ export const artists: Artist[] = [
       ]
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'C')",
-      description: "McKee painted the 'C' in the mural, using bold graphic lines and vibrant colors. Her work in the mural serves as a visual shout-out to the energy and creativity of Black youth culture.",
+      title: "Black Lives Matter Mural (Letter 'S')",
+      description: "McKee painted the 'S' in the mural (in 'LIVES'), using bold graphic lines and vibrant colors. Her work often fuses hip-hop aesthetics with fine art, bringing a youthful, energetic visual language to the street.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -870,8 +870,8 @@ export const artists: Artist[] = [
       bio: "Wavy Blayne is a visual artist known for his graffiti-inspired style. As part of the Eighteen Art Collective, his work brings a raw, street-level energy to the conversation about racial justice in Indianapolis."
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'K')",
-      description: "Blayne's 'K' in the mural features dynamic lettering and urban aesthetics, grounding the artwork in the language of the street and claiming public space for Black voices.",
+      title: "Black Lives Matter Mural (Letter 'M')",
+      description: "Blayne's 'M' in 'MATTER' features dynamic lettering and urban aesthetics, grounding the artwork in the language of the street and claiming public space for Black voices.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -893,8 +893,8 @@ export const artists: Artist[] = [
       website: "https://www.itsartmydearwatson.com"
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'L')",
-      description: "Watson painted the second 'L', incorporating historical references to the struggles of Black Americans. Her section serves as a reminder that the current movement is part of a long lineage of freedom fighting.",
+      title: "Black Lives Matter Mural (Letter 'A')",
+      description: "Watson painted the second 'A' in 'MATTER', incorporating historical references to the struggles of Black Americans. Her section serves as a reminder that the current movement is part of a long lineage of freedom fighting.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -915,8 +915,8 @@ export const artists: Artist[] = [
       website: "https://www.deonnacraigart.com"
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'I')",
-      description: "Craig's contribution, the letter 'I', uses bright colors and flowing forms to represent the vitality and spirit of Black women, centralizing their role in the movement for racial justice.",
+      title: "Black Lives Matter Mural (Letter 'V')",
+      description: "Craig's contribution, the letter 'V', uses bright colors and flowing forms to represent the vitality and spirit of Black women, centralizing their role in the movement for racial justice.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -962,8 +962,8 @@ export const artists: Artist[] = [
       ]
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'S')",
-      description: "Dortch's 'S' incorporates natural imagery, linking the fight for racial justice with the fight for land sovereignty and environmental health in urban neighborhoods.",
+      title: "Black Lives Matter Mural (Symbol '#')",
+      description: "Dortch painted the hashtag '#' symbol at the beginning of the mural. His design incorporates natural imagery, linking the fight for racial justice with the fight for land sovereignty and environmental health in urban neighborhoods.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -983,8 +983,8 @@ export const artists: Artist[] = [
       bio: "Matthew Cooper is a muralist whose work often features bold typography and graphic elements. A member of the Eighteen Art Collective, he uses his skills to broadcast messages of solidarity and strength."
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'M')",
-      description: "Cooper painted the 'M' in 'Matter', grounding the word in a strong, architectural style. His work emphasizes the solidity and permanence of the demand for justice.",
+      title: "Black Lives Matter Mural (Letter 'T')",
+      description: "Cooper contributed to the lettering of the mural, grounding the word in a strong, architectural style. His work emphasizes the solidity and permanence of the demand for justice.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -1006,7 +1006,7 @@ export const artists: Artist[] = [
     },
     artwork: {
       title: "Black Lives Matter Mural (Letter 'A')",
-      description: "Mims contributed the second 'A' in 'Matter'. Her design features flowing, interconnected lines that suggest movement and the continuity of the struggle for civil rights.",
+      description: "Mims contributed the first 'A' in 'BLACK'. Her design features flowing, interconnected lines that suggest movement and the continuity of the struggle for civil rights.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -1026,8 +1026,8 @@ export const artists: Artist[] = [
       bio: "Rebecca Robinson is a mixed-media artist known for using unconventional materials like cement and tar. Her work 'Concrete Jungle' explores the harsh realities of urban life while finding beauty in resilience."
     },
     artwork: {
-      title: "Black Lives Matter Mural (Letter 'T')",
-      description: "Robinson's 'T' incorporates her signature texture and gritty aesthetic, symbolizing the hardness of the road to justice but also the enduring strength of the Black community.",
+      title: "Black Lives Matter Mural (Letter 'L')",
+      description: "Robinson's 'L' incorporates her signature texture and gritty aesthetic, utilizing cement or tar-like visual elements to symbolize the hardness of the road to justice but also the enduring strength of the Black community.",
       medium: "Street Paint / Mural",
       date: "August 2020",
       location: "Indianapolis (Indiana Avenue)",
@@ -1256,15 +1256,15 @@ export const artists: Artist[] = [
       bio: "Boxx the Artist is a visual artist and community leader. Her work focuses on community engagement, mental health awareness, and creating safe spaces for creative expression in Indianapolis."
     },
     artwork: {
-      title: "Mental Health Awareness Mural",
-      description: "Public art that directly addresses the stigma of mental health in the Black community, offering visual affirmations and resources through art.",
-      medium: "Mural",
-      date: "Recent",
-      location: "Indianapolis",
-      cause: `${CAUSES.MENTAL_HEALTH}, ${CAUSES.COMMUNITY}`,
-      searchQuery: "Boxx the Artist",
+      title: "Afro-Futurism",
+      description: "A dynamic installation located at the Indianapolis International Airport. It examines ideas of Blackness through stylized portraits that display the intersectionality of identities within the African diaspora, using race, class, and gender to explore the evolving Black Experience.",
+      medium: "Acrylic / Digital Illustration",
+      date: "2022",
+      location: "Indianapolis International Airport",
+      cause: `${CAUSES.RACIAL_JUSTICE}, Representation`,
+      searchQuery: "Boxx the Artist Afro-Futurism Indianapolis",
       imageUrl: "/placeholder-art.jpg",
-      categories: ["mural", "social practice"]
+      categories: ["installation", "public art"]
     }
   },
   {
@@ -1296,15 +1296,15 @@ export const artists: Artist[] = [
       website: "https://brosepartingtonstudio.com"
     },
     artwork: {
-      title: "Surveillance Series",
-      description: "Kinetic sculptures incorporating cameras and screens that track the viewer, commenting on the erosion of privacy and the normalization of the surveillance state.",
-      medium: "Kinetic Sculpture",
-      date: "Ongoing",
-      location: "Indianapolis",
-      cause: "Privacy Rights, Social Critique",
-      searchQuery: "Brose Partington kinetic sculpture",
+      title: "Entangled",
+      description: "A kinetic steel sculpture located at IUPUI (Herron School of Art). It consists of eight unique elements bolted together to create an enclosed form, referencing the shape of a bird's nest. The work examines the subtle movements around us and the patterns they create.",
+      medium: "Kinetic Steel Sculpture",
+      date: "2004",
+      location: "Indianapolis (IUPUI)",
+      cause: "Environmental Awareness, Systems Thinking",
+      searchQuery: "Brose Partington Entangled sculpture",
       imageUrl: "/placeholder-art.jpg",
-      categories: ["sculpture", "technology"]
+      categories: ["sculpture", "kinetic"]
     }
   },
   {
@@ -1490,14 +1490,16 @@ export const artists: Artist[] = [
       bio: "Kyng Rhodes is a young artist and muralist. His work addresses contemporary social issues like gun violence and racial equity through a bold, illustrative style."
     },
     artwork: {
-      title: "Stop the Violence Mural",
-      description: "A public mural addressing the gun violence epidemic in Indianapolis, created to offer a message of peace and alternative paths for youth.",
-      medium: "Mural",
-      date: "Recent",
-      location: "Indianapolis",
-      cause: "Anti-Violence, Youth Advocacy",
+      title: "Black Lives Matter Mural (Letter 'B')",
+      description: "Rhodes painted the letter 'B' in the Indianapolis Black Lives Matter street mural. Inspired by Kente fabric, he used colors to symbolize privileged and unprivileged lives, with a red handprint representing lives lost to police brutality.",
+      medium: "Street Paint / Mural",
+      date: "August 2020",
+      location: "Indianapolis (Indiana Avenue)",
+      cause: CAUSES.RACIAL_JUSTICE,
       searchQuery: "Kyng Rhodes artist",
       imageUrl: "/placeholder-art.jpg",
+      latitude: 39.7753,
+      longitude: -86.1649,
       categories: ["mural", "activism"]
     }
   },
@@ -1744,7 +1746,7 @@ export const artists: Artist[] = [
     },
     artwork: {
       title: "Street Mandalas",
-      description: "Geometric, spiritual patterns painted on public infrastructure. These works interrupt the mundane commute, inviting city dwellers to pause and reflect.",
+      description: "Intricate, geometric spiritual patterns painted on public infrastructure like intersections and sidewalks. These works interrupt the mundane daily commute, inviting city dwellers to pause, reflect, and find a moment of zen in the urban chaos.",
       medium: "Street Art",
       date: "Ongoing",
       location: "Indianapolis",
@@ -2086,12 +2088,12 @@ export const artists: Artist[] = [
       bio: "Gregory Steel is a sculptor and professor. His work utilizes industrial materials to explore philosophical concepts of existence and presence."
     },
     artwork: {
-      title: "Steel Totems",
-      description: "Minimalist steel sculptures that assert a powerful physical presence, reflecting the industrial history of the Midwest while reaching for the sublime.",
+      title: "Victory Unchained",
+      description: "A large-scale metal sculpture installed at Indiana University Kokomo. Inspired by the Winged Victory of Samothrace, it represents the goddess Nike. The work reflects Steel's philosophical background, merging industrial materials with classical themes.",
       medium: "Steel Sculpture",
-      date: "Ongoing",
-      location: "Kokomo / Indianapolis",
-      cause: "Industrial History",
+      date: "2023",
+      location: "Kokomo (IU Kokomo Campus)",
+      cause: "Industrial History, Classical Reinterpretation",
       searchQuery: "Gregory Steel sculpture",
       imageUrl: "/placeholder-art.jpg",
       categories: ["sculpture", "minimalism"]
