@@ -21,24 +21,32 @@ export function ArtistGallery({ artists = allArtistsData }: ArtistGalleryProps) 
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedCause, setSelectedCause] = useState<string | null>(null);
 
+  const normalize = (value?: string | null) => value?.toLowerCase() ?? "";
+
   // Filter logic
   const filteredArtists = artists.filter(item => {
     const matchesSearch = (
-      item.artist.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.artwork.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.artwork.cause.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.artwork.location.toLowerCase().includes(searchQuery.toLowerCase())
+      item.artist.name.toLowerCase().includes(normalize(searchQuery)) ||
+      item.artwork.title.toLowerCase().includes(normalize(searchQuery)) ||
+      normalize(item.artwork.cause).includes(normalize(searchQuery)) ||
+      normalize(item.artwork.location).includes(normalize(searchQuery))
     );
 
-    const matchesCause = selectedCause 
-      ? item.artwork.cause.includes(selectedCause)
+    const matchesCause = selectedCause
+      ? normalize(item.artwork.cause).includes(normalize(selectedCause))
       : true;
 
     return matchesSearch && matchesCause;
   });
 
   // Get unique causes for filter dropdown (optional enhancement)
-  const allCauses = Array.from(new Set(artists.map(a => a.artwork.cause.split(',')[0].trim())));
+  const allCauses = Array.from(
+    new Set(
+      artists
+        .map(a => a.artwork.cause?.split(',')[0].trim() ?? "")
+        .filter(Boolean)
+    )
+  );
 
   return (
     <div className="space-y-8">
