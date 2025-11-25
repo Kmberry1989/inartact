@@ -81,7 +81,7 @@ export function Header() {
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col gap-6 mt-10">
                   <Link href="/" className="text-2xl font-bold font-heading mb-4">
-                    InArtAct
+                    Artists IN Activism
                   </Link>
                   {navigation.map((item) => (
                     <Link
