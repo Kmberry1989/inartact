@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-// Add children prop to the interface so we can inject the Search Bar
+// FIX: Added children prop here so we can inject the Search Bar from page.tsx
 export function HeroParallax({ children }: { children?: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -37,8 +37,11 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
       {/* LAYER 2: Indiana Outline */}
       <motion.div 
         style={{ y: yIndiana }}
-        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[80vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none"
+        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none"
       >
+         {/* SVG Fallback. If you have the file, you can swap this component for:
+             <Image src="/hero/indiana-outline.png" alt="Indiana" fill className="object-contain" /> 
+         */}
          <IndianaShape />
       </motion.div>
 
@@ -66,7 +69,7 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 w-full max-w-xl z-50"
+          className="mt-8 w-full max-w-xl z-50 px-4"
         >
           {children}
         </motion.div>
