@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-export function HeroParallax() {
+// Add children prop to the interface so we can inject the Search Bar
+export function HeroParallax({ children }: { children?: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -13,22 +14,11 @@ export function HeroParallax() {
   });
 
   // -- Parallax Transforms --
-  // 1. Particles: Slowest, background depth
   const yParticles = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  
-  // 2. Indiana Outline: Very slow, anchors the scene
   const yIndiana = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-
-  // 3. Text: Drifts up at medium speed
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  
-  // 4. Crowd: Moves slightly faster than background
   const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  
-  // 5. Fist: Foreground element, moves fast
   const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
-
-  // 6. Cardinal: Floating accent, moves fastest
   const yCardinal = useTransform(scrollYProgress, [0, 1], ["0%", "120%"]);
 
   return (
@@ -44,7 +34,7 @@ export function HeroParallax() {
         <ParticleEffect />
       </motion.div>
 
-      {/* LAYER 2: Indiana Outline (SVG or Image) */}
+      {/* LAYER 2: Indiana Outline */}
       <motion.div 
         style={{ y: yIndiana }}
         className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[80vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none"
@@ -52,10 +42,10 @@ export function HeroParallax() {
          <IndianaShape />
       </motion.div>
 
-      {/* LAYER 3: Text (Behind the crowd slightly) */}
+      {/* LAYER 3: Text & Injected Content (Search Bar) */}
       <motion.div 
         style={{ y: yText }}
-        className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20"
+        className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20 px-4"
       >
         <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground/90 drop-shadow-2xl flex gap-4 md:gap-8 flex-wrap justify-center">
           <SplitText word="ACT." delay={0} />
@@ -66,18 +56,29 @@ export function HeroParallax() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl px-4"
+          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl"
         >
           Advocacy through creativity. Change through expression.
         </motion.p>
+
+        {/* RENDER CHILDREN (Search Bar) HERE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="mt-8 w-full max-w-xl z-50"
+        >
+          {children}
+        </motion.div>
       </motion.div>
 
-      {/* LAYER 4: Crowd (Mid-ground) */}
+      {/* LAYER 4: Crowd */}
       <motion.div 
         style={{ y: yCrowd }}
         className="absolute bottom-0 left-0 right-0 z-20 w-full flex justify-center items-end pointer-events-none opacity-80 mix-blend-multiply dark:mix-blend-screen"
       >
         <div className="relative w-full h-[400px] md:h-[600px]">
+           <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 to-transparent" />
            <Image
              src="/hero/protest-crowd.png"
              alt="Crowd of protestors"
@@ -88,7 +89,7 @@ export function HeroParallax() {
         </div>
       </motion.div>
 
-      {/* LAYER 5: Cardinal (Floating Accent) */}
+      {/* LAYER 5: Cardinal */}
       <motion.div 
         style={{ y: yCardinal, x: 50 }}
         animate={{ 
@@ -110,7 +111,7 @@ export function HeroParallax() {
          />
       </motion.div>
 
-      {/* LAYER 6: Fist (Foreground) */}
+      {/* LAYER 6: Fist */}
       <motion.div 
         style={{ y: yFist }}
         className="absolute -bottom-[5%] left-[5%] md:left-[10%] z-40 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none"
@@ -123,13 +124,11 @@ export function HeroParallax() {
          />
       </motion.div>
       
-      {/* Gradient Fade at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-50" />
     </div>
   );
 }
 
-// --- Helper: Indiana SVG Shape ---
 function IndianaShape() {
   return (
     <svg viewBox="0 0 350 550" fill="currentColor" className="w-full h-full text-primary/30">
@@ -138,7 +137,6 @@ function IndianaShape() {
   );
 }
 
-// --- Helper: Split Text Animation ---
 function SplitText({ word, delay }: { word: string, delay: number }) {
   return (
     <span className="inline-flex overflow-hidden">
@@ -162,7 +160,6 @@ function SplitText({ word, delay }: { word: string, delay: number }) {
   );
 }
 
-// --- Helper: Particle System ---
 function ParticleEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
