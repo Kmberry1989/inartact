@@ -13,70 +13,47 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
   });
 
   // -- Parallax Transforms --
-  
-  // 1. Particles: Slow background movement
   const yParticles = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  
-  // 2. Indiana Outline: Very subtle movement, anchors the background
   const yIndiana = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
+  const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
   
-  // 3. Text: Drifts up at medium speed
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  
-  // 4. Crowd: Moves slightly faster than background
-  const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  
-  // 5. Fist: Foreground element, moves faster
-  const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-
-  // 6. Cardinal: Swipes OFF screen to the Top-Right
-  // y: 0% -> -150% (Moves Up)
-  // x: 0% -> 150% (Moves Right)
-  const yCardinal = useTransform(scrollYProgress, [0, 0.8], ["0%", "-150%"]);
-  const xCardinal = useTransform(scrollYProgress, [0, 0.8], ["0%", "150%"]);
+  // Cardinal: Swipes OFF screen to the Top-Right
+  const yCardinal = useTransform(scrollYProgress, [0, 0.5], ["0%", "-150%"]);
+  const xCardinal = useTransform(scrollYProgress, [0, 0.5], ["0%", "150%"]);
 
   return (
     <div 
       ref={ref} 
       className="relative w-full h-[130vh] overflow-hidden bg-background flex flex-col items-center justify-start pt-20 lg:pt-32"
     >
-      {/* --- BACKGROUND LAYERS (Z-0) --- */}
-      
-      {/* LAYER 1: Particle Background */}
-      <motion.div 
-        style={{ y: yParticles }}
-        className="absolute inset-0 z-0"
-      >
+      {/* LAYER 1: Particle Background (Z-0) */}
+      <motion.div style={{ y: yParticles }} className="absolute inset-0 z-0">
         <ParticleEffect />
       </motion.div>
 
-      {/* LAYER 2: Indiana Outline (PNG) */}
-      {/* Centered horizontally with left-1/2 and -translate-x-1/2 */}
+      {/* LAYER 2: Indiana Outline (Centered, Background) */}
       <motion.div 
         style={{ y: yIndiana }}
-        className="absolute top-[10%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-20 dark:opacity-30 pointer-events-none flex items-center justify-center"
+        className="absolute top-[15%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none flex items-center justify-center"
       >
-         <div className="relative w-full h-full">
-           <Image 
-             src="/hero/indiana-outline.png" 
-             alt="Indiana State Outline" 
-             fill 
-             className="object-contain"
-             priority
-           />
-         </div>
+         <Image 
+           src="/hero/indiana-outline.png" 
+           alt="Indiana State Outline" 
+           fill 
+           className="object-contain"
+           priority
+         />
       </motion.div>
 
-      {/* --- MID-GROUND LAYERS (Z-10) --- */}
-      {/* Moved these to z-10 so they are BEHIND the text (z-30) */}
-
-      {/* LAYER 3: Crowd */}
+      {/* LAYER 3: Crowd (Mid-ground, Z-10) */}
       <motion.div 
         style={{ y: yCrowd }}
         className="absolute bottom-0 left-0 right-0 z-10 w-full flex justify-center items-end pointer-events-none opacity-60 mix-blend-multiply dark:mix-blend-screen"
       >
         <div className="relative w-full h-[400px] md:h-[600px]">
-           <div className="absolute inset-0 bg-gradient-to-t from-foreground/5 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
            <Image
              src="/hero/protest-crowd.png"
              alt="Crowd of protestors"
@@ -87,10 +64,10 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         </div>
       </motion.div>
 
-      {/* LAYER 4: Fist (Moved Left) */}
+      {/* LAYER 4: Fist (Foreground Left, Z-20) */}
       <motion.div 
         style={{ y: yFist }}
-        className="absolute -bottom-[5%] left-[-15%] md:left-[-5%] z-10 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none opacity-90"
+        className="absolute -bottom-[5%] left-[-20%] md:left-[5%] z-20 w-[250px] h-[400px] md:w-[400px] md:h-[700px] pointer-events-none opacity-90"
       >
          <Image
            src="/hero/raised-fist.png"
@@ -100,22 +77,14 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
          />
       </motion.div>
 
-      {/* LAYER 5: Cardinal (Swipes away) */}
+      {/* LAYER 5: Cardinal (Foreground Right, Z-20) */}
       <motion.div 
         style={{ y: yCardinal, x: xCardinal }}
-        className="absolute top-[15%] right-[5%] md:right-[15%] z-10 w-32 h-32 md:w-64 md:h-64 pointer-events-none"
+        className="absolute top-[15%] right-[5%] md:right-[15%] z-20 w-24 h-24 md:w-48 md:h-48 pointer-events-none"
       >
-         {/* Inner div for the hovering idle animation */}
          <motion.div
-            animate={{ 
-              y: [0, -15, 0],
-              rotate: [0, 5, 0]
-            }}
-            transition={{ 
-              duration: 5, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
+            animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="w-full h-full relative"
          >
             <Image
@@ -127,69 +96,50 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
          </motion.div>
       </motion.div>
 
-      {/* --- FOREGROUND LAYER (Z-30) --- */}
-      {/* Text and Interactive Children (Search Bar) are now on top */}
-      
+      {/* LAYER 6: Text & Search (Topmost, Z-30) */}
       <motion.div 
         style={{ y: yText }}
         className="relative z-30 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20 px-4"
       >
-        <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground/90 drop-shadow-2xl flex gap-4 md:gap-8 flex-wrap justify-center">
-          <SplitText word="ACT." delay={0} />
-          <SplitText word="IN." delay={0.2} />
-          <SplitText word="ART." delay={0.4} />
+        <h1 className="text-6xl md:text-9xl font-black tracking-tighter drop-shadow-xl flex flex-col md:flex-row gap-2 md:gap-6 items-center justify-center">
+          {/* Applied animate-gradient with specific color stops */}
+          <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+            ACT.
+          </span>
+          <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient delay-75">
+            IN.
+          </span>
+          <span className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient delay-150">
+            ART.
+          </span>
         </h1>
+        
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl bg-background/20 backdrop-blur-sm p-2 rounded-xl"
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl bg-background/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-sm"
         >
           Advocacy through creativity. Change through expression.
         </motion.p>
 
-        {/* RENDER CHILDREN (Search Bar) HERE */}
+        {/* Search Bar Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 w-full max-w-xl px-4"
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="mt-8 w-full max-w-xl px-4 pointer-events-auto"
         >
           {children}
         </motion.div>
       </motion.div>
       
-      {/* Gradient Fade at bottom to blend into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-40" />
+      {/* Gradient Fade at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-20" />
     </div>
   );
 }
 
-// --- Helper: Split Text Animation ---
-function SplitText({ word, delay }: { word: string, delay: number }) {
-  return (
-    <span className="inline-flex overflow-hidden">
-      {word.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ 
-            delay: delay + (i * 0.05), 
-            type: "spring", 
-            stiffness: 100,
-            damping: 20 
-          }}
-          className="inline-block"
-        >
-          {char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
-
-// --- Helper: Particle System ---
 function ParticleEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
@@ -218,7 +168,6 @@ function ParticleEffect() {
       const style = getComputedStyle(document.body);
       const primary = style.getPropertyValue('--primary').trim();
       const accent = style.getPropertyValue('--accent').trim() || primary; 
-      
       return {
         primary: primary ? `hsla(${primary}, 0.5)` : 'rgba(0,0,0,0.2)',
         accent: accent ? `hsla(${accent}, 0.8)` : 'rgba(255,0,0,0.5)',
