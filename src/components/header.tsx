@@ -10,7 +10,7 @@ import {
 
 export function Header() {
   const navLinks = [
-    { href: "/artists", label: "Directory" }, // Added Directory link
+    { href: "/", label: "Directory" }, // Added Directory link
     { href: "/activists/map", label: "Map" },
     { href: "/activists/timeline", label: "Timeline" },
     { href: "/activists/zine", label: "Zine" },
