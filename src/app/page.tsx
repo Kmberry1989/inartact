@@ -17,6 +17,7 @@ import { ArtistGallery } from '@/components/artist-gallery';
 import { artists } from '@/lib/artists-data';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { CurrentEventsWidget } from '@/components/current-events-widget';
 import { Search, SlidersHorizontal, ArrowDownAZ, Clock, X, RotateCcw, User, Palette } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -433,9 +434,12 @@ export default function Home() {
             )}
           </div>
         </section>
+
+        {/* Current Events Widget */}
+        <CurrentEventsWidget />
+
       </main>
       <Footer />
     </div>
   );
 }
-
