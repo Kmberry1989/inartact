@@ -21,7 +21,6 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
-            {/* Updated Title as requested */}
             <span className="text-xl font-bold tracking-tight">
               Activism <span className="text-primary">IN</span> Artistry
             </span>
