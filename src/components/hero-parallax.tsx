@@ -1,4 +1,3 @@
-// src/components/hero-parallax.tsx
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
@@ -6,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-export function HeroParallax({ children }: { children?: React.ReactNode }) {
+export function HeroParallax() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -53,10 +52,10 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
          <IndianaShape />
       </motion.div>
 
-      {/* LAYER 3: Text & Search (Behind the crowd slightly) */}
+      {/* LAYER 3: Text (Behind the crowd slightly) */}
       <motion.div 
         style={{ y: yText }}
-        className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20 px-4"
+        className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20"
       >
         <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground/90 drop-shadow-2xl flex gap-4 md:gap-8 flex-wrap justify-center">
           <SplitText word="ACT." delay={0} />
@@ -71,16 +70,6 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         >
           Advocacy through creativity. Change through expression.
         </motion.p>
-        
-        {/* Injected Search Bar Container */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 w-full max-w-md pointer-events-auto"
-        >
-            {children}
-        </motion.div>
       </motion.div>
 
       {/* LAYER 4: Crowd (Mid-ground) */}
@@ -89,9 +78,8 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         className="absolute bottom-0 left-0 right-0 z-20 w-full flex justify-center items-end pointer-events-none opacity-80 mix-blend-multiply dark:mix-blend-screen"
       >
         <div className="relative w-full h-[400px] md:h-[600px]">
-           <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 to-transparent" />
            <Image
-             src="/loggers.png" 
+             src="/hero/protest-crowd.png"
              alt="Crowd of protestors"
              fill
              className="object-cover object-bottom"
@@ -115,7 +103,7 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         className="absolute top-[15%] right-[5%] md:right-[15%] z-30 w-32 h-32 md:w-64 md:h-64 pointer-events-none"
       >
          <Image
-           src="/Poplar_Trees_2015.webp" 
+           src="/hero/cardinal.png"
            alt="Cardinal"
            fill
            className="object-contain"
@@ -128,7 +116,7 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         className="absolute -bottom-[5%] left-[5%] md:left-[10%] z-40 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none"
       >
          <Image
-           src="/blkkklivesdontmatter.jpg" 
+           src="/hero/raised-fist.png"
            alt="Raised Fist"
            fill
            className="object-contain object-bottom drop-shadow-2xl mask-image-gradient"
