@@ -10,7 +10,7 @@ import {
 
 export function Header() {
   const navLinks = [
-    { href: "/artists", label: "Directory" },
+    { href: "/artists", label: "Directory" }, // Added Directory link
     { href: "/activists/map", label: "Map" },
     { href: "/activists/timeline", label: "Timeline" },
     { href: "/activists/zine", label: "Zine" },
@@ -21,8 +21,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold tracking-tight">
+          <Link href="/" className="flex items-center space-x-2 group">
+            <span className="text-xl font-bold tracking-tight transition-all group-hover:opacity-80">
               Activism <span className="text-primary">IN</span> Artistry
             </span>
           </Link>
@@ -34,7 +34,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium transition-colors hover:text-primary relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full"
             >
               {link.label}
             </Link>
@@ -58,7 +58,7 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-lg font-medium transition-colors hover:text-primary"
+                    className="text-lg font-medium transition-colors hover:text-primary p-2 hover:bg-primary/10 rounded-md"
                   >
                     {link.label}
                   </Link>
