@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
@@ -13,27 +13,30 @@ export function HeroParallax() {
   });
 
   // -- Parallax Transforms --
-  // Background particles move slowly
+  // 1. Particles: Slowest, background depth
   const yParticles = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   
-  // Text moves at medium speed (drifts up)
+  // 2. Indiana Outline: Very slow, anchors the scene
+  const yIndiana = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
+  // 3. Text: Drifts up at medium speed
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   
-  // Crowd moves slightly faster than background to create depth
+  // 4. Crowd: Moves slightly faster than background
   const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   
-  // Fist moves fastest (foreground element)
+  // 5. Fist: Foreground element, moves fast
   const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
 
-  // Cardinal has a floating animation independent of scroll, plus scroll movement
+  // 6. Cardinal: Floating accent, moves fastest
   const yCardinal = useTransform(scrollYProgress, [0, 1], ["0%", "120%"]);
 
   return (
     <div 
       ref={ref} 
-      className="relative w-full h-[120vh] overflow-hidden bg-background flex flex-col items-center justify-start pt-20 lg:pt-32"
+      className="relative w-full h-[130vh] overflow-hidden bg-background flex flex-col items-center justify-start pt-20 lg:pt-32"
     >
-      {/* 1. Particle Background Layer */}
+      {/* LAYER 1: Particle Background */}
       <motion.div 
         style={{ y: yParticles }}
         className="absolute inset-0 z-0"
@@ -41,7 +44,17 @@ export function HeroParallax() {
         <ParticleEffect />
       </motion.div>
 
-      {/* 2. Text Layer (Behind the crowd slightly or integrated) */}
+      {/* LAYER 2: Indiana Outline (SVG or Image) */}
+      <motion.div 
+        style={{ y: yIndiana }}
+        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[80vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none"
+      >
+         {/* Using a custom SVG component here so it works immediately without an asset file. 
+             You can replace this <IndianaShape /> with an <Image /> tag if you have a specific PNG. */}
+         <IndianaShape />
+      </motion.div>
+
+      {/* LAYER 3: Text (Behind the crowd slightly) */}
       <motion.div 
         style={{ y: yText }}
         className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20"
@@ -61,17 +74,16 @@ export function HeroParallax() {
         </motion.p>
       </motion.div>
 
-      {/* 3. Crowd Layer (Mid-ground) */}
-      {/* NOTE: Replace src with your actual file path: '/hero/protest-crowd.png' */}
+      {/* LAYER 4: Crowd (Mid-ground) */}
       <motion.div 
         style={{ y: yCrowd }}
         className="absolute bottom-0 left-0 right-0 z-20 w-full flex justify-center items-end pointer-events-none opacity-80 mix-blend-multiply dark:mix-blend-screen"
       >
         <div className="relative w-full h-[400px] md:h-[600px]">
-           {/* Fallback placeholder if image is missing */}
-           <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
+           {/* Fallback gradient if image is missing */}
+           <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 to-transparent" />
            <Image
-             src="/loggers.png" // TEMPORARY: Replace with "/hero/protest-crowd.png"
+             src="/loggers.png" // TODO: Replace with "/hero/protest-crowd.png"
              alt="Crowd of protestors"
              fill
              className="object-cover object-bottom"
@@ -80,8 +92,7 @@ export function HeroParallax() {
         </div>
       </motion.div>
 
-      {/* 4. Cardinal Layer (Floating Accent) */}
-      {/* NOTE: Replace src with your actual file path: '/hero/cardinal.png' */}
+      {/* LAYER 5: Cardinal (Floating Accent) */}
       <motion.div 
         style={{ y: yCardinal, x: 50 }}
         animate={{ 
@@ -96,30 +107,39 @@ export function HeroParallax() {
         className="absolute top-[15%] right-[5%] md:right-[15%] z-30 w-32 h-32 md:w-64 md:h-64 pointer-events-none"
       >
          <Image
-           src="/Poplar_Trees_2015.webp" // TEMPORARY: Replace with "/hero/cardinal.png"
+           src="/Poplar_Trees_2015.webp" // TODO: Replace with "/hero/cardinal.png"
            alt="Cardinal"
            fill
            className="object-contain"
          />
       </motion.div>
 
-      {/* 5. Fist Layer (Foreground) */}
-      {/* NOTE: Replace src with your actual file path: '/hero/raised-fist.png' */}
+      {/* LAYER 6: Fist (Foreground) */}
       <motion.div 
         style={{ y: yFist }}
-        className="absolute -bottom-[10%] left-[5%] md:left-[10%] z-40 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none"
+        className="absolute -bottom-[5%] left-[5%] md:left-[10%] z-40 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none"
       >
          <Image
-           src="/blkkklivesdontmatter.jpg" // TEMPORARY: Replace with "/hero/raised-fist.png"
+           src="/blkkklivesdontmatter.jpg" // TODO: Replace with "/hero/raised-fist.png"
            alt="Raised Fist"
            fill
            className="object-contain object-bottom drop-shadow-2xl mask-image-gradient"
          />
       </motion.div>
       
-      {/* Gradient Fade at bottom to blend into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-50" />
+      {/* Gradient Fade at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-50" />
     </div>
+  );
+}
+
+// --- Helper: Indiana SVG Shape ---
+function IndianaShape() {
+  return (
+    <svg viewBox="0 0 350 550" fill="currentColor" className="w-full h-full text-primary/30">
+      {/* Approximate path for Indiana State Outline */}
+      <path d="M 107.5 20 L 237.5 20 L 242.5 45 L 252.5 55 L 250 85 L 260 100 L 260 140 L 255 150 L 260 170 L 250 185 L 250 220 L 235 240 L 235 260 L 215 275 L 185 275 L 170 295 L 140 295 L 110 325 L 90 325 L 80 335 L 50 335 L 40 325 L 40 305 L 25 290 L 25 270 L 10 255 L 10 225 L 20 215 L 20 185 L 10 175 L 10 155 L 20 145 L 20 125 L 30 115 L 30 85 L 40 75 L 40 45 Z" />
+    </svg>
   );
 }
 
@@ -150,7 +170,7 @@ function SplitText({ word, delay }: { word: string, delay: number }) {
 // --- Helper: Particle System ---
 function ParticleEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { theme, systemTheme } = useTheme();
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -165,7 +185,6 @@ function ParticleEffect() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set dimensions
     const setSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -173,25 +192,19 @@ function ParticleEffect() {
     setSize();
     window.addEventListener('resize', setSize);
 
-    // Determine Colors based on CSS variables
-    // We grab the computed style of the --primary variable to match the theme
     const getThemeColor = () => {
       const style = getComputedStyle(document.body);
-      // This usually returns standard CSS format, e.g., "240 5.9% 10%" if using Tailwind HSL
-      // We'll try to grab the HSL value and wrap it in hsla
       const primary = style.getPropertyValue('--primary').trim();
-      const accent = style.getPropertyValue('--accent').trim();
+      const accent = style.getPropertyValue('--accent').trim() || primary; 
       
       return {
         primary: primary ? `hsla(${primary}, 0.5)` : 'rgba(0,0,0,0.2)',
         accent: accent ? `hsla(${accent}, 0.8)` : 'rgba(255,0,0,0.5)',
-        isDark: document.documentElement.classList.contains('dark')
       };
     };
 
     let colors = getThemeColor();
 
-    // Particle Class
     class Particle {
       x: number;
       y: number;
@@ -203,22 +216,19 @@ function ParticleEffect() {
 
       constructor() {
         this.x = Math.random() * canvas!.width;
-        this.y = canvas!.height + Math.random() * 100; // Start slightly below
+        this.y = canvas!.height + Math.random() * 100;
         this.size = Math.random() * 3 + 1;
         this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * -2 - 0.5; // Always move up
+        this.speedY = Math.random() * -2 - 0.5; 
         this.life = 1.0;
-        
-        // Randomly choose between primary and accent color
         this.color = Math.random() > 0.5 ? colors.primary : colors.accent;
       }
 
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        this.life -= 0.005; // Fade out slowly
+        this.life -= 0.005;
         
-        // Reset if dead or out of bounds
         if (this.life <= 0 || this.y < 0) {
           this.x = Math.random() * canvas!.width;
           this.y = canvas!.height + 10;
@@ -230,34 +240,30 @@ function ParticleEffect() {
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, `${this.life})`); // Hacky opacity replace
+        ctx.fillStyle = this.color.replace(/[\d.]+\)$/g, `${this.life})`);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
       }
     }
 
-    const particleCount = 50;
+    const particleCount = 60;
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
 
-    // Animation Loop
     let animationId: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
       particles.forEach(p => {
         p.update();
         p.draw();
       });
-      
       animationId = requestAnimationFrame(animate);
     };
     animate();
 
-    // Observer for Theme Changes to update colors dynamically
     const observer = new MutationObserver(() => {
         colors = getThemeColor();
     });
@@ -268,8 +274,9 @@ function ParticleEffect() {
       cancelAnimationFrame(animationId);
       observer.disconnect();
     };
-  }, [mounted, theme, systemTheme]);
+  }, [mounted, theme]);
 
   return <canvas ref={canvasRef} className="w-full h-full opacity-60" />;
 }
+
 
