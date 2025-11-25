@@ -1,22 +1,58 @@
+'use client';
+
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SmoothScroller } from "@/components/smooth-scroller";
 import { HeroParallax } from "@/components/hero-parallax";
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 export default function Home() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/activists/map?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <SmoothScroller />
       <Header />
       
       <main>
-        {/* Parallax Hero Section 
-          NOTE: If you have your search bar logic (ref, handleSearch, form) in your local file,
-          you can now safely place it inside <HeroParallax>...</HeroParallax> without causing a type error.
+        {/* We pass the Search Bar as a child to HeroParallax.
+          This works because we updated HeroParallax to accept { children }.
         */}
-        <HeroParallax />
+        <HeroParallax>
+          <div className="relative" ref={searchContainerRef}>
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search artists, causes, or locations..."
+                className="h-12 w-full rounded-full border-2 border-primary/20 bg-background/80 pl-10 pr-4 text-lg backdrop-blur-sm transition-all focus:border-primary focus:ring-primary/20"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button 
+                type="submit" 
+                className="absolute right-1 top-1 bottom-1 rounded-full"
+                size="sm"
+              >
+                Search
+              </Button>
+            </form>
+          </div>
+        </HeroParallax>
 
         <section className="container py-24 space-y-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
@@ -40,8 +76,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Featured Content / Grid could go here */}
       </main>
 
       <Footer />
