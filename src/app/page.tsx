@@ -20,7 +20,6 @@ export default function Home() {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Directs to the restored Directory page
       router.push(`/artists?search=${encodeURIComponent(searchQuery)}`);
     }
   };
@@ -31,7 +30,6 @@ export default function Home() {
       <Header />
       
       <main>
-        {/* Hero Section with Parallax and Search Bar */}
         <HeroParallax>
           <div className="relative shadow-xl rounded-full" ref={searchContainerRef}>
             <form onSubmit={handleSearchSubmit} className="relative group">
@@ -57,11 +55,9 @@ export default function Home() {
         </HeroParallax>
 
         <section className="container relative z-10 -mt-20 md:-mt-32 pb-24 space-y-16">
-          
-          {/* Content Grid: Intro + Events Widget */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
-            {/* Main Welcome Text */}
+            {/* Left Content */}
             <div className="lg:col-span-8 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-8 md:p-10 rounded-3xl border border-border shadow-2xl">
               <div className="space-y-6">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -85,7 +81,7 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Current Events Widget (Sidebar) */}
+            {/* Right Sidebar: Events Widget */}
             <div className="lg:col-span-4 sticky top-24">
               <CurrentEventsWidget />
             </div>
