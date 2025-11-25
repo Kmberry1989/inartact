@@ -19,11 +19,12 @@ export default function ArtistsPage() {
             Artist <span className="text-primary">Directory</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Discover the creatives behind the movement. Search and filter to find artists, muralists, and activists working across Indiana to bring social change through visual expression.
+            Discover the creatives behind the movement. Search and filter to find artists, muralists, and activists working across Indiana.
           </p>
         </div>
 
         <Suspense fallback={<div className="py-20 text-center text-muted-foreground">Loading directory...</div>}>
+          {/* No props needed now, uses default export from artists-data.ts */}
           <ArtistGallery />
         </Suspense>
       </main>
