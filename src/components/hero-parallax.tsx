@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-// FIX: Added children prop here so we can inject the Search Bar from page.tsx
 export function HeroParallax({ children }: { children?: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -14,18 +13,35 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
   });
 
   // -- Parallax Transforms --
+  
+  // 1. Particles: Slow background movement
   const yParticles = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const yIndiana = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  
+  // 2. Indiana Outline: Very subtle movement, anchors the background
+  const yIndiana = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  
+  // 3. Text: Drifts up at medium speed
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
-  const yCardinal = useTransform(scrollYProgress, [0, 1], ["0%", "120%"]);
+  
+  // 4. Crowd: Moves slightly faster than background
+  const yCrowd = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  
+  // 5. Fist: Foreground element, moves faster
+  const yFist = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+
+  // 6. Cardinal: Swipes OFF screen to the Top-Right
+  // y: 0% -> -150% (Moves Up)
+  // x: 0% -> 150% (Moves Right)
+  const yCardinal = useTransform(scrollYProgress, [0, 0.8], ["0%", "-150%"]);
+  const xCardinal = useTransform(scrollYProgress, [0, 0.8], ["0%", "150%"]);
 
   return (
     <div 
       ref={ref} 
       className="relative w-full h-[130vh] overflow-hidden bg-background flex flex-col items-center justify-start pt-20 lg:pt-32"
     >
+      {/* --- BACKGROUND LAYERS (Z-0) --- */}
+      
       {/* LAYER 1: Particle Background */}
       <motion.div 
         style={{ y: yParticles }}
@@ -34,54 +50,30 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         <ParticleEffect />
       </motion.div>
 
-      {/* LAYER 2: Indiana Outline */}
+      {/* LAYER 2: Indiana Outline (PNG) */}
       <motion.div 
         style={{ y: yIndiana }}
-        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-10 dark:opacity-20 pointer-events-none"
+        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-20 dark:opacity-30 pointer-events-none"
       >
-         {/* SVG Fallback. If you have the file, you can swap this component for:
-             <Image src="/hero/indiana-outline.png" alt="Indiana" fill className="object-contain" /> 
-         */}
-         <IndianaShape />
+         <Image 
+           src="/hero/indiana-outline.png" 
+           alt="Indiana State Outline" 
+           fill 
+           className="object-contain"
+           priority
+         />
       </motion.div>
 
-      {/* LAYER 3: Text & Injected Content (Search Bar) */}
-      <motion.div 
-        style={{ y: yText }}
-        className="relative z-10 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20 px-4"
-      >
-        <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground/90 drop-shadow-2xl flex gap-4 md:gap-8 flex-wrap justify-center">
-          <SplitText word="ACT." delay={0} />
-          <SplitText word="IN." delay={0.2} />
-          <SplitText word="ART." delay={0.4} />
-        </h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl"
-        >
-          Advocacy through creativity. Change through expression.
-        </motion.p>
+      {/* --- MID-GROUND LAYERS (Z-10) --- */}
+      {/* Moved these to z-10 so they are BEHIND the text (z-30) */}
 
-        {/* RENDER CHILDREN (Search Bar) HERE */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 w-full max-w-xl z-50 px-4"
-        >
-          {children}
-        </motion.div>
-      </motion.div>
-
-      {/* LAYER 4: Crowd */}
+      {/* LAYER 3: Crowd */}
       <motion.div 
         style={{ y: yCrowd }}
-        className="absolute bottom-0 left-0 right-0 z-20 w-full flex justify-center items-end pointer-events-none opacity-80 mix-blend-multiply dark:mix-blend-screen"
+        className="absolute bottom-0 left-0 right-0 z-10 w-full flex justify-center items-end pointer-events-none opacity-60 mix-blend-multiply dark:mix-blend-screen"
       >
         <div className="relative w-full h-[400px] md:h-[600px]">
-           <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-t from-foreground/5 to-transparent" />
            <Image
              src="/hero/protest-crowd.png"
              alt="Crowd of protestors"
@@ -92,54 +84,85 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
         </div>
       </motion.div>
 
-      {/* LAYER 5: Cardinal */}
-      <motion.div 
-        style={{ y: yCardinal, x: 50 }}
-        animate={{ 
-          y: [0, -20, 0],
-          rotate: [0, 5, 0]
-        }}
-        transition={{ 
-          duration: 6, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        className="absolute top-[15%] right-[5%] md:right-[15%] z-30 w-32 h-32 md:w-64 md:h-64 pointer-events-none"
-      >
-         <Image
-           src="/hero/cardinal.png"
-           alt="Cardinal"
-           fill
-           className="object-contain"
-         />
-      </motion.div>
-
-      {/* LAYER 6: Fist */}
+      {/* LAYER 4: Fist (Moved Left) */}
       <motion.div 
         style={{ y: yFist }}
-        className="absolute -bottom-[5%] left-[5%] md:left-[10%] z-40 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none"
+        className="absolute -bottom-[5%] left-[-15%] md:left-[-5%] z-10 w-[300px] h-[500px] md:w-[500px] md:h-[800px] pointer-events-none opacity-90"
       >
          <Image
            src="/hero/raised-fist.png"
            alt="Raised Fist"
            fill
-           className="object-contain object-bottom drop-shadow-2xl mask-image-gradient"
+           className="object-contain object-bottom drop-shadow-2xl"
          />
       </motion.div>
+
+      {/* LAYER 5: Cardinal (Swipes away) */}
+      <motion.div 
+        style={{ y: yCardinal, x: xCardinal }}
+        className="absolute top-[15%] right-[5%] md:right-[15%] z-10 w-32 h-32 md:w-64 md:h-64 pointer-events-none"
+      >
+         {/* Inner div for the hovering idle animation */}
+         <motion.div
+            animate={{ 
+              y: [0, -15, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ 
+              duration: 5, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="w-full h-full relative"
+         >
+            <Image
+              src="/hero/cardinal.png"
+              alt="Cardinal"
+              fill
+              className="object-contain"
+            />
+         </motion.div>
+      </motion.div>
+
+      {/* --- FOREGROUND LAYER (Z-30) --- */}
+      {/* Text and Interactive Children (Search Bar) are now on top */}
       
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-50" />
+      <motion.div 
+        style={{ y: yText }}
+        className="relative z-30 flex flex-col items-center justify-center w-full text-center mt-10 md:mt-20 px-4"
+      >
+        <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground/90 drop-shadow-2xl flex gap-4 md:gap-8 flex-wrap justify-center">
+          <SplitText word="ACT." delay={0} />
+          <SplitText word="IN." delay={0.2} />
+          <SplitText word="ART." delay={0.4} />
+        </h1>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="mt-6 text-lg md:text-2xl font-medium text-muted-foreground max-w-2xl bg-background/20 backdrop-blur-sm p-2 rounded-xl"
+        >
+          Advocacy through creativity. Change through expression.
+        </motion.p>
+
+        {/* RENDER CHILDREN (Search Bar) HERE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="mt-8 w-full max-w-xl px-4"
+        >
+          {children}
+        </motion.div>
+      </motion.div>
+      
+      {/* Gradient Fade at bottom to blend into next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-40" />
     </div>
   );
 }
 
-function IndianaShape() {
-  return (
-    <svg viewBox="0 0 350 550" fill="currentColor" className="w-full h-full text-primary/30">
-      <path d="M 107.5 20 L 237.5 20 L 242.5 45 L 252.5 55 L 250 85 L 260 100 L 260 140 L 255 150 L 260 170 L 250 185 L 250 220 L 235 240 L 235 260 L 215 275 L 185 275 L 170 295 L 140 295 L 110 325 L 90 325 L 80 335 L 50 335 L 40 325 L 40 305 L 25 290 L 25 270 L 10 255 L 10 225 L 20 215 L 20 185 L 10 175 L 10 155 L 20 145 L 20 125 L 30 115 L 30 85 L 40 75 L 40 45 Z" />
-    </svg>
-  );
-}
-
+// --- Helper: Split Text Animation ---
 function SplitText({ word, delay }: { word: string, delay: number }) {
   return (
     <span className="inline-flex overflow-hidden">
@@ -163,6 +186,7 @@ function SplitText({ word, delay }: { word: string, delay: number }) {
   );
 }
 
+// --- Helper: Particle System ---
 function ParticleEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
