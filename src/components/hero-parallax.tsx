@@ -51,17 +51,20 @@ export function HeroParallax({ children }: { children?: React.ReactNode }) {
       </motion.div>
 
       {/* LAYER 2: Indiana Outline (PNG) */}
+      {/* Centered horizontally with left-1/2 and -translate-x-1/2 */}
       <motion.div 
         style={{ y: yIndiana }}
-        className="absolute top-[5%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-20 dark:opacity-30 pointer-events-none"
+        className="absolute top-[10%] left-1/2 -translate-x-1/2 z-0 w-[90vw] h-[60vh] md:w-[600px] md:h-[800px] opacity-20 dark:opacity-30 pointer-events-none flex items-center justify-center"
       >
-         <Image 
-           src="/hero/indiana-outline.png" 
-           alt="Indiana State Outline" 
-           fill 
-           className="object-contain"
-           priority
-         />
+         <div className="relative w-full h-full">
+           <Image 
+             src="/hero/indiana-outline.png" 
+             alt="Indiana State Outline" 
+             fill 
+             className="object-contain"
+             priority
+           />
+         </div>
       </motion.div>
 
       {/* --- MID-GROUND LAYERS (Z-10) --- */}
