@@ -20,6 +20,7 @@ import { Footer } from '@/components/footer';
 import { CurrentEventsWidget } from '@/components/current-events-widget';
 import { Search, SlidersHorizontal, ArrowDownAZ, Clock, X, RotateCcw, User, Palette } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { HeroParallax } from '@/components/hero-parallax';
 
 // Type for our suggestions
 type Suggestion = {
@@ -236,34 +237,11 @@ export default function Home() {
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors duration-300">
       <Header />
       <main className="flex-1">
-        {/* Hero Section - UPDATED to support themes */}
-        <section className="relative py-20 md:py-32 overflow-hidden transition-colors duration-300 bg-background border-b border-border">
-          {/* Background Gradient Layer to show off theme Primary/Secondary colors */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-secondary/5 to-background z-0" />
-
-          {/* Optional: Texture overlay if desired */}
-          <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-10 mix-blend-overlay" />
-
-          <div className="container relative z-10 mx-auto px-4 text-center">
-            <Badge variant="secondary" className="mb-4 px-3 py-1 text-sm font-medium bg-primary text-primary-foreground border-primary/30 backdrop-blur-sm shadow-md">
-              {artists.length} Stories of Change
-            </Badge>
-
-            <h1 className="text-4xl md:text-7xl font-bold font-heading tracking-tighter mb-6 text-foreground leading-[1.1]">
-              Art as Activism
-              {/* FORCED LINE BREAK */}
-              <br className="block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary animate-gradient-x pb-2 bg-[length:200%_auto]">
-                in Indiana
-              </span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
-              Discover the artists, murals, and movements shaping social justice and community identity across the Hoosier state.
-            </p>
-
-            {/* Hero Search with Suggestions */}
-            <div className="max-w-md mx-auto relative" ref={searchContainerRef}>
+        
+        {/* NEW HERO SECTION: Parallax Component */}
+        <HeroParallax>
+            {/* Search Bar injected into Parallax Text Layer */}
+            <div className="relative" ref={searchContainerRef}>
               <form onSubmit={handleSearchSubmit} className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
@@ -301,8 +279,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-          </div>
-        </section>
+        </HeroParallax>
 
         {/* Directory Section */}
         <section id="directory-section" className="py-12 md:py-20 bg-muted/20">
@@ -315,8 +292,6 @@ export default function Home() {
                 {/* Left Side: Title & Mobile Search */}
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto items-center">
                   <h2 className="text-2xl font-heading font-bold tracking-tight mr-4 hidden md:block text-foreground">Directory</h2>
-
-
 
                   {/* Dropdowns */}
                   <div className="flex gap-2 w-full md:w-auto">
